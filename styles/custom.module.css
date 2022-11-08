@@ -1,0 +1,14 @@
+.hero {
+    background-image: linear-gradient(180deg, #243773, #14D5FF);
+}
+.footer-logo {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+@media only screen and (max-width: 769px) {
+    .footer-logo {
+        justify-content: center;
+    }
+}
