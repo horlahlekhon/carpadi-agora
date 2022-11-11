@@ -3,6 +3,7 @@ import {Container, Link, Typography, Divider, Box} from "@mui/material";
 import {Row, Col} from "reactstrap";
 import style from "../../styles/custom.module.css";
 
+
 export default function Footer(props) {
     const shopItems = [
         {name: 'Search used cars', link: 'cars/used'},
@@ -115,7 +116,7 @@ export default function Footer(props) {
                                     underline="hover"
                                     display="block"
                                     sx={{color: "white", mb: 2, textDecoration: 'none'}}
-                                    key={index}
+                                    key={`${Math.random()}-${index}`}
                                 >
                                     {item.name}
                                 </Link>
@@ -128,7 +129,7 @@ export default function Footer(props) {
                             Sell / Trade
                         </Typography>
                         {
-                            sellTrade.map((item, index) => (
+                            sellTrade.map((item) => (
                                 <Link
                                     variant="body1"
                                     href={item.link}
@@ -136,7 +137,7 @@ export default function Footer(props) {
                                     underline="hover"
                                     display="block"
                                     sx={{color: "white", mb: 2, textDecoration: 'none'}}
-                                    key={index}
+                                    key={`${item}-${Math.random()}`}
                                 >
                                     {item.name}
                                 </Link>
@@ -149,7 +150,7 @@ export default function Footer(props) {
                             Learn
                         </Typography>
                         {
-                            learnItems.map((item, index) => (
+                            learnItems.map((item) => (
                                 <Link
                                     variant="body1"
                                     href={item.link}
@@ -157,7 +158,7 @@ export default function Footer(props) {
                                     underline="hover"
                                     display="block"
                                     sx={{color: "white", mb: 2, textDecoration: 'none'}}
-                                    key={index}
+                                    key={`${item}-${Math.random()}`}
                                 >
                                     {item.name}
                                 </Link>
@@ -170,7 +171,7 @@ export default function Footer(props) {
                             Help
                         </Typography>
                         {
-                            helpItems.map((item, index) => (
+                            helpItems.map((item) => (
                                 <Link
                                     variant="body1"
                                     href={item.link}
@@ -178,7 +179,7 @@ export default function Footer(props) {
                                     underline="hover"
                                     display="block"
                                     sx={{color: "white", mb: 2, textDecoration: 'none'}}
-                                    key={index}
+                                    key={`${item}-${Math.random()}`}
                                 >
                                     {item.name}
                                 </Link>

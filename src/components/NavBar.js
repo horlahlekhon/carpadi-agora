@@ -41,7 +41,7 @@ export default function LandingNavBar() {
                     <Box sx={{ flexGrow: 1, justifyContent: 'center', display: { xs: 'none', md: 'flex' }, ml: {md: -20} }}>
                         <Nav fill={true} className="ml-n6">
                             {pages.map((page) => (
-                                <NavItem key={page}>
+                                <NavItem key={`${page}-${Math.random()}`}>
                                     <NavLink href={page.link} className="text-white">
                                         {page.name}
                                     </NavLink>
