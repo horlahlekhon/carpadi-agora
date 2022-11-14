@@ -1,0 +1,60 @@
+.hero {
+    background-image: linear-gradient(180deg, #243773, #14D5FF);
+}
+.footer-logo {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+@media only screen and (max-width: 769px) {
+    .footer-logo {
+        justify-content: center;
+    }
+}
+
+.backgroundOne {
+    padding: 4rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 90px;
+    background: url('../public/images/elipse.png') no-repeat center center;
+}
+@media only screen and (max-width: 769px) {
+    .backgroundOne {
+        background: url('../public/images/elipse-mobile.png') no-repeat center center;
+    }
+}
+
+@media only screen and (min-width: 769px) {
+    .howItWork {
+        background: url('../public/images/elipse.png') no-repeat left center;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .howItWorkMobile {
+        background: url('../public/images/elipse-mobile.png') no-repeat center center;
+    }
+}
+.download {
+    border-radius: 34px;
+    margin: 90px 0;
+    background: linear-gradient(97.18deg, #002E6B 0%, #3BB4F9 100.65%);
+}
+.downloadCol {
+    padding: 40px;
+}
+@media only screen and (max-width: 768px) {
+    .download {
+        border-radius: 25px;
+    }
+    .downloadCol {
+        padding: 30px;
+    }
+}
+.storeWrapper {
+    margin-top: 35px;
+}
