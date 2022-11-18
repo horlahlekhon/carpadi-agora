@@ -2,12 +2,14 @@ import LandingLayout from "../src/layouts/LandingLayout";
 import style from "../styles/custom.module.css";
 import React, {useEffect, useState} from "react";
 import {Col, Row} from "reactstrap";
-import {Box, Button, Container, Link, Typography, Grid} from "@mui/material";
+import {Box, Button, Container, Typography, Grid, Paper, Divider} from "@mui/material";
 import CarDisplay from "../src/components/CarDisplay";
 import StepsInBuyCar from "../src/components/StepsInBuyCar";
 import Slider from "react-slick";
 import settings from "../src/utils/feedback-slider"
 import Feedback from "../src/components/FeedbackItem";
+import NavigationBar from "../src/components/NavigationBar";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function Home() {
     const steps = [
@@ -52,7 +54,10 @@ export default function Home() {
         setCars(fetchedCars);
     }, []);
     return (
-        <LandingLayout title="Welcome to CarPadi landing page">
+        <LandingLayout
+            title="Welcome to CarPadi landing page"
+            navbar={<Navigation/>}
+        >
             <Container>
                 <div className="d-flex justify-content-center">
                     <Box
@@ -175,7 +180,6 @@ export default function Home() {
                 <Row noGutters className={style.download}>
                     <Col xs={12} md={6} className={style.downloadCol}>
                         <Typography
-                            gutterBottom
                             variant="h3"
                             sx={{color: 'white', fontWeight: 700, pr: 3}}
                         >
@@ -183,7 +187,6 @@ export default function Home() {
                         </Typography>
                         <Typography
                             variant="body2"
-                            gutterButtom
                             sx={{color: 'white', mt: {xs: 4, md: 4}}}
                         >
                             Trade Nigerian-used cars, such as
@@ -348,3 +351,83 @@ export default function Home() {
         </LandingLayout>
     )
 }
+
+const Navigation = () => (
+    <NavigationBar>
+        <Box
+            sx={{
+                my: 4,
+                px: {xs: 2, md: 20},
+                pb: {xs: 10, md: 20},
+                textAlign: "center",
+                alignItems: 'center',
+            }}
+        >
+            <Typography variant="h4" sx={{color: 'white', fontWeight: 800, fontSize: {xs: 39, md: 65}}}>
+                Buy & sell your car online with Carpadi
+            </Typography>
+            <Typography variant="body1" sx={{color: 'white', my: 4}}>
+                We give you access to diverse selection of cars to buy and a easy way to sell your car
+            </Typography>
+            <Paper
+                sx={{
+                    display: 'flex',
+                    padding: 1.3,
+                    mx: {xs: 3, md: 20},
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 5,
+                    backgroundColor: "white",
+                    mt: 2,
+                    mb: {xs: 2, mb: 5},
+                    height: {xs: 50, md: 60}
+                }}
+            >
+                <Button
+                    sx={{textTransform: 'capitalize', color: 'black'}}
+                    endIcon={<ExpandMoreIcon />}
+                >
+                    Select Make
+                </Button>
+                <Divider orientation="vertical" color="dark" sx={{mx: 2, padding: 0}}/>
+                <Button
+                    sx={{textTransform: 'capitalize', color: 'black'}}
+                    endIcon={<ExpandMoreIcon/>}
+                >
+                    Select Model
+                </Button>
+                <Button
+                    variant="contained"
+                    sx={{
+                        display: {xs: 'none', md: 'block'},
+                        height: 50,
+                        borderRadius: 5,
+                        px: 4,
+                        ml: 1.4,
+                        backgroundColor: '#01579B',
+                        color: 'white',
+                        textTransform: 'lowercase',
+                    }}
+                >
+                    search all 3450 cars
+                </Button>
+            </Paper>
+            <div className="d-flex justify-content-center">
+                <Button
+                    variant="contained"
+                    sx={{
+                        display: {xs: 'flex', md: 'none'},
+                        height: 50,
+                        borderRadius: 5,
+                        px: 4,
+                        backgroundColor: '#01579B',
+                        color: 'white',
+                        textTransform: 'lowercase',
+                    }}
+                >
+                    search all 3450 cars
+                </Button>
+            </div>
+        </Box>
+    </NavigationBar>
+);
