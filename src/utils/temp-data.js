@@ -18,3 +18,12 @@ export const Cars = [
     {id: 17, model: 'Toyota Corolla GQ', description: '2.5 Lt VHC Engine, 5dr Step Auto', image: '/sell/car-4.png', color: 'Blue', year: 2011, transmission: 'Automatic', type: 'Salon', price: 4700000 },
     {id: 18, model: 'Toyota Corolla GQ', description: '2.5 Lt VHC Engine, 5dr Step Auto', image: '/sell/car-5.png', color: 'Blue', year: 2011, transmission: 'Automatic', type: 'Salon', price: 4700000 },
 ];
+
+export const features = [
+    {name: 'Panoramic roof', url: '/cars/features/feature-1.png'},
+    {name: 'Leather seats', url: '/cars/features/feature-2.png'},
+    {name: 'Digital device', url: '/cars/features/feature-3.png'},
+    {name: 'Seat heater', url: '/cars/features/feature-4.png'},
+    {name: 'Panoramic roof', url: '/cars/features/feature-5.png'},
+    {name: 'Durable seats', url: '/cars/features/feature-6.png'},
+];

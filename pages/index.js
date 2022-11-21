@@ -6,7 +6,7 @@ import {Box, Button, Container, Typography, Grid, Paper, Divider} from "@mui/mat
 import CarDisplay from "../src/components/CarDisplay";
 import StepsInBuyCar from "../src/components/StepsInBuyCar";
 import Slider from "react-slick";
-import settings from "../src/utils/feedback-slider"
+import {feedback as settings} from "../src/utils/slider-settings"
 import Feedback from "../src/components/FeedbackItem";
 import NavigationBar from "../src/components/NavigationBar";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
