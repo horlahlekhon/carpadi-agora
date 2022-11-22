@@ -9,12 +9,27 @@ import "slick-carousel/slick/slick-theme.css";
 import {Provider} from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react';
 import {persistor, store} from "../src/store";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { indigo } from '@mui/material/colors';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#243773',
+        },
+        secondary: {
+            main: '#000000',
+        },
+    },
+});
 
 function MyApp({ Component, pageProps }) {
   return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Component {...pageProps} />
+            <ThemeProvider theme={theme}>
+                <Component {...pageProps} />
+            </ThemeProvider>
         </PersistGate>
       </Provider>
   )

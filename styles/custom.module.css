@@ -58,3 +58,11 @@
 .storeWrapper {
     margin-top: 35px;
 }
+.carLink:hover {
+    cursor: pointer;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+}
+.link:hover {
+    cursor: pointer;
+}
