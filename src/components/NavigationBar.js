@@ -7,7 +7,7 @@ import {useRouter} from "next/router";
 
 const pages = [{name: 'Buy car', link:'/cars'}, {name: 'Sell car', link: '/cars/register'}, {name: 'Become a Merchant', link: '/register'}];
 
-const NavigationBar = ({children=null, active=''}) => {
+const NavigationBar = ({children=null, active='', ...props}) => {
 
     const router = useRouter();
 
@@ -25,13 +25,13 @@ const NavigationBar = ({children=null, active=''}) => {
 
     return(
     <AppBar position="static" color="transparent" elevation={0}>
-        <Container>
+        <Container {...props}>
             <Toolbar disableGutters>
                 <Box
                     onClick={() => router.push('/')}
                     className={style.link}
                     component="img"
-                    sx={{ display: { xs: 'flex', md: 'flex' }, mr: 1 }}
+                    sx={{ display: "flex", mr: 1 }}
                     src="/images/logo.png"
                 />
                 <Typography
@@ -42,7 +42,7 @@ const NavigationBar = ({children=null, active=''}) => {
                     href="/"
                     sx={{
                         mr: 2,
-                        display: { xs: 'flex', md: 'flex' },
+                        display: "flex",
                         fontFamily: "inherit",
                         textTransform: 'uppercase',
                         fontWeight: 700,
@@ -57,7 +57,7 @@ const NavigationBar = ({children=null, active=''}) => {
                     <Nav fill={true} className="ml-n6">
                         {pages.map((page) => (
                             <NavItem key={`${page}-${Math.random()}`}>
-                                <NavLink href={page.link} className="text-white" style={page.link == active?{fontWeight: 700} : {}}>
+                                <NavLink href={page.link} className="text-white" style={page.name == active?{fontWeight: 700} : {}}>
                                     {page.name}
                                 </NavLink>
                             </NavItem>

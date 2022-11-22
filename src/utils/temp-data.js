@@ -27,3 +27,57 @@ export const features = [
     {name: 'Panoramic roof', url: '/cars/features/feature-5.png'},
     {name: 'Durable seats', url: '/cars/features/feature-6.png'},
 ];
+
+export const states = [
+    "Abia",
+    "Adamawa",
+    "Akwa Ibom",
+    "Anambra",
+    "Bauchi",
+    "Bayelsa",
+    "Benue",
+    "Borno",
+    "Cross River",
+    "Delta",
+    "Ebonyi",
+    "Edo",
+    "Ekiti",
+    "Enugu",
+    "FCT - Abuja",
+    "Gombe",
+    "Imo",
+    "Jigawa",
+    "Kaduna",
+    "Kano",
+    "Katsina",
+    "Kebbi",
+    "Kogi",
+    "Kwara",
+    "Lagos",
+    "Nasarawa",
+    "Niger",
+    "Ogun",
+    "Ondo",
+    "Osun",
+    "Oyo",
+    "Plateau",
+    "Rivers",
+    "Sokoto",
+    "Taraba",
+    "Yobe",
+    "Zamfara"
+];
+
+export const years = () => {
+    let year = new Date().getFullYear();
+    let lowerBoundary = year - 25;
+    let array = [];
+    for(let x = lowerBoundary; x <= year; x++) {
+        array.push(x);
+    }
+    return array;
+};
+
+export const makes = [
+   "Acura", "Honda", "Hyundai", "Land Rover", "Lexus", "Mazda", "Mercedes Benz", "Peugeot", "Toyota"
+];
