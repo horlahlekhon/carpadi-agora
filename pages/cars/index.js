@@ -77,9 +77,9 @@ const CarIndex = (props) => {
     }, [page]);
     return (
         <LandingLayout
-            title="Sell your car on Carpadi"
+            title="buy your car on Carpadi"
             navbar={
-                <NavigationBar active='buyCar'>
+                <NavigationBar active='Buy car'>
                     <Grid container spacing={3} sx={{display: 'flex', justifyContent: 'center', mt: 1, mb: 4}}>
                         <Grid item xs={9} md={6}>
                             <Box
