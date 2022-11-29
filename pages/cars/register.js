@@ -4,8 +4,11 @@ import LandingLayout from "../../src/layouts/LandingLayout";
 import NavigationBar from "../../src/components/NavigationBar";
 import style from "../../styles/custom.module.css";
 import {states, years, Cars, makes} from "../../src/utils/temp-data";
+import {useRouter} from "next/router";
 
 const SellCar = (props) => {
+
+    const router = useRouter();
     const stylesheet = {
         button: {
             backgroundColor: "black",
@@ -209,7 +212,7 @@ const SellCar = (props) => {
                             fullWidth
                             variant="contained"
                             sx={stylesheet.submit}
-                            onClick={() => setPage(3)}
+                            onClick={() => router.push('/cars/entry')}
                         >
                             Proceed
                         </Button>
