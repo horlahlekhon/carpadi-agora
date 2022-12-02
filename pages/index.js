@@ -64,7 +64,7 @@ export default function Home() {
                         component='img'
                         src='/images/hero-image.png'
                         sx={{
-                            height: {xs: 130, md: 260},
+                            height: {xs: 110, sm: 130, md: 260},
                             mt: {xs: -8, md: -17}
                         }}
                     />
@@ -128,7 +128,6 @@ export default function Home() {
                         />
                     </Grid>
                     <Grid item xs={12} md={6} sx={{display: 'flex', alignSelf: 'center'}} className={style.howItWorkMobile}>
-
                         <Box
                             component="img"
                             src="/icons/icon-circle.png"
@@ -181,34 +180,70 @@ export default function Home() {
                     <Col xs={12} md={6} className={style.downloadCol}>
                         <Typography
                             variant="h3"
-                            sx={{color: 'white', fontWeight: 700, pr: 3}}
+                            sx={{color: 'white', fontSize: {xs: 32, sm: 39, md: 45}, fontWeight: 700, pr: {sx: 1, md: 3}}}
                         >
                             Download our trading app
                         </Typography>
                         <Typography
                             variant="body2"
-                            sx={{color: 'white', mt: {xs: 4, md: 4}}}
+                            sx={{color: 'white', mt: {xs: 3, md: 4}}}
                         >
                             Trade Nigerian-used cars, such as
                         </Typography>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={1}>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/hyundai.png' className="align-self-center" height={20} alt="hyundai_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/hyundai.png'
+                                    className="align-self-center"
+                                    sx={{height: {xs: 13, sm: 18, md: 20}}}
+                                    alt="hyundai_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/toyota.png' className="align-self-center" height={18} alt="toyota_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/toyota.png'
+                                    className="align-self-center"
+                                    sx={{height: {xs: 12, sm: 15, md: 18}}}
+                                    alt="toyota_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/mercedesbenz.png' className="align-self-center" height={33} alt="mercedesbenz_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/mercedesbenz.png'
+                                    className="align-self-center"
+                                    sx={{height:{xs: 25, sm: 29, md: 33}}}
+                                    alt="mercedesbenz_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/lexus.png' className="align-self-center" height={20} alt="lexus_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/lexus.png'
+                                    className="align-self-center"
+                                    sx={{height: {xs: 15, sm: 18, md: 20} }}
+                                    alt="lexus_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/kia-logo.png' className="align-self-center" height={30} alt="kia_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/kia-logo.png'
+                                    className="align-self-center"
+                                    sx={{height:{xs: 25, sm: 28, md:30}}}
+                                    alt="kia_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/honda.png' className="align-self-center" height={30} alt="honda_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/honda.png'
+                                    className="align-self-center"
+                                    sx={{height:{xs: 25, sm: 28, md:30}}}
+                                    alt="honda_logo"
+                                />
                             </Grid>
                         </Grid>
                         <Row className={style.storeWrapper}>
@@ -232,7 +267,7 @@ export default function Home() {
                                         component="img"
                                         src="/icons/play-store.png"
                                         sx={{
-                                            height: {xs: 30, md: 45},
+                                            height: {xs: 20, sm: 30, md: 45},
                                             backgroundColor: 'transparent',
                                             mr: {xs: 1, md: 2},
                                         }}
@@ -242,7 +277,7 @@ export default function Home() {
                                             variant="subtitle2"
                                             sx={{
                                                 textTransform: 'uppercase',
-                                                fontSize: {xs: 11, md: 14},
+                                                fontSize: {xs: 8, sm: 11, md: 14},
                                             }}
                                         >
                                             Get it on
@@ -250,7 +285,7 @@ export default function Home() {
                                         <Typography
                                             variant="h5"
                                             sx={{
-                                                fontSize: {xs: 16, md: 23},
+                                                fontSize: {xs: 11, sm: 16, md: 23},
                                             }}
                                         >
                                             Google Play
@@ -278,7 +313,7 @@ export default function Home() {
                                         component="img"
                                         src="/icons/apple-store.png"
                                         sx={{
-                                            height: {xs: 30, md: 45},
+                                            height: {xs: 20, sm: 30, md: 45},
                                             backgroundColor: 'transparent',
                                             mr: {xs: 1, md: 2},
                                         }}
@@ -287,8 +322,8 @@ export default function Home() {
                                         <Typography
                                             variant="subtitle2"
                                             sx={{
-                                                textTransform: 'inherit',
-                                                fontSize: {xs: 11, md: 14},
+                                                textTransform: 'none',
+                                                fontSize: {xs: 8, sm: 11, md: 14},
                                             }}
                                         >
                                             Download on the
@@ -296,7 +331,7 @@ export default function Home() {
                                         <Typography
                                             variant="h5"
                                             sx={{
-                                                fontSize: {xs: 16, md: 23},
+                                                fontSize: {xs: 11, sm: 16, md: 23},
                                             }}
                                         >
                                             Apple Store
@@ -329,7 +364,7 @@ export default function Home() {
                                component="img"
                                src="/images/mobile-phone.png"
                                sx={{
-                                   height: {xs:300, md: 405},
+                                   height: {xs: 250, sm:300, md: 405},
                                    mt: {xs: 2, md: 15},
                                    zIndex: 20,
                                }}
@@ -338,7 +373,7 @@ export default function Home() {
                                component="img"
                                src="/images/d-car.png"
                                sx={{
-                                   height: {xs: 120, md: 170},
+                                   height: {xs: 100, sm: 120, md: 170},
                                    mt: {xs: 19, md: 36},
                                    ml: -11,
                                    zIndex: 9,
@@ -367,16 +402,16 @@ const Navigation = () => (
                 Buy & sell your car online with Carpadi
             </Typography>
             <Typography variant="body1" sx={{color: 'white', my: 4}}>
-                We give you access to diverse selection of cars to buy and a easy way to sell your car
+                We give you access to diverse selection of cars to buy and an easy way to sell your car
             </Typography>
             <Paper
                 sx={{
                     display: 'flex',
                     padding: 1.3,
-                    mx: {xs: 3, md: 20},
+                    mx: {xs: 0, sm: 3, md: 20},
                     justifyContent: 'center',
                     alignItems: 'center',
-                    borderRadius: 5,
+                    borderRadius: 4,
                     backgroundColor: "white",
                     mt: 2,
                     mb: {xs: 2, mb: 5},
@@ -389,7 +424,7 @@ const Navigation = () => (
                 >
                     Select Make
                 </Button>
-                <Divider orientation="vertical" color="dark" sx={{mx: 2, padding: 0}}/>
+                <Divider orientation="vertical" sx={{mx: 2, padding: 0, bgcolor: "#000"}}/>
                 <Button
                     sx={{textTransform: 'capitalize', color: 'black'}}
                     endIcon={<ExpandMoreIcon/>}
@@ -401,7 +436,7 @@ const Navigation = () => (
                     sx={{
                         display: {xs: 'none', md: 'block'},
                         height: 50,
-                        borderRadius: 5,
+                        borderRadius: 4,
                         px: 4,
                         ml: 1.4,
                         backgroundColor: '#01579B',
@@ -418,7 +453,8 @@ const Navigation = () => (
                     sx={{
                         display: {xs: 'flex', md: 'none'},
                         height: 50,
-                        borderRadius: 5,
+                        borderRadius: {xs: 4, md: 5},
+                        mt: {xs: 3, md: 4},
                         px: 4,
                         backgroundColor: '#01579B',
                         color: 'white',

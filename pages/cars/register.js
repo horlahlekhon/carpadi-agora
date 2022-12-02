@@ -226,7 +226,7 @@ const SellCar = (props) => {
         <LandingLayout
             title="sell your car on Carpadi"
             navbar={
-                <NavigationBar active="Sell car" sx={{height: {xs: 400, md: 490}, }}>
+                <NavigationBar active="Sell car" sx={{height: {xs: 380, sm: 400, md: 490}, }}>
                     <Container>
                         <Grid container>
                             <Grid item xs={12} md={7} sx={{pt: {xs: 0, md: 3}}}>

@@ -20,6 +20,7 @@ const NavigationBar = ({children=null, active='', ...props}) => {
         // change the button group dividers color
         '& .MuiButtonGroup-grouped:not(:last-of-type)': {
             borderColor: "white",
+            minHeight: '30px',
         }
     });
 
@@ -70,11 +71,10 @@ const NavigationBar = ({children=null, active='', ...props}) => {
                 component="div"
                 sx={{
                     borderRadius: 3,
-                    height: 50,
                     backgroundColor: '#0277BD',
-                    padding: 3,
-                    mx: 2,
-                    my: 4,
+                    padding: {xs: 1.5, sm: 2},
+                    mx: 1,
+                    my: {xs: 3, sm: 4},
                     display: {xs:'flex', md: 'none'},
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -86,11 +86,14 @@ const NavigationBar = ({children=null, active='', ...props}) => {
                     {
                         pages.map(page => (
                             <Button
+                                size="small"
                                 href={page.link}
                                 key={Math.random()}
                                 sx={{
-                                   px: 2
+                                   px: {xs: 1, sm: 2},
+                                   fontWeight: page.name===active? 700 : 400,
                                 }}
+
                             >
                                 {page.name}
                             </Button>

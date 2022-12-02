@@ -246,16 +246,17 @@ const CarIndex = (props) => {
                                 display: "flex",
                                 border: "1px solid #dedede",
                                 borderRadius: 3,
-                                height: {xs: 480, md: 150},
+                                height: {xs: 'auto', sm: 480, md: 150},
                                 alignItems: "center",
+                                mb: {xs: 3, md: 0}
                             }}
                         >
                             <Grid container>
                                 <Grid item xs={12} md={4} sx={{height: "inherit", display: "flex", alignItems: "center", px: 2}}>
-                                    <Box sx={{alignSelf: "center", width: {xs: '100%', md: 'auto'},}}>
+                                    <Box sx={{alignSelf: "center", width: {xs: '100%', md: 'auto'}}}>
                                         <Typography
                                             variant="h5"
-                                            sx={{fontWeight: 700, fontSize: {xs: 21, md: 28}, mb: "20px"}}
+                                            sx={{fontWeight: 700, fontSize: {xs: 21, md: 28}, mb: "20px", mt: {xs: 2, sm: 1, md: 0}}}
                                         >
                                             Sort By
                                         </Typography>
@@ -305,7 +306,7 @@ const CarIndex = (props) => {
                                                 cars.map(car => (
                                                     <Grid
                                                         item
-                                                        sx={{textAlign: "center", width: {xs:"180px", md:"110px"}, my: {xs: "10px", md: "5px"}}}
+                                                        sx={{textAlign: "center", width: {xs: "120px", sm:"180px", md:"110px"}, my: {xs: "10px", md: "5px"}}}
                                                         key={`${car.name}-${Math.random()}`}
                                                         className={style.carLink}
                                                     >

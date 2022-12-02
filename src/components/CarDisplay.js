@@ -7,7 +7,7 @@ export default function CarDisplay({car}) {
             border: '1px solid #dedede',
             borderRadius: 3,
             textAlign: 'center',
-            height: {xs: 280, md: 300},
+            height: {xs: 260, sm: 280, md: 300},
             mb: 3
         }}>
             <Box
@@ -15,7 +15,7 @@ export default function CarDisplay({car}) {
                 src={car.image}
                 alt={'car_'+car.name}
                 sx={{
-                    height: {xs: 130, md: 150},
+                    height: {xs: 100, sm: 130, md: 150},
                     width: "auto"
                 }}
             />

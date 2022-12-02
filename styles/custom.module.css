@@ -55,6 +55,14 @@
         padding: 30px;
     }
 }
+@media only screen and (max-width: 595px) {
+    .download {
+        border-radius: 20px;
+    }
+    .downloadCol {
+        padding: 18px;
+    }
+}
 .storeWrapper {
     margin-top: 35px;
 }
