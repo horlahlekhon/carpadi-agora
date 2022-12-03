@@ -2,12 +2,14 @@ import LandingLayout from "../src/layouts/LandingLayout";
 import style from "../styles/custom.module.css";
 import React, {useEffect, useState} from "react";
 import {Col, Row} from "reactstrap";
-import {Box, Button, Container, Link, Typography, Grid} from "@mui/material";
+import {Box, Button, Container, Typography, Grid, Paper, Divider} from "@mui/material";
 import CarDisplay from "../src/components/CarDisplay";
 import StepsInBuyCar from "../src/components/StepsInBuyCar";
 import Slider from "react-slick";
-import settings from "../src/utils/feedback-slider"
+import {feedback as settings} from "../src/utils/slider-settings"
 import Feedback from "../src/components/FeedbackItem";
+import NavigationBar from "../src/components/NavigationBar";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function Home() {
     const steps = [
@@ -52,14 +54,17 @@ export default function Home() {
         setCars(fetchedCars);
     }, []);
     return (
-        <LandingLayout title="Welcome to CarPadi landing page">
+        <LandingLayout
+            title="Welcome to CarPadi landing page"
+            navbar={<Navigation/>}
+        >
             <Container>
                 <div className="d-flex justify-content-center">
                     <Box
                         component='img'
                         src='/images/hero-image.png'
                         sx={{
-                            height: {xs: 130, md: 260},
+                            height: {xs: 110, sm: 130, md: 260},
                             mt: {xs: -8, md: -17}
                         }}
                     />
@@ -123,7 +128,6 @@ export default function Home() {
                         />
                     </Grid>
                     <Grid item xs={12} md={6} sx={{display: 'flex', alignSelf: 'center'}} className={style.howItWorkMobile}>
-
                         <Box
                             component="img"
                             src="/icons/icon-circle.png"
@@ -175,37 +179,71 @@ export default function Home() {
                 <Row noGutters className={style.download}>
                     <Col xs={12} md={6} className={style.downloadCol}>
                         <Typography
-                            gutterBottom
                             variant="h3"
-                            sx={{color: 'white', fontWeight: 700, pr: 3}}
+                            sx={{color: 'white', fontSize: {xs: 32, sm: 39, md: 45}, fontWeight: 700, pr: {sx: 1, md: 3}}}
                         >
                             Download our trading app
                         </Typography>
                         <Typography
                             variant="body2"
-                            gutterButtom
-                            sx={{color: 'white', mt: {xs: 4, md: 4}}}
+                            sx={{color: 'white', mt: {xs: 3, md: 4}}}
                         >
                             Trade Nigerian-used cars, such as
                         </Typography>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={1}>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/hyundai.png' className="align-self-center" height={20} alt="hyundai_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/hyundai.png'
+                                    className="align-self-center"
+                                    sx={{height: {xs: 13, sm: 18, md: 20}}}
+                                    alt="hyundai_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/toyota.png' className="align-self-center" height={18} alt="toyota_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/toyota.png'
+                                    className="align-self-center"
+                                    sx={{height: {xs: 12, sm: 15, md: 18}}}
+                                    alt="toyota_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/mercedesbenz.png' className="align-self-center" height={33} alt="mercedesbenz_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/mercedesbenz.png'
+                                    className="align-self-center"
+                                    sx={{height:{xs: 25, sm: 29, md: 33}}}
+                                    alt="mercedesbenz_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/lexus.png' className="align-self-center" height={20} alt="lexus_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/lexus.png'
+                                    className="align-self-center"
+                                    sx={{height: {xs: 15, sm: 18, md: 20} }}
+                                    alt="lexus_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/kia-logo.png' className="align-self-center" height={30} alt="kia_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/kia-logo.png'
+                                    className="align-self-center"
+                                    sx={{height:{xs: 25, sm: 28, md:30}}}
+                                    alt="kia_logo"
+                                />
                             </Grid>
                             <Grid item xs={4} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
-                                <img src='/downloads/honda.png' className="align-self-center" height={30} alt="honda_logo"/>
+                                <Box
+                                    component="img"
+                                    src='/downloads/honda.png'
+                                    className="align-self-center"
+                                    sx={{height:{xs: 25, sm: 28, md:30}}}
+                                    alt="honda_logo"
+                                />
                             </Grid>
                         </Grid>
                         <Row className={style.storeWrapper}>
@@ -229,7 +267,7 @@ export default function Home() {
                                         component="img"
                                         src="/icons/play-store.png"
                                         sx={{
-                                            height: {xs: 30, md: 45},
+                                            height: {xs: 20, sm: 30, md: 45},
                                             backgroundColor: 'transparent',
                                             mr: {xs: 1, md: 2},
                                         }}
@@ -239,7 +277,7 @@ export default function Home() {
                                             variant="subtitle2"
                                             sx={{
                                                 textTransform: 'uppercase',
-                                                fontSize: {xs: 11, md: 14},
+                                                fontSize: {xs: 8, sm: 11, md: 14},
                                             }}
                                         >
                                             Get it on
@@ -247,7 +285,7 @@ export default function Home() {
                                         <Typography
                                             variant="h5"
                                             sx={{
-                                                fontSize: {xs: 16, md: 23},
+                                                fontSize: {xs: 11, sm: 16, md: 23},
                                             }}
                                         >
                                             Google Play
@@ -275,7 +313,7 @@ export default function Home() {
                                         component="img"
                                         src="/icons/apple-store.png"
                                         sx={{
-                                            height: {xs: 30, md: 45},
+                                            height: {xs: 20, sm: 30, md: 45},
                                             backgroundColor: 'transparent',
                                             mr: {xs: 1, md: 2},
                                         }}
@@ -284,8 +322,8 @@ export default function Home() {
                                         <Typography
                                             variant="subtitle2"
                                             sx={{
-                                                textTransform: 'inherit',
-                                                fontSize: {xs: 11, md: 14},
+                                                textTransform: 'none',
+                                                fontSize: {xs: 8, sm: 11, md: 14},
                                             }}
                                         >
                                             Download on the
@@ -293,7 +331,7 @@ export default function Home() {
                                         <Typography
                                             variant="h5"
                                             sx={{
-                                                fontSize: {xs: 16, md: 23},
+                                                fontSize: {xs: 11, sm: 16, md: 23},
                                             }}
                                         >
                                             Apple Store
@@ -326,7 +364,7 @@ export default function Home() {
                                component="img"
                                src="/images/mobile-phone.png"
                                sx={{
-                                   height: {xs:300, md: 405},
+                                   height: {xs: 250, sm:300, md: 405},
                                    mt: {xs: 2, md: 15},
                                    zIndex: 20,
                                }}
@@ -335,7 +373,7 @@ export default function Home() {
                                component="img"
                                src="/images/d-car.png"
                                sx={{
-                                   height: {xs: 120, md: 170},
+                                   height: {xs: 100, sm: 120, md: 170},
                                    mt: {xs: 19, md: 36},
                                    ml: -11,
                                    zIndex: 9,
@@ -348,3 +386,84 @@ export default function Home() {
         </LandingLayout>
     )
 }
+
+const Navigation = () => (
+    <NavigationBar>
+        <Box
+            sx={{
+                my: 4,
+                px: {xs: 2, md: 20},
+                pb: {xs: 10, md: 20},
+                textAlign: "center",
+                alignItems: 'center',
+            }}
+        >
+            <Typography variant="h4" sx={{color: 'white', fontWeight: 800, fontSize: {xs: 39, md: 65}}}>
+                Buy & sell your car online with Carpadi
+            </Typography>
+            <Typography variant="body1" sx={{color: 'white', my: 4}}>
+                We give you access to diverse selection of cars to buy and an easy way to sell your car
+            </Typography>
+            <Paper
+                sx={{
+                    display: 'flex',
+                    padding: 1.3,
+                    mx: {xs: 0, sm: 3, md: 20},
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 4,
+                    backgroundColor: "white",
+                    mt: 2,
+                    mb: {xs: 2, mb: 5},
+                    height: {xs: 50, md: 60}
+                }}
+            >
+                <Button
+                    sx={{textTransform: 'capitalize', color: 'black'}}
+                    endIcon={<ExpandMoreIcon />}
+                >
+                    Select Make
+                </Button>
+                <Divider orientation="vertical" sx={{mx: 2, padding: 0, bgcolor: "#000"}}/>
+                <Button
+                    sx={{textTransform: 'capitalize', color: 'black'}}
+                    endIcon={<ExpandMoreIcon/>}
+                >
+                    Select Model
+                </Button>
+                <Button
+                    variant="contained"
+                    sx={{
+                        display: {xs: 'none', md: 'block'},
+                        height: 50,
+                        borderRadius: 4,
+                        px: 4,
+                        ml: 1.4,
+                        backgroundColor: '#01579B',
+                        color: 'white',
+                        textTransform: 'lowercase',
+                    }}
+                >
+                    search all 3450 cars
+                </Button>
+            </Paper>
+            <div className="d-flex justify-content-center">
+                <Button
+                    variant="contained"
+                    sx={{
+                        display: {xs: 'flex', md: 'none'},
+                        height: 50,
+                        borderRadius: {xs: 4, md: 5},
+                        mt: {xs: 3, md: 4},
+                        px: 4,
+                        backgroundColor: '#01579B',
+                        color: 'white',
+                        textTransform: 'lowercase',
+                    }}
+                >
+                    search all 3450 cars
+                </Button>
+            </div>
+        </Box>
+    </NavigationBar>
+);

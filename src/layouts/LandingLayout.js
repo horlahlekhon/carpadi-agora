@@ -1,10 +1,9 @@
 import React from "react";
 import Head from "next/head";
-import LandingAppBar from "../components/NavBar";
 import style from "../../styles/custom.module.css"
 import Footer from "../components/Footer";
 
-function LandingLayout({title='Welcome', children}) {
+function LandingLayout({children, navbar=null, title='Welcome'}) {
     return (
         <>
             <Head>
@@ -15,7 +14,7 @@ function LandingLayout({title='Welcome', children}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className={style.hero}>
-                <LandingAppBar/>
+                {navbar}
             </div>
             <main>
                 { children }

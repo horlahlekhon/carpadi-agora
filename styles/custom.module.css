@@ -55,6 +55,27 @@
         padding: 30px;
     }
 }
+@media only screen and (max-width: 595px) {
+    .download {
+        border-radius: 20px;
+    }
+    .downloadCol {
+        padding: 18px;
+    }
+}
 .storeWrapper {
     margin-top: 35px;
+}
+.carLink:hover {
+    cursor: pointer;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+}
+.link:hover {
+    cursor: pointer !important;
+}
+.sellInteractiveBtns {
+    border-radius: 10px !important;
+    text-transform: none !important;
+    padding: auto 40px !important;
 }
