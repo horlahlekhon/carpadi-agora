@@ -93,20 +93,35 @@ export default function CarRegisterDetail(props) {
             case 1:
                 return (
                     <>
-                        <div className="text-center mb-4">
-                            <Typography variant="h4" sx={{fontWeight: 700, mb: 1}}>Vehicle Details</Typography>
+                        <Box className="text-center mb-4">
+                            <Typography
+                                variant="h4"
+                                sx={{
+                                    fontWeight: 700,
+                                    mb: 1,
+                                    fontSize: {xs: 23, sm: 28, md: 34},
+                                    mt: {xs: 2, md: 0},
+                                }}
+                            >
+                                Vehicle Details
+                            </Typography>
                             <Typography variant="title1" sx={{mb: 3}}>Give us more information about your vehicle</Typography>
-                        </div>
+                        </Box>
                         <Box className="p-4 mt-2" sx={{border: "1px solid #dedede", borderRadius: 4}}>
                             <Grid container sx={{alignItems: "center"}}>
-                                <Grid item xs={3}/>
-                                <Grid item xs={6}>
+                                <Grid item sx={{display: {xs: 'none', md: 'inline'}}} md={3}/>
+                                <Grid item xs={8} md={6}>
                                     <div className="text-center">
-                                        <Typography variant="h5" sx={{fontWeight: "bold"}}>2003 Acura MDX</Typography>
-                                        <Typography variant="body1">Trim: Base 4D SUV</Typography>
+                                        <Typography
+                                            variant="h5"
+                                            sx={{fontWeight: "bold", fontSize: {xs: 17, md: 24}}}
+                                        >
+                                            2003 Acura MDX
+                                        </Typography>
+                                        <Typography sx={{fontSize: {xs: 14, md: 16}}}>Trim: Base 4D SUV</Typography>
                                     </div>
                                 </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4} md={3}>
                                     <div className="d-flex justify-content-end">
                                         <Button
                                             variant="contained"
@@ -124,7 +139,8 @@ export default function CarRegisterDetail(props) {
                             sx={{
                                 border: "1px solid #dedede",
                                 borderRadius: 4,
-                                padding: "30px 100px",
+                                py: "30px",
+                                px: {xs: "10px", sm: "15px", md: "100px"}
                             }}
                         >
                             <Typography variant="subtitle1" className="fw-bold">Enter your vehicle Information</Typography>
@@ -148,7 +164,7 @@ export default function CarRegisterDetail(props) {
                                 />
                             </FormControl>
                             <Grid container spacing={2} className="mb-3">
-                                <Grid item xs={12} md={4}>
+                                <Grid item xs={6} md={4}>
                                     <Button
                                         fullWidth
                                         variant="outlined"
@@ -158,7 +174,7 @@ export default function CarRegisterDetail(props) {
                                         Back
                                     </Button>
                                 </Grid>
-                                <Grid item xs={12} md={8}>
+                                <Grid item xs={6} md={8}>
                                     <Button
                                         fullWidth
                                         variant="contained"
@@ -176,19 +192,34 @@ export default function CarRegisterDetail(props) {
                 return (
                     <>
                         <div className="text-center mb-4">
-                            <Typography variant="h4" sx={{fontWeight: 700, mb: 1}}>Vehicle Condition</Typography>
+                            <Typography
+                                variant="h4"
+                                sx={{
+                                    fontWeight: 700,
+                                    mb: 1,
+                                    fontSize: {xs: 23, sm: 28, md: 34},
+                                    mt: {xs: 2, md: 0},
+                                }}
+                            >
+                                Vehicle Condition
+                            </Typography>
                             <Typography variant="title1" sx={{mb: 3}}>Give us more information about your vehicle</Typography>
                         </div>
                         <Box className="p-4 mt-2" sx={{border: "1px solid #dedede", borderRadius: 4}}>
                             <Grid container sx={{alignItems: "center"}}>
-                                <Grid item xs={3}/>
-                                <Grid item xs={6}>
+                                <Grid item sx={{display: {xs: 'none', md: 'inline'}}} md={3}/>
+                                <Grid item xs={8} md={6}>
                                     <div className="text-center">
-                                        <Typography variant="h5" sx={{fontWeight: "bold"}}>2003 Acura MDX</Typography>
-                                        <Typography variant="body1">Trim: Base 4D SUV</Typography>
+                                        <Typography
+                                            variant="h5"
+                                            sx={{fontWeight: "bold", fontSize: {xs: 17, md: 24}}}
+                                        >
+                                            2003 Acura MDX
+                                        </Typography>
+                                        <Typography sx={{fontSize: {xs: 14, md: 16}}}>Trim: Base 4D SUV</Typography>
                                     </div>
                                 </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4} md={3}>
                                     <div className="d-flex justify-content-end">
                                         <Button
                                             variant="contained"
@@ -206,7 +237,8 @@ export default function CarRegisterDetail(props) {
                             sx={{
                                 border: "1px solid #dedede",
                                 borderRadius: 4,
-                                padding: "30px 100px",
+                                py: "30px",
+                                px: {xs: "10px", sm: "15px", md: "100px"}
                             }}
                         >
                             <FormControl>
@@ -275,7 +307,7 @@ export default function CarRegisterDetail(props) {
                                 />
                             </FormControl>
                             <Grid container spacing={2} className="mb-3">
-                                <Grid item xs={12} md={4}>
+                                <Grid item xs={6} md={4}>
                                     <Button
                                         fullWidth
                                         variant="outlined"
@@ -285,7 +317,7 @@ export default function CarRegisterDetail(props) {
                                         Back
                                     </Button>
                                 </Grid>
-                                <Grid item xs={12} md={8}>
+                                <Grid item xs={6} md={8}>
                                     <Button
                                         fullWidth
                                         variant="contained"
@@ -303,19 +335,34 @@ export default function CarRegisterDetail(props) {
                 return (
                     <>
                         <div className="text-center mb-4">
-                            <Typography variant="h4" sx={{fontWeight: 700, mb: 1}}>Customer Details</Typography>
+                            <Typography
+                                variant="h4"
+                                sx={{
+                                    fontWeight: 700,
+                                    mb: 1,
+                                    fontSize: {xs: 23, sm: 28, md: 34},
+                                    mt: {xs: 2, md: 0},
+                                }}
+                            >
+                                Customer Details
+                            </Typography>
                             <Typography variant="title1" sx={{mb: 3}}>Give us more information about your vehicle</Typography>
                         </div>
                         <Box className="p-4 mt-2" sx={{border: "1px solid #dedede", borderRadius: 4}}>
                             <Grid container sx={{alignItems: "center"}}>
-                                <Grid item xs={3}/>
-                                <Grid item xs={6}>
+                                <Grid item sx={{display: {xs: 'none', md: 'inline'}}} md={3}/>
+                                <Grid item xs={8} md={6}>
                                     <div className="text-center">
-                                        <Typography variant="h5" sx={{fontWeight: "bold"}}>2003 Acura MDX</Typography>
-                                        <Typography variant="body1">Trim: Base 4D SUV</Typography>
+                                        <Typography
+                                            variant="h5"
+                                            sx={{fontWeight: "bold", fontSize: {xs: 17, md: 24}}}
+                                        >
+                                            2003 Acura MDX
+                                        </Typography>
+                                        <Typography sx={{fontSize: {xs: 14, md: 16}}}>Trim: Base 4D SUV</Typography>
                                     </div>
                                 </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4} md={3}>
                                     <div className="d-flex justify-content-end">
                                         <Button
                                             variant="contained"
@@ -333,7 +380,8 @@ export default function CarRegisterDetail(props) {
                             sx={{
                                 border: "1px solid #dedede",
                                 borderRadius: 4,
-                                padding: "30px 100px",
+                                py: "30px",
+                                px: {xs: "10px", sm: "15px", md: "100px"}
                             }}
                         >
                             <Typography variant="body2" sx={stylesheet.label}>First Name</Typography>
@@ -425,7 +473,7 @@ export default function CarRegisterDetail(props) {
                             </FormControl>
 
                             <Grid container spacing={2} className="mb-3 mt-2">
-                                <Grid item xs={12} md={4}>
+                                <Grid item xs={6} md={4}>
                                     <Button
                                         fullWidth
                                         variant="outlined"
@@ -435,7 +483,7 @@ export default function CarRegisterDetail(props) {
                                         Back
                                     </Button>
                                 </Grid>
-                                <Grid item xs={12} md={8}>
+                                <Grid item xs={6} md={8}>
                                     <Button
                                         fullWidth
                                         variant="contained"
@@ -453,19 +501,34 @@ export default function CarRegisterDetail(props) {
                 return (
                    <>
                        <div className="text-center mb-4">
-                           <Typography variant="h4" sx={{fontWeight: 700, mb: 1}}>Vehicle Worth</Typography>
+                           <Typography
+                               variant="h4"
+                               sx={{
+                                   fontWeight: 700,
+                                   mb: 1,
+                                   fontSize: {xs: 23, sm: 28, md: 34},
+                                   mt: {xs: 2, md: 0},
+                               }}
+                           >
+                               Vehicle Worth
+                           </Typography>
                            <Typography variant="title1" sx={{mb: 3}}>Tell us how much you like to sell your car</Typography>
                        </div>
                        <Box className="p-4 mt-2" sx={{border: "1px solid #dedede", borderRadius: 4}}>
                            <Grid container sx={{alignItems: "center"}}>
-                               <Grid item xs={3}/>
-                               <Grid item xs={6}>
+                               <Grid item sx={{display: {xs: 'none', md: 'inline'}}} md={3}/>
+                               <Grid item xs={8} md={6}>
                                    <div className="text-center">
-                                       <Typography variant="h5" sx={{fontWeight: "bold"}}>2003 Acura MDX</Typography>
-                                       <Typography variant="body1">Trim: Base 4D SUV</Typography>
+                                       <Typography
+                                           variant="h5"
+                                           sx={{fontWeight: "bold", fontSize: {xs: 17, md: 24}}}
+                                       >
+                                           2003 Acura MDX
+                                       </Typography>
+                                       <Typography sx={{fontSize: {xs: 14, md: 16}}}>Trim: Base 4D SUV</Typography>
                                    </div>
                                </Grid>
-                               <Grid item xs={3}>
+                               <Grid item xs={4} md={3}>
                                    <div className="d-flex justify-content-end">
                                        <Button
                                            variant="contained"
@@ -483,7 +546,8 @@ export default function CarRegisterDetail(props) {
                            sx={{
                                border: "1px solid #dedede",
                                borderRadius: 4,
-                               padding: "30px 100px",
+                               py: "30px",
+                               px: {xs: "10px", sm: "15px", md: "100px"}
                            }}
                        >
                            <div className="text-center">
@@ -521,7 +585,7 @@ export default function CarRegisterDetail(props) {
                            </FormControl>
 
                            <Grid container spacing={2} className="mb-3 mt-2">
-                               <Grid item xs={12} md={4}>
+                               <Grid item xs={6} md={4}>
                                    <Button
                                        fullWidth
                                        variant="outlined"
@@ -531,14 +595,14 @@ export default function CarRegisterDetail(props) {
                                        Back
                                    </Button>
                                </Grid>
-                               <Grid item xs={12} md={8}>
+                               <Grid item xs={6} md={8}>
                                    <Button
                                        fullWidth
                                        variant="contained"
                                        sx={stylesheet.submit}
                                        onClick={handleFormSubmission}
                                    >
-                                       Proceed
+                                       Submit
                                    </Button>
                                </Grid>
                            </Grid>
@@ -555,8 +619,16 @@ export default function CarRegisterDetail(props) {
         <SellLayout title="enter car details">
             <Container>
                 <div className="row d-flex justify-content-center">
-                    <div className="col-sm-12 col-md-10 my-4 p-sm-2 p-md-4" style={{border: "1px solid #dedede", borderRadius: "20px",}}>
-                        <Box className="mx-4" sx={{bgcolor: "#f0f0f0", borderRadius: "20px", zIndex: 100}}>
+                    <Box
+                        className="col-sm-12 col-md-10"
+                        sx={{
+                            my: {xs: 3, md: 4},
+                            p: {xs: 1, md: 4},
+                            borderRadius: "20px",
+                            border: "1px solid #dedede"
+                        }}
+                    >
+                        <Box sx={{bgcolor: "#f0f0f0", borderRadius: "20px", zIndex: 100, mx: {xs: 0.8, sm: 1, md: 4}}}>
                             <Grid container>
                                 <Grid
                                     xs={3}
@@ -652,33 +724,41 @@ export default function CarRegisterDetail(props) {
                             {
                                 steps.map((item, index) =>(
                                     <Grid item xs={3} sx={{display: "flex", justifyContent: index===0?"start": index===3?"end":"center"}} key={Math.random()}>
-                                        <div>{item}</div>
+                                        <Typography sx={{fontSize: {xs: 14, sm: 14.5, md: 16}}} style={index===3?{textAlign: "end"}:index===2||index===1?{textAlign: "center"}: {}}>{item}</Typography>
                                     </Grid>
                                 ))
                             }
                         </Grid>
-                    </div>
+                    </Box>
 
-                    <div className="col-sm-12 col-md-10 my-4 p-sm-2 p-md-4" style={{border: "1px solid #dedede", borderRadius: "20px",}}>
+                    <Box
+                        sx={{
+                            border: "1px solid #dedede",
+                            borderRadius: "20px",
+                            my: {xs: 1.5, sm: 2, md: 4},
+                            p: {xs: 1.5, sm: 2, md: 4},
+                        }}
+                        className="col-sm-12 col-md-10"
+                    >
                         <Row style={{display: "flex", justifyContent: "center"}}>
                             <Col sm={12} md={8}>
                                 <RegisterSteps/>
                             </Col>
                         </Row>
-                    </div>
+                    </Box>
                 </div>
             </Container>
             <CustomDialog isOpen={isOpen} handleClose={handleCloseModal} width={950}>
                 <Row className="d-flex justify-content-center">
                     <div style={{width: 400, textAlign: "center"}}>
-                        <Typography variant="h4" className="fw-semibold">Successful</Typography>
+                        <Typography variant="h4" sx={{fontSize: {xs: '20px', md: '29px'}}} className="fw-semibold">Successful</Typography>
                         <Box
                             component="img"
                             src="/images/success.png"
                             sx={{
-                                height: "180px",
+                                height: {xs: "100px", md:"180px"},
                                 width: "auto",
-                                my: 5,
+                                my: {xs: 2, md: 5},
                             }}
                         />
                         <Typography variant="body1">
@@ -691,7 +771,7 @@ export default function CarRegisterDetail(props) {
                                 my: 3,
                                 py: "8px",
                                 borderRadius: 2,
-                                width: "200px"
+                                width: {xs: "100%", md:"200px"}
                             }}
                             onClick={navigateToHome}
                         >

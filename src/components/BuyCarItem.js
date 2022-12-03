@@ -9,7 +9,7 @@ const BuyCarItem = ({car}) => {
                 component="img"
                 height="160"
                 sx={{
-                    height: {xs: 220, md: 160}
+                    height: {xs:180, sm: 220, md: 160}
                 }}
                 image={car.image}
                 alt={car.model}
