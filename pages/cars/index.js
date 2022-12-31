@@ -31,7 +31,9 @@ import BuyCarItem from "../../src/components/BuyCarItem";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Cars as car_sell } from "../../src/utils/temp-data"
-
+import {retrieveCarsProducts} from "../../src/services/cars"
+import {CPToast} from "../../src/components/shared/carpadiToast"
+import {toast} from "react-hot-toast";
 const cars = [
     {name: "Recommended", url: "/cars/icons/Car.png"},
     {name: "Acura", url: "/cars/icons/Acura.png"},
@@ -48,8 +50,9 @@ const cars = [
 
 const years = [2018, 2019, 2022, 2023, 2024];
 
-const CarIndex = (props) => {
 
+const CarIndex = (props) => {
+    const [carProducts, setCarProducts] = useState([])
     const [carAge, setCarAge] = useState('new');
     const [carModel, setCarModel] = useState('Toyota');
     const [page, setPage] = useState(1);
@@ -72,9 +75,24 @@ const CarIndex = (props) => {
         setCarModel(event.target.value);
     };
 
-    useEffect(() => {
+    const retrieveCarList = (rowsPerPage = 10, page = 0) => {
+        retrieveCarsProducts(rowsPerPage, page)
+            .then((response) => {
+                console.debug(response)
+                if (response.status) {
+                    setCarProducts(response.data.results)
+                } else {
+                    toast.error(response.data)
+                }
+            })
+            .catch((error) => {
+                toast.error(error.data)
+            })
+    }
 
-    }, [page]);
+    useEffect(() => {
+        retrieveCarList()
+    }, []);
     return (
         <LandingLayout
             title="buy your car on Carpadi"
@@ -358,7 +376,7 @@ const CarIndex = (props) => {
                         <Divider sx={{border: '1px solid #dedede'}}/>
                         <Grid container spacing={2}>
                             {
-                                car_sell.map(car => (
+                                carProducts.map(car => (
                                     <Grid item xs={12} md={4} key={`${Math.random()}`} sx={{mb: 1}}>
                                         <BuyCarItem car={car}/>
                                     </Grid>
