@@ -3,7 +3,7 @@ import {Card, CardContent, CardMedia, Button, Typography, Box, Chip} from "@mui/
 import {NairaFormat} from "../utils/functions";
 import getConfig from 'next/config';
 
-const {staticBase} = getConfig()
+const {publicRuntimeConfig} = getConfig()
 
 const BuyCarItem = ({car}) => {
     const picture = car.product_images.length > 0 ? car.product_images[0] : `${staticBase}/images/placeholder-car-image-1.jpg`
@@ -19,7 +19,7 @@ const BuyCarItem = ({car}) => {
                 alt={car.car.model}
             />
             <CardContent sx={{padding: 2}}>
-                <Typography variant="h6" component="div">{car.model}</Typography>
+                <Typography variant="h6" component="div">{car.car.name}</Typography>
                 <Typography variant="caption">{car.car.engine}</Typography>
                 <Box
                     sx={{
@@ -41,7 +41,7 @@ const BuyCarItem = ({car}) => {
                         mb: 2,
                     }}
                 >
-                    {NairaFormat(car.price)}
+                    {NairaFormat(car.selling_price)}
                 </Typography>
                 <Button
                     variant="outlined"

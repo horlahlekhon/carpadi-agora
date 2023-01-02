@@ -18,6 +18,7 @@ import {
     Select,
     MenuItem,
     Divider,
+    ListItemButton,
 } from "@mui/material";
 import NavigationBar from "../../src/components/NavigationBar";
 import CustomAccordion from "../../src/components/CustomAccordion";
@@ -31,56 +32,132 @@ import BuyCarItem from "../../src/components/BuyCarItem";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Cars as car_sell } from "../../src/utils/temp-data"
-import {retrieveCarsProducts} from "../../src/services/cars"
+import {retrieveCarsProducts, retrieveCarBrands} from "../../src/services/cars"
 import {CPToast} from "../../src/components/shared/carpadiToast"
 import {toast} from "react-hot-toast";
 const cars = [
-    {name: "Recommended", url: "/cars/icons/Car.png"},
-    {name: "Acura", url: "/cars/icons/Acura.png"},
-    {name: "Honda", url: "/cars/icons/Honda.png"},
-    {name: "Hyundai", url: "/cars/icons/Hyundai.png"},
-    {name: "Land Rover", url: "/cars/icons/Land-Rover.png"},
-    {name: "Lexus", url: "/cars/icons/Lexus.png"},
-    {name: "Mazda", url: "/cars/icons/Mazda.png"},
-    {name: "Mercedes Benz", url: "/cars/icons/Mercedes-Benz.png"},
-    {name: "Peugeot", url: "/cars/icons/Peugeot.png"},
-    {name: "Toyota", url: "/cars/icons/Toyota.png"},
+    {name: "Recommended", url: "/cars/icons/Car.png", filterValue: ""},
+    {name: "Acura", url: "/cars/icons/Acura.png", filterValue: "acura"},
+    {name: "Honda", url: "/cars/icons/Honda.png", filterValue: "honda"},
+    {name: "Hyundai", url: "/cars/icons/Hyundai.png", filterValue: "hyundai"},
+    {name: "Land Rover", url: "/cars/icons/Land-Rover.png", filterValue: "land_rover"},
+    {name: "Lexus", url: "/cars/icons/Lexus.png", filterValue: "lexus"},
+    {name: "Mazda", url: "/cars/icons/Mazda.png", filterValue: "mazda"},
+    {name: "Mercedes Benz", url: "/cars/icons/Mercedes-Benz.png", filterValue: "mercedez"},
+    {name: "Peugeot", url: "/cars/icons/Peugeot.png", filterValue: "peugeot"},
+    {name: "Toyota", url: "/cars/icons/Toyota.png", filterValue: "toyota"},
 ];
 
+// sorting is ascending by defualt
+const sortOptionsValues = [
+    {
+        label: 'Car name',
+        value: '-car__name'
+    },
+    {
+        label: 'Price',
+        value: '-selling_price'
+    },
+    {
+        label: 'Popularity',
+        value: '-id' // TODO change to implemented popularity check
+    }
+]
 
-const years = [2018, 2019, 2022, 2023, 2024];
+const filters = {
+    make: '',
+    year: 0,
+    price: 0,
+    transmission: '',
+    car_type: ''
+//    {key: 'make', value: '', label: 'Make'},
+//    {key: 'year', value: '', label: 'Year'},
+//    {key: 'price', value: '', label: 'Price'},
+//    {key: 'transmission', value: '', label: 'Transmission'},
+//    {key: 'car_type', value: '', label: 'Body type'},
+}
+
+const yearsList = () => {
+    const date = new Date()
+    const dateList = [date.getFullYear()]
+    for (let index = 1; index < 21; index++) {
+        dateList.push(date.getFullYear() - index)
+    }
+    console.log("years list", dateList)
+    return dateList
+};
 
 
 const CarIndex = (props) => {
     const [carProducts, setCarProducts] = useState([])
     const [carAge, setCarAge] = useState('new');
-    const [carModel, setCarModel] = useState('Toyota');
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(24);
+    const [sortOption, setSortOption] = useState(sortOptionsValues[0]);
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [previousPage, setPreviousPage] = useState(page)
+    const rowsPerPage = 9
+    const [pageLimit, setPageLimit] = useState(0)
+    const [dataFilter, setDataFilter] = useState(filters)
+    const [brands, setBrands] = useState([])
+    const brandsData = retrieveCarBrands()
+    const [years, _] = useState(yearsList())
+
+const handleBrandsData = () => {
+    if (brands.length <= 0){
+        retrieveCarBrands()
+            .then(response => {
+                if (response.status && typeof response.data == "object" && Array.isArray(response.data.results)){
+                    const data = new Set(response.data.results.map(e => e.name))
+                    setBrands([...data])
+                    console.debug("brand data", data)
+                }else{
+                    console.log("brand data error", response.data)
+                    toast.error(response.data)
+                }
+            }).catch(error => {
+                toast.error(response.data)
+            })
+        
+    }
+}
+
+    const handleFilterSelect = (event, value, item) => {
+        let filt = dataFilter
+        filt[item] = value
+        setDataFilter(filt)
+    }
 
     const onCarAgeClick = () => {
 
     };
     const handleForwardPage = () => {
         if (page < totalPages) {
-            setPage((page) => page + 1);
+            setPage((page) => page + rowsPerPage <= totalPages ? page + rowsPerPage: page);
         }
     };
     const handleBackwardPage = () => {
-        if (page > 1) {
-            setPage((page) => page - 1)
+        if (page > 1 ) {
+            setPage((page) => page - rowsPerPage)
         }
     };
-    const handleCarSelect = (event) => {
-        setCarModel(event.target.value);
+    const handleSortOptionSelect = (event) => {
+        const selected = sortOptionsValues.find(e => e["value"] == event.target.value)
+        setSortOption(selected ? selected: sortOptionsValues[0]);
     };
 
-    const retrieveCarList = (rowsPerPage = 10, page = 0) => {
-        retrieveCarsProducts(rowsPerPage, page)
+    const handleDataFilter = (filter) => {
+        
+    }
+
+    const retrieveCarList = (rowsPerPage = 10, page = 0, dataFilter) => {
+        retrieveCarsProducts(rowsPerPage, page, [], sortOption.value, dataFilter)
             .then((response) => {
-                console.debug(response)
-                if (response.status) {
+                if (response.status && typeof response.data == "object" && Array.isArray(response.data.results)) {
                     setCarProducts(response.data.results)
+                    setTotalPages(response.data.count)
+                    const prev = page - rowsPerPage >= 0 ? page - rowsPerPage: 0
+                    setPreviousPage(Math.max(page, 0))
+                    setPageLimit(page + response.data.results.length)
                 } else {
                     toast.error(response.data)
                 }
@@ -91,8 +168,9 @@ const CarIndex = (props) => {
     }
 
     useEffect(() => {
-        retrieveCarList()
-    }, []);
+        retrieveCarList(rowsPerPage, page)
+        handleBrandsData()
+    }, [page, sortOption]);
     return (
         <LandingLayout
             title="buy your car on Carpadi"
@@ -152,15 +230,16 @@ const CarIndex = (props) => {
                         </Box>
                         <CustomAccordion iconLeft={<DirectionsCarIcon/>} title="Make & Models">
                             {
-                                cars.slice(1).map(item => (
+                                brands.map((item, idx) => (
                                     <List
-                                        key={Math.random()}
+                                        key={idx}
                                         sx={{
                                             alignItems: "center",
                                         }}
                                         className={style.carLink}
                                     >
-                                        <ListItem
+                                        <ListItemButton
+                                            onClick={(event) => handleFilterSelect(event, brands[idx], "make")}
                                             sx={{
                                                 display: "flex",
                                                 justifyContent: "start",
@@ -169,10 +248,10 @@ const CarIndex = (props) => {
                                                 mx: 1
                                             }}
                                         >
-                                            <div className="flex-grow-1">
+                                            {/* <div className="flex-grow-1">
                                                 <Box
                                                     component="img"
-                                                    src={item.url}
+                                                    src=""
                                                     alt={`${item}`}
                                                     sx={{
                                                         display: "flex",
@@ -180,16 +259,16 @@ const CarIndex = (props) => {
                                                         width: "auto"
                                                     }}
                                                 />
-                                            </div>
+                                            </div> */}
                                             <Typography
                                                 variant="title1"
                                                 sx={{
                                                     mx: 2,
                                                 }}
                                             >
-                                                {item.name}
+                                                {item}
                                             </Typography>
-                                        </ListItem>
+                                        </ListItemButton>
                                     </List>
                                 ))
                             }
@@ -200,12 +279,12 @@ const CarIndex = (props) => {
                             <FormControl sx={{ml: 2}}>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue={years[2]}
+                                    defaultValue={new Date().getFullYear()}
                                     name="radio-buttons-group"
                                 >
                                     {
-                                        years.map(year => (
-                                            <FormControlLabel value={year} control={<Radio />} label={year} key={year}/>
+                                        years.map((year, idx) => (
+                                            <FormControlLabel key={idx} value={year} control={<Radio />} label={year}/>
                                         ))
                                     }
                                 </RadioGroup>
@@ -346,26 +425,26 @@ const CarIndex = (props) => {
                                     flexGrow: 1,
                                 }}
                             >
-                                234556 cars available
+                                {totalPages} cars available
                             </Typography>
                             <Box sx={{display: "flex", height: 80, alignItems: "center"}}>
                                 <Typography variant="body2">Sort</Typography>
                                 <Box sx={{ minWidth: 100, ml: 2 }}>
                                     <FormControl fullWidth size="small">
-                                        <InputLabel id="demo-simple-select-label">A - Z</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{sortOption.label}</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
-                                            value={carModel}
-                                            label="A - Z"
-                                            onChange={handleCarSelect}
+                                            value={sortOption.value}
+                                            label={sortOption.label}
+                                            onChange={handleSortOptionSelect}
                                             sx={{
                                                 borderRadius: 3,
                                             }}
                                         >
                                             {
-                                                cars.slice(1).map(car => (
-                                                    <MenuItem key={`${Math.random()}-${car.name}`} value={car.name}>{car.name}</MenuItem>
+                                                sortOptionsValues.map(sortOption => (
+                                                    <MenuItem key={`${Math.random()}-${sortOption.value}`} value={sortOption.value}>{sortOption.label}</MenuItem>
                                                 ))
                                             }
                                         </Select>
@@ -425,7 +504,7 @@ const CarIndex = (props) => {
                                         }}
                                     >
                                         <ChevronLeftIcon onClick={handleBackwardPage}/>
-                                        <Typography variant="body2" sx={{px: "3px"}}>{page}</Typography>
+                                        <Typography variant="body2" sx={{px: "3px"}}>{previousPage} to {pageLimit}</Typography>
                                         <ChevronRightIcon onClick={handleForwardPage}/>
                                     </Box>
                                     <Typography variant="body2">of {totalPages}</Typography>
