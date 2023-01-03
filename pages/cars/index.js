@@ -32,9 +32,11 @@ import BuyCarItem from "../../src/components/BuyCarItem";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Cars as car_sell } from "../../src/utils/temp-data"
-import {retrieveCarsProducts, retrieveCarBrands} from "../../src/services/cars"
+import {retrieveCarsProducts, retrieveCarFilters} from "../../src/services/cars"
 import {CPToast} from "../../src/components/shared/carpadiToast"
 import {toast} from "react-hot-toast";
+import {NairaFormat, debounce} from "../../src/utils/functions";
+import _ from "lodash";
 const cars = [
     {name: "Recommended", url: "/cars/icons/Car.png", filterValue: ""},
     {name: "Acura", url: "/cars/icons/Acura.png", filterValue: "acura"},
@@ -67,14 +69,10 @@ const sortOptionsValues = [
 const filters = {
     make: '',
     year: 0,
-    price: 0,
+    selling_price: 0,
     transmission: '',
-    car_type: ''
-//    {key: 'make', value: '', label: 'Make'},
-//    {key: 'year', value: '', label: 'Year'},
-//    {key: 'price', value: '', label: 'Price'},
-//    {key: 'transmission', value: '', label: 'Transmission'},
-//    {key: 'car_type', value: '', label: 'Body type'},
+    car_type: '',
+    search: ''
 }
 
 const yearsList = () => {
@@ -99,37 +97,43 @@ const CarIndex = (props) => {
     const [pageLimit, setPageLimit] = useState(0)
     const [dataFilter, setDataFilter] = useState(filters)
     const [brands, setBrands] = useState([])
-    const brandsData = retrieveCarBrands()
-    const [years, _] = useState(yearsList())
+    const [years, setYears] = useState([])
+    const [transmissions, setTransmissions] = useState([])
+    const [bodyTypes, setBodyTypes] = useState([])
+    const [price, setPrice] = useState({min: 0, max: 0})
+    const [search, setSearch] = useState("")
+
 
 const handleBrandsData = () => {
     if (brands.length <= 0){
-        retrieveCarBrands()
+        retrieveCarFilters()
             .then(response => {
-                if (response.status && typeof response.data == "object" && Array.isArray(response.data.results)){
-                    const data = new Set(response.data.results.map(e => e.name))
-                    setBrands([...data])
-                    console.debug("brand data", data)
+                if (response.status && typeof response.data == "object"){
+                    let brands = [...new Set(response.data.brands.map(e => e.name))]
+                    setBrands(brands ? brands : [])
+                    const bodyTypes = response.data.body_types
+                    setBodyTypes(bodyTypes ? bodyTypes : [])
+                    setTransmissions(response.data.transmissions ? response.data.transmissions: [])
+                    setYears(response.data.years ? response.data.years: [])
+                    setPrice(response.data.price ? response.data.price : {min: 0, max: 0})
                 }else{
-                    console.log("brand data error", response.data)
                     toast.error(response.data)
                 }
             }).catch(error => {
-                toast.error(response.data)
+                toast.error(error.data)
             })
         
     }
 }
 
     const handleFilterSelect = (event, value, item) => {
-        let filt = dataFilter
-        filt[item] = value
-        setDataFilter(filt)
-    }
+        const newData = {...dataFilter}
+        newData[item] = value
+        setDataFilter(newData)
+    } 
 
-    const onCarAgeClick = () => {
-
-    };
+    const handleFilterChange = _.debounce(handleFilterSelect, 2000)
+    
     const handleForwardPage = () => {
         if (page < totalPages) {
             setPage((page) => page + rowsPerPage <= totalPages ? page + rowsPerPage: page);
@@ -138,7 +142,7 @@ const handleBrandsData = () => {
     const handleBackwardPage = () => {
         if (page > 1 ) {
             setPage((page) => page - rowsPerPage)
-        }
+        } 
     };
     const handleSortOptionSelect = (event) => {
         const selected = sortOptionsValues.find(e => e["value"] == event.target.value)
@@ -168,9 +172,9 @@ const handleBrandsData = () => {
     }
 
     useEffect(() => {
-        retrieveCarList(rowsPerPage, page)
+        retrieveCarList(rowsPerPage, page, dataFilter)
         handleBrandsData()
-    }, [page, sortOption]);
+    }, [page, sortOption, dataFilter]);
     return (
         <LandingLayout
             title="buy your car on Carpadi"
@@ -191,6 +195,7 @@ const handleBrandsData = () => {
                                     sx={{ ml: 3, flex: 1, flexGrow: 1}}
                                     placeholder="Search make, model or car type"
                                     inputProps={{ 'aria-label': 'search make, model or type' }}
+                                    onChange={(event) => handleFilterChange(event, event.target.value.toLowerCase(), "search")}
                                 />
                                 <Button
                                     variant="contained"
@@ -229,58 +234,28 @@ const handleBrandsData = () => {
                             </Typography>
                         </Box>
                         <CustomAccordion iconLeft={<DirectionsCarIcon/>} title="Make & Models">
-                            {
-                                brands.map((item, idx) => (
-                                    <List
-                                        key={idx}
-                                        sx={{
-                                            alignItems: "center",
-                                        }}
-                                        className={style.carLink}
-                                    >
-                                        <ListItemButton
-                                            onClick={(event) => handleFilterSelect(event, brands[idx], "make")}
-                                            sx={{
-                                                display: "flex",
-                                                justifyContent: "start",
-                                                alignItems: "center",
-                                                height: 40,
-                                                mx: 1
-                                            }}
-                                        >
-                                            {/* <div className="flex-grow-1">
-                                                <Box
-                                                    component="img"
-                                                    src=""
-                                                    alt={`${item}`}
-                                                    sx={{
-                                                        display: "flex",
-                                                        height: {xs: 20, md: 25},
-                                                        width: "auto"
-                                                    }}
-                                                />
-                                            </div> */}
-                                            <Typography
-                                                variant="title1"
-                                                sx={{
-                                                    mx: 2,
-                                                }}
-                                            >
-                                                {item}
-                                            </Typography>
-                                        </ListItemButton>
-                                    </List>
-                                ))
-                            }
-                            <Typography variant="body2" sx={{fontWeight: 700, px: 2, pb: 2}}>See More</Typography>
+                            <FormControl sx={{ml: 2}}>
+                                <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    name="radio-buttons-group"
+                                    onChange={(event, value) => handleFilterChange(event, value.toLowerCase(), "make")}
+                                >
+                                    {
+                                        brands.map((brand, idx) => (
+                                            <FormControlLabel key={idx} value={brand} control={<Radio />} label={brand}/>
+                                        ))
+                                    }
+                                </RadioGroup>
+                            </FormControl>
                         </CustomAccordion>
 
                         <CustomAccordion iconLeft={<DateRangeIcon/>} title="Year">
                             <FormControl sx={{ml: 2}}>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue={new Date().getFullYear()}
+                                    // defaultValue={new Date().getFullYear()}
                                     name="radio-buttons-group"
+                                    onChange={(event, value) => handleFilterChange(event, value, "year")}
                                 >
                                     {
                                         years.map((year, idx) => (
@@ -295,12 +270,13 @@ const handleBrandsData = () => {
                             <FormControl sx={{ml: 2}}>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="Automatic"
+                                    // defaultValue="Automatic"
                                     name="radio-buttons-group"
+                                    onChange={(event, value) => handleFilterChange(event, value.toLowerCase(), "transmission")}
                                 >
                                     {
-                                        ['Manual', 'Automatic'].map(type => (
-                                            <FormControlLabel value={type} control={<Radio />} label={type} key={type}/>
+                                        ['Manual', 'Automatic', 'All'].map((type, idx) => (
+                                            <FormControlLabel value={type} control={<Radio />} label={type} key={idx}/>
                                         ))
                                     }
                                 </RadioGroup>
@@ -311,30 +287,48 @@ const handleBrandsData = () => {
                             <FormControl sx={{ml: 2}}>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="Nigerian Used"
+                                    // defaultValue="Nigerian Used"
                                     name="radio-buttons-group"
+                                    onChange={(event, value) => handleFilterChange(event, value.toLowerCase(), "car_type")}
                                 >
                                     {
-                                        ['Brand New', 'Nigerian Used', 'Foreign Used'].map(type => (
-                                            <FormControlLabel value={type} control={<Radio />} label={type} key={type}/>
+                                        bodyTypes.map((type, idx) => (
+                                            <FormControlLabel value={type} control={<Radio />} label={type} key={idx}/>
                                         ))
                                     }
                                 </RadioGroup>
                             </FormControl>
                         </CustomAccordion>
 
-                        <CustomAccordion iconLeft={<PaymentIcon/>} title="Price">
+                        <CustomAccordion iconLeft={<PaymentIcon/>} title="Price(max)">
                             <Box sx={{px: 2, pb: 2, pt: 4,}}>
                                 <Slider
                                     size="small"
-                                    defaultValue={700000}
+                                    step={1000000}
+                                    defaultValue={price.min}
                                     aria-label="Default"
-                                    valueLabelDisplay="auto"
-                                    min={400000}
-                                    max={20000000}
+                                    valueLabelDisplay="on"
+                                    min={price.min}
+                                    max={price.max}
+                                    onChange={(e, value, thumb) => handleFilterChange(e, value, "selling_price")}
+                                    valueLabelFormat={NairaFormat}
                                 />
                             </Box>
                         </CustomAccordion>
+                        <Button
+                            variant="outlined"
+                            color="inherit"
+                            fullWidth
+                            sx={{
+                                borderRadius: 3,
+                                mb: -1,
+                                textTransform: 'capitalize',
+                            }}
+                            href=''
+                            onClick={(e) => setDataFilter(filters)}
+                        >
+                            Reset filters
+                        </Button>
                     </Grid>
                     <Grid item xs={12} md={9}>
                         <Box
