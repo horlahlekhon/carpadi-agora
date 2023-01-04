@@ -35,7 +35,7 @@ import { Cars as car_sell } from "../../src/utils/temp-data"
 import {retrieveCarsProducts, retrieveCarFilters} from "../../src/services/cars"
 import {CPToast} from "../../src/components/shared/carpadiToast"
 import {toast} from "react-hot-toast";
-import {NairaFormat, debounce} from "../../src/utils/functions";
+import {NairaFormat} from "../../src/utils/functions";
 import _ from "lodash";
 const cars = [
     {name: "Recommended", url: "/cars/icons/Car.png", filterValue: ""},
@@ -156,7 +156,7 @@ const handleBrandsData = () => {
     const retrieveCarList = (rowsPerPage = 10, page = 0, dataFilter) => {
         retrieveCarsProducts(rowsPerPage, page, [], sortOption.value, dataFilter)
             .then((response) => {
-                if (response.status && typeof response.data == "object" && Array.isArray(response.data.results)) {
+                if (response.status && typeof response.data === "object" && Array.isArray(response.data.results)) {
                     setCarProducts(response.data.results)
                     setTotalPages(response.data.count)
                     const prev = page - rowsPerPage >= 0 ? page - rowsPerPage: 0
@@ -207,6 +207,7 @@ const handleBrandsData = () => {
                                         color: "white",
                                         textTransform: 'capitalize',
                                     }}
+                                    // onClick={handleFilterChange(event, search.toLowerCase(), "search")}
                                 >
                                     search
                                 </Button>

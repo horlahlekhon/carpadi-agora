@@ -2,11 +2,13 @@ import * as React from "react";
 import {Card, CardContent, CardMedia, Button, Typography, Box, Chip} from "@mui/material";
 import {NairaFormat} from "../utils/functions";
 import getConfig from 'next/config';
-
+import {useRouter} from 'next/router'
 const {publicRuntimeConfig} = getConfig()
 
 const BuyCarItem = ({car}) => {
-    const picture = car.product_images.length > 0 ? car.product_images[0] : `${staticBase}/images/placeholder-car-image-1.jpg`
+    const router = useRouter()
+    console.log(`car`, car)
+    const picture = car.product_images && car.product_images.length > 0 ? car.product_images[0] : `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`
     return (
         <Card sx={{borderRadius: 3}}>
             <CardMedia
@@ -52,7 +54,10 @@ const BuyCarItem = ({car}) => {
                         mb: -1,
                         textTransform: 'capitalize',
                     }}
-                    href={`/cars/${car.id}`}
+                    onClick={(event) => router.push({
+                        pathname: `/cars/${car.id}`,
+                        query: {carId: car.id}
+                    })}
                 >
                     view
                 </Button>

@@ -42,7 +42,7 @@ export default function CarsModal({isOpen, handleClose, images=[]}) {
             <Box sx={style}>
                <Box
                    component="img"
-                   src={currentImage.image}
+                   src={currentImage}
                    sx={{
                        width: '100%',
                        height: 'auto',
