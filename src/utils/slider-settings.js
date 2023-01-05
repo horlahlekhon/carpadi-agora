@@ -30,12 +30,14 @@ export const feedback = {
   ],
 };
 
-export const featuresSettings = (slidesToShow, slidesToScroll) => {
+export const featuresSettings = (images = []) => {
+
   return {
-    slidesToShow: slidesToShow,
-    slidesToScroll: slidesToScroll,
+    slidesToShow: 3,
+    slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
+    lazyLoad: true,
     responsive: [
       {
         breakpoint: 1024,

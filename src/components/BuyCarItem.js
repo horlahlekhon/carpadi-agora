@@ -56,7 +56,8 @@ const BuyCarItem = ({car}) => {
                     }}
                     onClick={(event) => router.push({
                         pathname: `/cars/${car.id}`,
-                        query: {carId: car.id}
+                        as: `/cars/${car.id}`,
+                        query: {carId: car.id, make:car.car.make.toLowerCase(), car_type: car.car.car_type.toLowerCase()}
                     })}
                 >
                     view

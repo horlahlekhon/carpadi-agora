@@ -26,10 +26,10 @@ const { publicRuntimeConfig } = getConfig();
 
 const CarView = ({ carId }) => {
   const router = useRouter();
+  const [similarCarProducts, setSimilarCarProducts] = useState([]);
   const [car, setCar] = useState({});
   const [cars, setCars] = useState(Cars);
   const [isOpen, setIsOpen] = useState(false);
-  const [similarCarProducts, setSimilarCarProducts] = useState([]);
   const [features, setFeatures] = useState([]);
   const handleViewImages = () => setIsOpen(!isOpen);
   console.debug("car id", carId);
@@ -39,8 +39,7 @@ const CarView = ({ carId }) => {
         .then((response) => {
           if (response.status && typeof response.data === "object") {
             setCar(response.data);
-            setFeatures(response.data.features);
-            fetchSimilarCars(response.data);
+            setFeatures(response.data.car_features);
           } else {
             toast.error(response.data);
           }
@@ -49,14 +48,13 @@ const CarView = ({ carId }) => {
           toast.error(error.data);
         });
     }
-  }
+  };
 
-  const fetchSimilarCars = (car) => {
-    if (Object.values(car).length > 0) {
+  const fetchSimilarCars = (filter) => {
+    if (Object.values(filter).length > 0) {
       const dataFilter = {
-        make: car.car.make,
-        transmission: car.car.transmission,
-        car_type: car.car.car_type,
+        car_type: filter.car_type,
+        transmission: filter.transmission,
       };
       retrieveCarsProducts(4, 0, ["active"], "car__name", dataFilter)
         .then((response) => {
@@ -66,9 +64,9 @@ const CarView = ({ carId }) => {
             typeof response.data === "object" &&
             Array.isArray(response.data.results)
           ) {
-            const result = response.data.results
-            setSimilarCarProducts((similarCarProducts) => [...similarCarProducts, ...result]);
-            console.log("here at similar", similarCarProducts);
+            const result = response.data.results.filter((e) => e.id !== carId);
+            console.log("here results", result);
+            setSimilarCarProducts(result);
           } else {
             toast.error(response.data);
           }
@@ -78,13 +76,23 @@ const CarView = ({ carId }) => {
         });
     } else {
       console.log(`empty car`, car);
+      return;
     }
-  }
+  };
 
   useEffect(() => {
-    fetchCar(router.query.carId);
-    console.debug("similar cars", similarCarProducts);
+    const query = router.query;
+    fetchCar(query.carId);
+    fetchSimilarCars(query);
   }, [router, carId]);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
   return (
     <LandingLayout title="View Single Car" navbar={<NavigationBar />}>
@@ -96,7 +104,7 @@ const CarView = ({ carId }) => {
                 sx={{
                   backgroundImage: `url(${
                     car.product_images && car.product_images.length > 0
-                      ? car.product_images
+                      ? car.product_images[0]
                       : `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`
                   })`,
                   backgroundRepeat: "no-repeat",
@@ -141,7 +149,11 @@ const CarView = ({ carId }) => {
             >
               <Box
                 component="img"
-                src="/cars/features/feature-1.png"
+                src={`${
+                  car.product_images && car.product_images.length > 1
+                    ? car.product_images[1]
+                    : `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`
+                }`}
                 fullWidth
                 sx={{
                   height: 240,
@@ -154,7 +166,11 @@ const CarView = ({ carId }) => {
               <Box
                 component="img"
                 fullWidth
-                src="/cars/features/feature-2.png"
+                src={`${
+                  car.product_images && car.product_images.length > 2
+                    ? car.product_images[2]
+                    : `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`
+                }`}
                 sx={{
                   borderRadius: 4,
                   border: "1px solid #dedede",
@@ -250,7 +266,7 @@ const CarView = ({ carId }) => {
                   sx={{ mx: "3px" }}
                   label={car.car.car_type}
                 />
-                <Chip size="medium" sx={{ ml: "3px" }} label={car.car.color} />
+                <Chip size="medium" sx={{ ml: "3px", backgroundColor: car.car.colour }} label={car.car.colour} />
               </Box>
               <Typography
                 variant="h4"
@@ -415,7 +431,7 @@ const CarView = ({ carId }) => {
                 >
                   Transmission
                 </Typography>
-                <Typography variant="body2">Automatic</Typography>
+                <Typography variant="body2">{car.car.transmission}</Typography>
               </Box>
 
               <Divider sx={{ border: "1px solid #dedede", my: "18px" }} />
@@ -431,7 +447,7 @@ const CarView = ({ carId }) => {
                 >
                   Mileage
                 </Typography>
-                <Typography variant="body2">187904</Typography>
+                <Typography variant="body2">{car.car.mileage}</Typography>
               </Box>
 
               <Divider sx={{ border: "1px solid #dedede", my: "18px" }} />
@@ -447,7 +463,7 @@ const CarView = ({ carId }) => {
                 >
                   Drive type
                 </Typography>
-                <Typography variant="body2">Front-wheel drive</Typography>
+                <Typography variant="body2">{car.car.drive_type}</Typography>
               </Box>
 
               <Typography
@@ -471,7 +487,7 @@ const CarView = ({ carId }) => {
                 >
                   Registration number
                 </Typography>
-                <Typography variant="body2">MB234JJ</Typography>
+                <Typography variant="body2">{car.car.vin}</Typography>
               </Box>
 
               <Divider sx={{ border: "1px solid #dedede", my: "18px" }} />
@@ -487,7 +503,7 @@ const CarView = ({ carId }) => {
                 >
                   Previous owners
                 </Typography>
-                <Typography variant="body2">2</Typography>
+                <Typography variant="body2">{car.car.previous_owners}</Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -509,7 +525,7 @@ const CarView = ({ carId }) => {
                 >
                   Model number
                 </Typography>
-                <Typography variant="body2">Toyota Corolla GQ</Typography>
+                <Typography variant="body2">{car.car.model}</Typography>
               </Box>
 
               <Divider sx={{ border: "1px solid #dedede", my: "18px" }} />
@@ -525,7 +541,7 @@ const CarView = ({ carId }) => {
                 >
                   Made in
                 </Typography>
-                <Typography variant="body2">America</Typography>
+                <Typography variant="body2">{car.car.spec_country}</Typography>
               </Box>
 
               <Typography
@@ -549,7 +565,7 @@ const CarView = ({ carId }) => {
                 >
                   Last service
                 </Typography>
-                <Typography variant="body2">14th November, 2022</Typography>
+                <Typography variant="body2">{car.car.last_service_date}</Typography>
               </Box>
 
               <Divider sx={{ border: "1px solid #dedede", my: "18px" }} />
@@ -565,7 +581,7 @@ const CarView = ({ carId }) => {
                 >
                   Mileage at last service
                 </Typography>
-                <Typography variant="body2">256466</Typography>
+                <Typography variant="body2">{car.car.last_service_mileage}</Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -587,7 +603,7 @@ const CarView = ({ carId }) => {
                 >
                   Engine type
                 </Typography>
-                <Typography variant="body2">2.5L Turbo Inline-4 Gas</Typography>
+                <Typography variant="body2">{car.car.engine}</Typography>
               </Box>
 
               <Divider sx={{ border: "1px solid #dedede", my: "18px" }} />
@@ -603,7 +619,7 @@ const CarView = ({ carId }) => {
                 >
                   Engin power
                 </Typography>
-                <Typography variant="body2">255 hp @ 5800 rpm</Typography>
+                <Typography variant="body2">{car.car.engine_power}</Typography>
               </Box>
 
               <Divider sx={{ border: "1px solid #dedede", my: "18px" }} />
@@ -619,7 +635,7 @@ const CarView = ({ carId }) => {
                 >
                   Torque
                 </Typography>
-                <Typography variant="body2">273 lb-ft @5800 rpm</Typography>
+                <Typography variant="body2">{car.car.torque}</Typography>
               </Box>
 
               <Divider sx={{ border: "1px solid #dedede", my: "18px" }} />
@@ -635,7 +651,7 @@ const CarView = ({ carId }) => {
                 >
                   No. of cylinders
                 </Typography>
-                <Typography variant="body2">4</Typography>
+                <Typography variant="body2">{car.car.cylinders}</Typography>
               </Box>
 
               <Divider sx={{ border: "1px solid #dedede", my: "18px" }} />
@@ -652,43 +668,13 @@ const CarView = ({ carId }) => {
                   Fuel type
                 </Typography>
                 <Typography variant="body2">
-                  Premium unleaded gasoline
+                  {car.car.fuel_type}
                 </Typography>
               </Box>
             </Grid>
           </Grid>
 
-          <Box component="div" sx={{ mt: "100px", mb: "50px" }}>
-            <div className="text-center">
-              <Typography variant="h5" sx={{ fontWeight: 700, mb: 5 }}>
-                Key features include
-              </Typography>
-            </div>
-            <Slider {...featuresSettings(4, 1)}>
-              {featureData.map((feature) => (
-                <div className="text-center px-2" key={Math.random()}>
-                  <Box
-                    component="img"
-                    src={feature.url}
-                    sx={{
-                      height: 190,
-                      width: "100%",
-                      borderRadius: 4,
-                    }}
-                  />
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      mt: 2,
-                    }}
-                  >
-                    {feature.name}
-                  </Typography>
-                </div>
-              ))}
-            </Slider>
-          </Box>
-
+          <Features featuresData={features} />
           <Box component="div" sx={{ mt: "150px", mb: "150px" }}>
             <div className="text-center mb-5">
               <Typography variant="h5" sx={{ fontWeight: 700, mb: 3 }}>
@@ -696,11 +682,21 @@ const CarView = ({ carId }) => {
               </Typography>
             </div>
             <Grid container spacing={2}>
-              {similarCarProducts.map((car, index) => {
-                <Grid item xs={12} md={3} key={index} sx={{ mb: 1 }}>
-                  <BuyCarItem car={car} />
-                </Grid>;
-              })}
+              {similarCarProducts.length > 0 ? (
+                similarCarProducts.map((car) => (
+                  <Grid
+                    item
+                    xs={12}
+                    md={3}
+                    key={`${car.name}-${Math.random()}`}
+                    sx={{ mb: 1 }}
+                  >
+                    <BuyCarItem car={similarCarProducts[0]} />
+                  </Grid>
+                ))
+              ) : (
+                <div> Sorry, No Similar cars found</div>
+              )}
             </Grid>
           </Box>
           <CarsModal
@@ -711,6 +707,83 @@ const CarView = ({ carId }) => {
         </Container>
       )}
     </LandingLayout>
+  );
+};
+
+const Features = ({ featuresData }) => {
+  return (
+    <Box component="div" sx={{ mt: "100px", mb: "50px", width: "100%" }}>
+      <div className="text-center">
+        <Typography variant="h5" sx={{ fontWeight: 700, mb: 5 }}>
+          Key features include
+        </Typography>
+      </div>
+      {
+        featuresData.length === 0 ? <div>No additional features</div> 
+        :
+      featuresData.length < 3 ? (
+        <Grid
+          container
+          spacing={2}
+          sx={{ justifyContent: "center", display: "flex" }}
+        >
+          {featuresData.map((feature, index) => (
+            <Grid item xs={12} md={6} key={index} sx={{ mb: 1 }}>
+              <div className="text-center px-2">
+                <Box
+                  component="img"
+                //   src={feature.url}
+                  src={
+                    feature.feature_images.length > 0
+                      ? feature.feature_images[0]
+                      : `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`
+                  }
+                  sx={{
+                    height: 190,
+                    width: "100%",
+                    borderRadius: 4,
+                  }}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mt: 2,
+                  }}
+                >
+                  {feature.name}
+                </Typography>
+              </div>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Slider {...featuresSettings(featuresData)}>
+          {featuresData.map((feature) => (
+            <div className="text-center px-2" key={Math.random()}>
+              <Box
+                component="img"
+                // src={feature.url}
+                src={feature.feature_images.length > 0 ? feature.feature_images[0]: `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`}
+
+                sx={{
+                  height: 190,
+                  width: "100%",
+                  borderRadius: 4,
+                }}
+              />
+              <Typography
+                variant="body2"
+                sx={{
+                  mt: 2,
+                }}
+              >
+                {feature.name}
+              </Typography>
+            </div>
+          ))}
+        </Slider>
+      )}
+    </Box>
   );
 };
 
