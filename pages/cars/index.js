@@ -37,6 +37,8 @@ import {CPToast} from "../../src/components/shared/carpadiToast"
 import {toast} from "react-hot-toast";
 import {NairaFormat} from "../../src/utils/functions";
 import _ from "lodash";
+import Loader from "../../src/layouts/core/Loader";
+
 const cars = [
     {name: "Recommended", url: "/cars/icons/Car.png", filterValue: ""},
     {name: "Acura", url: "/cars/icons/Acura.png", filterValue: "acura"},
@@ -75,17 +77,6 @@ const filters = {
     search: ''
 }
 
-const yearsList = () => {
-    const date = new Date()
-    const dateList = [date.getFullYear()]
-    for (let index = 1; index < 21; index++) {
-        dateList.push(date.getFullYear() - index)
-    }
-    console.log("years list", dateList)
-    return dateList
-};
-
-
 const CarIndex = (props) => {
     const [carProducts, setCarProducts] = useState([])
     const [carAge, setCarAge] = useState('new');
@@ -102,6 +93,7 @@ const CarIndex = (props) => {
     const [bodyTypes, setBodyTypes] = useState([])
     const [price, setPrice] = useState({min: 0, max: 0})
     const [search, setSearch] = useState("")
+    const [pageLoading, setPageLoading] = useState(false)
 
 
 const handleBrandsData = () => {
@@ -128,8 +120,9 @@ const handleBrandsData = () => {
 
     const handleFilterSelect = (event, value, item) => {
         const newData = {...dataFilter}
-        newData[item] = value
+        newData[item] = event.target.value
         setDataFilter(newData)
+        console.debug("latest data filtes", dataFilter, value, event)
     } 
 
     const handleFilterChange = _.debounce(handleFilterSelect, 2000)
@@ -154,6 +147,8 @@ const handleBrandsData = () => {
     }
 
     const retrieveCarList = (rowsPerPage = 10, page = 0, dataFilter) => {
+        setPageLoading(true)
+        console.log("data filters", dataFilter)
         retrieveCarsProducts(rowsPerPage, page, [], sortOption.value, dataFilter)
             .then((response) => {
                 if (response.status && typeof response.data === "object" && Array.isArray(response.data.results)) {
@@ -168,6 +163,8 @@ const handleBrandsData = () => {
             })
             .catch((error) => {
                 toast.error(error.data)
+            }).finally(() => {
+                setPageLoading(false)
             })
     }
 
@@ -195,7 +192,7 @@ const handleBrandsData = () => {
                                     sx={{ ml: 3, flex: 1, flexGrow: 1}}
                                     placeholder="Search make, model or car type"
                                     inputProps={{ 'aria-label': 'search make, model or type' }}
-                                    onChange={(event) => handleFilterChange(event, event.target.value.toLowerCase(), "search")}
+                                    onChange={(event) => handleFilterChange(event, search.toLowerCase(), "search")}
                                 />
                                 <Button
                                     variant="contained"
@@ -332,86 +329,7 @@ const handleBrandsData = () => {
                         </Button>
                     </Grid>
                     <Grid item xs={12} md={9}>
-                        <Box
-                            component="div"
-                            sx={{
-                                display: "flex",
-                                border: "1px solid #dedede",
-                                borderRadius: 3,
-                                height: {xs: 'auto', sm: 480, md: 150},
-                                alignItems: "center",
-                                mb: {xs: 3, md: 0}
-                            }}
-                        >
-                            <Grid container>
-                                <Grid item xs={12} md={4} sx={{height: "inherit", display: "flex", alignItems: "center", px: 2}}>
-                                    <Box sx={{alignSelf: "center", width: {xs: '100%', md: 'auto'}}}>
-                                        <Typography
-                                            variant="h5"
-                                            sx={{fontWeight: 700, fontSize: {xs: 21, md: 28}, mb: "20px", mt: {xs: 2, sm: 1, md: 0}}}
-                                        >
-                                            Sort By
-                                        </Typography>
-                                        <Box
-                                            component="div"
-                                            sx={{
-                                                display: "flex",
-                                                padding: 1,
-                                                border: "1px solid #dedede",
-                                                borderRadius: 3,
-                                            }}
-                                        >
-                                            <Button
-                                                onClick={() => setCarAge('new')}
-                                                variant={carAge === 'new'? 'contained':'text'}
-                                                color="primary"
-                                                sx={{
-                                                    borderRadius: 3,
-                                                    px: 2,
-                                                    textTransform: 'capitalize',
-                                                    width: {xs: '50%', md: "auto"}
-                                                }}
-                                            >
-                                                New Cars
-                                            </Button>
-
-                                            <Button
-                                                onClick={() => setCarAge('used')}
-                                                variant={carAge === 'used'? 'contained':'text'}
-                                                color="primary"
-                                                sx={{
-                                                    borderRadius: 3,
-                                                    px: 2,
-                                                    textTransform: 'capitalize',
-                                                    width: {xs: "50%", md: "auto"}
-                                                }}
-                                            >
-                                                Used Cars
-                                            </Button>
-                                        </Box>
-                                    </Box>
-                                </Grid>
-                                <Grid item xs={12} md={8} >
-                                    <Box sx={{display: "flex", alignItems: "center", justify: {xs: "center", md: "start"}, height: "inherit"}}>
-                                        <Grid container sx={{alignSelf: "center", justifyContent: {md: "start", xs: "center"}}}>
-                                            {
-                                                cars.map(car => (
-                                                    <Grid
-                                                        item
-                                                        sx={{textAlign: "center", width: {xs: "120px", sm:"180px", md:"110px"}, my: {xs: "10px", md: "5px"}}}
-                                                        key={`${car.name}-${Math.random()}`}
-                                                        className={style.carLink}
-                                                    >
-                                                        <Box component="img" src={car.url} alt={car} sx={{height: 25}}/>
-                                                        <Typography variant="body2" sx={{fontWeight: 400,}}>{car.name}</Typography>
-                                                    </Grid>
-                                                ))
-                                            }
-                                        </Grid>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                        </Box>
+                        
 
                         <Box sx={{display: "flex", height: 80, mb: "-3px", alignItems: "center"}}>
                             <Typography
@@ -448,8 +366,11 @@ const handleBrandsData = () => {
                             </Box>
                         </Box>
                         <Divider sx={{border: '1px solid #dedede'}}/>
+                        
                         <Grid container spacing={2}>
+                        
                             {
+                                pageLoading ? <Loader/> :
                                 carProducts.map(car => (
                                     <Grid item xs={12} md={4} key={`${Math.random()}`} sx={{mb: 1}}>
                                         <BuyCarItem car={car}/>
@@ -457,7 +378,7 @@ const handleBrandsData = () => {
                                 ))
                             }
                         </Grid>
-
+                        
                         <Grid container sx={{mt: 5}}>
                             <Grid item xs={12} md={4}/>
                             <Grid item xs={12} md={4} sx={{textAlign: 'center'}}>

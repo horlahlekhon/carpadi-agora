@@ -20,6 +20,8 @@ import BuyCarItem from "../../src/components/BuyCarItem";
 import CarsModal from "../../src/components/CarsModal";
 import { retrieveCar, retrieveCarsProducts } from "../../src/services/cars";
 import { toast } from "react-hot-toast";
+import Loader from "../../src/layouts/core/Loader";
+
 import getConfig from "next/config";
 
 const { publicRuntimeConfig } = getConfig();
@@ -31,9 +33,11 @@ const CarView = ({ carId }) => {
   const [cars, setCars] = useState(Cars);
   const [isOpen, setIsOpen] = useState(false);
   const [features, setFeatures] = useState([]);
+  const [pageLoading, setPageLoading] = useState(false)
   const handleViewImages = () => setIsOpen(!isOpen);
   console.debug("car id", carId);
   const fetchCar = (carId) => {
+    setPageLoading(true)
     if (carId) {
       retrieveCar(carId)
         .then((response) => {
@@ -46,7 +50,9 @@ const CarView = ({ carId }) => {
         })
         .catch((error) => {
           toast.error(error.data);
-        });
+        }).finally(() => {
+          setPageLoading(false)
+        })
     }
   };
 
@@ -81,6 +87,7 @@ const CarView = ({ carId }) => {
   };
 
   useEffect(() => {
+    
     const query = router.query;
     fetchCar(query.carId);
     fetchSimilarCars(query);
@@ -96,8 +103,12 @@ const CarView = ({ carId }) => {
 
   return (
     <LandingLayout title="View Single Car" navbar={<NavigationBar />}>
-      {car && car.id && (
+        {
+          pageLoading ? <Loader/>:
+          car && car.id && (
         <Container>
+          
+          
           <Grid container spacing={2} sx={{ mt: 4 }}>
             <Grid item xs={12} md={8}>
               <Box
@@ -539,9 +550,9 @@ const CarView = ({ carId }) => {
                   variant="body2"
                   sx={{ flexGrow: 1, fontWeight: "bold" }}
                 >
-                  Made in
+                  Specification
                 </Typography>
-                <Typography variant="body2">{car.car.spec_country}</Typography>
+                <Typography variant="body2">{car.car.specifications}</Typography>
               </Box>
 
               <Typography
@@ -691,7 +702,7 @@ const CarView = ({ carId }) => {
                     key={`${car.name}-${Math.random()}`}
                     sx={{ mb: 1 }}
                   >
-                    <BuyCarItem car={similarCarProducts[0]} />
+                    <BuyCarItem car={car} />
                   </Grid>
                 ))
               ) : (
@@ -704,8 +715,11 @@ const CarView = ({ carId }) => {
             handleClose={handleViewImages}
             images={car.product_images}
           />
+          
+          
         </Container>
-      )}
+        )}
+        
     </LandingLayout>
   );
 };

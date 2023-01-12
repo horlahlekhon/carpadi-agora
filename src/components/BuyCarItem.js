@@ -3,11 +3,11 @@ import {Card, CardContent, CardMedia, Button, Typography, Box, Chip} from "@mui/
 import {NairaFormat} from "../utils/functions";
 import getConfig from 'next/config';
 import {useRouter} from 'next/router'
+
 const {publicRuntimeConfig} = getConfig()
 
 const BuyCarItem = ({car}) => {
     const router = useRouter()
-    console.log(`car`, car)
     const picture = car.product_images && car.product_images.length > 0 ? car.product_images[0] : `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`
     return (
         <Card sx={{borderRadius: 3}}>
@@ -21,7 +21,11 @@ const BuyCarItem = ({car}) => {
                 alt={car.car.model}
             />
             <CardContent sx={{padding: 2}}>
-                <Typography variant="h6" component="div">{car.car.name}</Typography>
+                <Typography 
+                variant="h6" 
+                component="div" 
+                style={{textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}
+                >{car.car.name}</Typography>
                 <Typography variant="caption">{car.car.engine}</Typography>
                 <Box
                     sx={{

@@ -42,9 +42,20 @@ const retrieveCar = (carId) => {
             return {status: false, data: error};
         })
 }
+
+const retrieveBrands = (make = null, model = null) => {
+    return fetchWrapper.get(`${baseUrl}/home`)
+        .then((response) => {
+            return {status: true, data: response}
+        }).catch((error) => {
+            return {status: false, data: error}
+        })
+}
+
 export {
     retrieveCarsProducts,
     retrieveCarFilters,
-    retrieveCar
+    retrieveCar,
+    retrieveBrands
    
 }
