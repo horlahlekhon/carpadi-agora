@@ -24,6 +24,8 @@ import NavigationBar from "../src/components/NavigationBar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { toast } from "react-hot-toast";
 import { retrieveBrands} from "../src/services/cars"
+import _, { filter } from "lodash";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const steps = [
@@ -106,6 +108,7 @@ export default function Home() {
   ];
 
   const [cars, setCars] = useState({});
+  const router = useRouter()
 
   useEffect(() => {
     setCars(fetchedCars);
@@ -113,7 +116,7 @@ export default function Home() {
   return (
     <LandingLayout
       title="Welcome to CarPadi landing page"
-      navbar={<Navigation />}
+      navbar={<Navigation router={router} />}
     >
       <Container>
         <div className="d-flex justify-content-center">
@@ -492,18 +495,24 @@ export default function Home() {
   );
 }
 
-const Navigation = () => {
-  const [make, setMake] = useState(null);
-  const [model, setModel] = useState(null)
+const Navigation = (router) => {
+  const [make, setMake] = useState("");
+  const [model, setModel] = useState("")
   const [brands, setBrands] = useState([])
-
-
+  const [currentQueryCount, setCurrentQueryCount] = useState(0)
+  const [loadedBrands, setLoadedBrands] = useState(false)
   const retrieveBrandsData = (make, model) => {
-    retrieveBrands(make, model)
+    const filter = {model: model, make: make}
+    retrieveBrands(filter)
         .then((response) => {
             if (response.status && typeof response.data == "object"){
-                console.log("branddsss", response.data)
-                setBrands(response.data.brands)
+                if(response.data.count){
+                    setCurrentQueryCount(response.data.count)
+                }else if(loadedBrands === false){
+                    setBrands(response.data.brands)
+                    setCurrentQueryCount(response.data.available_cars_count)
+                    setLoadedBrands(true)
+                }
             }else{
                 toast.error(response.data)
             }
@@ -511,8 +520,11 @@ const Navigation = () => {
             toast.error(error.data)
         })
   }
+  
 
-  const handleChange = (e, type) => {
+  
+
+  const _handleChange = (e, type) => {
     if(type === "make"){
         setMake(e.target.value)
     }else if(type === "model"){
@@ -521,10 +533,10 @@ const Navigation = () => {
         toast.error("invalid selection!")
     }
   }
+  const handleChange = _.debounce(_handleChange, 2000)
 
   useEffect(() => {
     retrieveBrandsData(make, model)
-    console.log(brands)
   }, [make, model])
 
   return (
@@ -549,7 +561,7 @@ const Navigation = () => {
           to sell your car
         </Typography>
         <Paper
-          sx={{
+          sx={{       
             display: "flex",
             padding: 1.3,
             mx: { xs: 0, sm: 3, md: 20 },
@@ -568,8 +580,14 @@ const Navigation = () => {
           ></Button> */}
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <InputLabel>Select Make</InputLabel>
-            <Select label="" value={make} onChange={(e) => handleChange(e, "model")}>
-              <MenuItem value={"toyota"}>Toyota</MenuItem>
+            <Select label="" value={make} onChange={(e) => handleChange(e, "make")}>
+            {
+                brands && (
+                    brands.map((brand, index) => (
+                        <MenuItem key={index} value={brand.make} >{brand.make}</MenuItem>
+                    ))
+                )
+              }
             </Select>
           </FormControl>
           <Divider
@@ -582,7 +600,7 @@ const Navigation = () => {
               {
                 brands && (
                     brands.map((brand, index) => (
-                        <MenuItem key={index} value={model} >{brand.model}</MenuItem>
+                        <MenuItem key={index} value={brand.model} >{brand.model}</MenuItem>
                     ))
                 )
               }
@@ -600,8 +618,9 @@ const Navigation = () => {
               color: "white",
               textTransform: "lowercase",
             }}
+            onClick={(e) => router.router.push(`/cars?make=${make}&model=${model}`)}
           >
-            search 3450 cars
+            search {currentQueryCount} cars
           </Button>
         </Paper>
         <div className="d-flex justify-content-center">

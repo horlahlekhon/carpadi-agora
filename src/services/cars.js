@@ -43,8 +43,13 @@ const retrieveCar = (carId) => {
         })
 }
 
-const retrieveBrands = (make = null, model = null) => {
-    return fetchWrapper.get(`${baseUrl}/home`)
+const retrieveBrands = (filter) => {
+    
+    let filterString = ""
+    Object.keys(filter).forEach(element => {
+        if(filter[element]) filterString += `&${element}=${String(filter[element]).toLowerCase()}`
+    });
+    return fetchWrapper.get(`${baseUrl}/home?${filterString}`)
         .then((response) => {
             return {status: true, data: response}
         }).catch((error) => {
