@@ -1,10 +1,14 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Container, Grid, Box, Typography, Button, OutlinedInput, FormControl, MenuItem, Select} from "@mui/material";
 import LandingLayout from "../../src/layouts/LandingLayout";
 import NavigationBar from "../../src/components/NavigationBar";
 import style from "../../styles/custom.module.css";
 import {states, years, Cars, makes} from "../../src/utils/temp-data";
 import {useRouter} from "next/router";
+import { toast } from "react-hot-toast";
+import _ from "lodash"
+import {fetchVehicleInfoByVin} from "../../src/services/cars"
+import CPToast from "../../src/components/shared/carpadiToast";
 
 const SellCar = (props) => {
 
@@ -42,27 +46,45 @@ const SellCar = (props) => {
 
     };
     const [page, setPage] = useState(1);
-    const [state, setState ] = useState('Lagos');
-    const [make, setMake ] = useState('Toyota');
-    const [model, setModel] = useState(4);
+    const [state, setState ] = useState('');
+    const [make, setMake ] = useState('');
+    const [model, setModel] = useState('');
     const [year, setYear] = useState(() => (new Date().getFullYear() - 10));
-    const [trim, setTrim] = useState('Foreign used');
+    const [trim, setTrim] = useState('');
+    const [vin, setVin] = useState({vin: "", error: false})
+    const [vehicleInfo, setVehicleInfo] = useState({})
+    const [licencePlate, setLicencePlate] = useState("")
 
     const handleSelectState = (e) => {
         setState(e.target.value);
     };
-    const handleMakeSelect = (e) => {
-        setMake(e.target.value);
-    };
-    const handleModelSelect = (e) => {
-        setModel(e.target.value);
-    };
-    const handleYearSelect = (e) => {
-        setYear(e.target.value);
-    };
-    const handleTrimSelect = (e) => {
-        setTrim(e.target.value);
-    };
+    
+
+    const handleVin = () => {
+        if(vin.vin.length == 17 && _.isEmpty(vehicleInfo)){
+            fetchVehicleInfoByVin(vin.vin)
+                .then((response) => {
+                    if(response.status && response.data){
+                        setVehicleInfo(response.data.id)
+                        setMake(response.data.brand.name)
+                        setModel(response.data.brand.model)
+                        setYear(response.data.brand.year)
+                        setTrim(response.data.trim)
+                        toast.success("Vehicle information fetched successfully!")
+                    }else{
+                        toast.error(`${response.data.vin ? response.data.vin : response.data}`)
+                    }
+                }).catch(error => {
+                    toast.error(`${response.data.vin ? response.data.vin : response.data}`)
+                })
+    }
+}
+    const getVinData = _.debounce(handleVin, 5000)
+
+    useEffect(() => {
+        getVinData()
+        
+    }, [vin])
 
     const RenderForm = () => {
         switch (page) {
@@ -72,17 +94,26 @@ const SellCar = (props) => {
                         <Typography variant="body2" sx={stylesheet.label}>VIN</Typography>
                         <FormControl sx={stylesheet.wrapper}>
                             <OutlinedInput
+                                error={_.isEmpty(vehicleInfo)}
+                                key="vin"
                                 size="small"
                                 fullWidth
                                 placeholder="enter your VIN"
                                 sx={stylesheet.input}
+                                value={vin.vin}
+                                onChange={(e) => {setVin({vin: e.target.value, error: vin.error}); setVehicleInfo({})}}
+                                autoFocus={true}
+                                helperText="Invalid vin"
+                                // onBlur={}
                             />
                         </FormControl>
                         <Button
                             fullWidth
                             variant="contained"
                             sx={stylesheet.submit}
-                            onClick={() => setPage(2)}
+                            onClick={() =>{ setPage(2); }}
+                            disabled={_.isEmpty(vehicleInfo)}
+                            
                         >
                             Proceed
                         </Button>
@@ -98,6 +129,11 @@ const SellCar = (props) => {
                                 fullWidth
                                 placeholder="enter plate number"
                                 sx={stylesheet.input}
+                                value={licencePlate}
+                                error={!licencePlate || !(new RegExp(/(^[A-Z]{3}-[0-9]{3}[A-Z])\w+/g).test(licencePlate))}
+                                onChange={(e) => setLicencePlate(e.target.value)}
+                                autoFocus={true}
+
                             />
                         </FormControl>
                         <Typography variant="body2" sx={stylesheet.label}>Registered state</Typography>
@@ -109,6 +145,7 @@ const SellCar = (props) => {
                                 size="small"
                                 inputProps={{ 'aria-label': 'Without label' }}
                                 sx={stylesheet.input}
+                                error={!state}
                             >
                                 {
                                     states.map(state => (
@@ -122,6 +159,7 @@ const SellCar = (props) => {
                             variant="contained"
                             sx={stylesheet.submit}
                             onClick={() => setPage(3)}
+                            disabled={_.isEmpty(vehicleInfo) || !licencePlate || !state}
                         >
                             Proceed
                         </Button>
@@ -137,82 +175,68 @@ const SellCar = (props) => {
 
                         <Typography variant="body2" sx={stylesheet.label}>Make</Typography>
                         <FormControl sx={stylesheet.wrapper}>
-                            <Select
-                                value={make}
-                                onChange={handleMakeSelect}
-                                displayEmpty
-                                placeholder="enter make"
+                        <OutlinedInput
                                 size="small"
-                                inputProps={{ 'aria-label': 'Without label' }}
+                                fullWidth
+                                placeholder="enter make"
                                 sx={stylesheet.input}
-                            >
-                                {
-                                    makes.map(make => (
-                                        <MenuItem value={make} key={Math.random()}>{make}</MenuItem>
-                                    ))
-                                }
-                            </Select>
+                                value={make}
+                                disabled
+
+                            />
                         </FormControl>
 
                         <Typography variant="body2" sx={stylesheet.label}>Model</Typography>
                         <FormControl sx={stylesheet.wrapper}>
-                            <Select
-                                value={model}
-                                onChange={handleModelSelect}
-                                displayEmpty
+                            <OutlinedInput
                                 size="small"
-                                inputProps={{ 'aria-label': 'Without label' }}
+                                fullWidth
+                                placeholder="enter model"
                                 sx={stylesheet.input}
-                            >
-                                {
-                                    Cars.map(car => (
-                                        <MenuItem value={car.id} key={Math.random()}>{car.type}</MenuItem>
-                                    ))
-                                }
-                            </Select>
+                                value={model}
+                                disabled
+
+                            />
                         </FormControl>
 
                         <Typography variant="body2" sx={stylesheet.label}>Year</Typography>
                         <FormControl sx={stylesheet.wrapper}>
-                            <Select
-                                value={year}
-                                onChange={handleYearSelect}
-                                displayEmpty
+                            <OutlinedInput
                                 size="small"
-                                inputProps={{ 'aria-label': 'Without label' }}
+                                fullWidth
+                                placeholder="enter manufactured year"
                                 sx={stylesheet.input}
-                            >
-                                {
-                                    years().map(year => (
-                                        <MenuItem value={year} key={Math.random()}>{year}</MenuItem>
-                                    ))
-                                }
-                            </Select>
+                                value={year}
+                                disabled
+
+                            />
                         </FormControl>
 
                         <Typography variant="body2" sx={stylesheet.label}>Trim</Typography>
                         <FormControl sx={stylesheet.wrapper}>
-                            <Select
-                                value={trim}
-                                onChange={handleTrimSelect}
-                                displayEmpty
+                            <OutlinedInput
                                 size="small"
-                                inputProps={{ 'aria-label': 'Without label' }}
+                                fullWidth
+                                placeholder="enter vehicle trim"
                                 sx={stylesheet.input}
-                            >
-                                {
-                                    ['Foreign used', 'Nigerian used', 'Brand new'].map(trim => (
-                                        <MenuItem value={trim} key={Math.random()}>{trim}</MenuItem>
-                                    ))
-                                }
-                            </Select>
+                                value={trim}
+                                disabled
+
+                            />
                         </FormControl>
 
                         <Button
                             fullWidth
                             variant="contained"
                             sx={stylesheet.submit}
-                            onClick={() => router.push('/cars/entry')}
+                            onClick={() => router.push({
+                                pathname: '/cars/entry',
+                                query: {
+                                    state,
+                                    licence_plate: licencePlate,
+                                    vehicle_info: vehicleInfo
+                                }
+                            })}
                         >
                             Proceed
                         </Button>
@@ -228,101 +252,104 @@ const SellCar = (props) => {
             navbar={
                 <NavigationBar active="Sell car" sx={{height: {xs: 380, sm: 400, md: 490}, }}>
                     <Container>
-                        <Grid container>
-                            <Grid item xs={12} md={7} sx={{pt: {xs: 0, md: 3}}}>
-                                <Typography
-                                    variant="h3"
-                                    sx={{
-                                        color: "white",
-                                        marginTop: {xs: "10px", md: "120px"},
-                                        fontWeight: 700,
-                                        fontSize: {xs: 35, md: 48},
-                                    }}
-                                >
-                                    Sell your car here
-                                </Typography>
-                                <Typography
-                                    variant="subtitle1"
-                                    sx={{
-                                        mt: 2,
-                                        color: "white",
-                                    }}
-                                >
-                                    Get instant cash offer and vehicle pickup on your schedule.
-                                </Typography>
-                                <Box
-                                    component='img'
-                                    src='/images/sell-hero.png'
-                                    sx={{
-                                        display: {xs: 'none', md: 'flex'},
-                                        height: {xs: 115, md: 180},
-                                        mt: {xs: 5, md: 10},
-                                    }}
-                                />
-                                <Box className="text-center" sx={{display: {xs: 'flex', md: 'none'}}}>
-                                    <Box
-                                        component='img'
-                                        fullWidth
-                                        src='/images/sell-hero.png'
+                        <CPToast/>
+                            <Grid container>
+                                <Grid item xs={12} md={7} sx={{pt: {xs: 0, md: 3}}}>
+                                    <Typography
+                                        variant="h3"
                                         sx={{
-                                            height: 'auto',
-                                            width: '100%',
-                                            mt: 5
-                                        }}
-                                    />
-                                </Box>
-                            </Grid>
-                            <Grid item xs={12} md={5} sx={{p: {xs: 0, md: 2}}}>
-                                <Box
-                                    sx={{
-                                        mt: 5,
-                                        borderRadius: {xs: 0, md: 4},
-                                        backgroundColor: "white",
-                                        border: {xs: "none", md: "1px solid #dedede"},
-                                        p: {xs: 0, md: 3},
-                                    }}
-                                >
-                                    <Box
-                                        sx={{
-                                            border: "1px solid #dedede",
-                                            display: "flex",
-                                            justifyContent: "space-evenly",
-                                            borderRadius: 3,
-                                            p: 1,
+                                            color: "white",
+                                            marginTop: {xs: "10px", md: "120px"},
+                                            fontWeight: 700,
+                                            fontSize: {xs: 35, md: 48},
                                         }}
                                     >
-                                        <Button
-                                            className={style.sellInteractiveBtns}
-                                            sx={{px: 2}}
-                                            style={page===1? stylesheet.button : {}}
-                                            onClick={() => setPage(1)}
-                                        >
-                                            VIN
-                                        </Button>
-                                        <Button
-                                            className={style.sellInteractiveBtns}
-                                            style={page===2? stylesheet.button : {}}
+                                        Sell your car here
+                                    </Typography>
+                                    <Typography
+                                        variant="subtitle1"
+                                        sx={{
+                                            mt: 2,
+                                            color: "white",
+                                        }}
+                                    >
+                                        Get instant cash offer and vehicle pickup on your schedule.
+                                    </Typography>
+                                    <Box
+                                        component='img'
+                                        src='/images/sell-hero.png'
+                                        sx={{
+                                            display: {xs: 'none', md: 'flex'},
+                                            height: {xs: 115, md: 180},
+                                            mt: {xs: 5, md: 10},
+                                        }}
+                                    />
+                                    <Box className="text-center" sx={{display: {xs: 'flex', md: 'none'}}}>
+                                        <Box
+                                            component='img'
+                                            fullWidth
+                                            src='/images/sell-hero.png'
                                             sx={{
-                                                flexGrow: 1,
+                                                height: 'auto',
+                                                width: '100%',
+                                                mt: 5
                                             }}
-                                            onClick={() => setPage(2)}
-                                        >
-                                            License Plate
-                                        </Button>
-                                        <Button
-                                            className={style.sellInteractiveBtns}
-                                            sx={{px: 2}}
-                                            style={page===3? stylesheet.button : {}}
-                                            onClick={() => setPage(3)}
-                                        >
-                                            Make/Model
-                                        </Button>
+                                        />
                                     </Box>
-                                    <Typography variant="subtitle1" sx={{fontWeight: 700, mt: 3}}>Enter your vehicle Information</Typography>
-                                    <RenderForm/>
-                                </Box>
+                                </Grid>
+                                <Grid item xs={12} md={5} sx={{p: {xs: 0, md: 2}}}>
+                                    <Box
+                                        sx={{
+                                            mt: 5,
+                                            borderRadius: {xs: 0, md: 4},
+                                            backgroundColor: "white",
+                                            border: {xs: "none", md: "1px solid #dedede"},
+                                            p: {xs: 0, md: 3},
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                border: "1px solid #dedede",
+                                                display: "flex",
+                                                justifyContent: "space-evenly",
+                                                borderRadius: 3,
+                                                p: 1,
+                                            }}
+                                        >
+                                            <Button
+                                                className={style.sellInteractiveBtns}
+                                                sx={{px: 2}}
+                                                style={page===1? stylesheet.button : {}}
+                                                onClick={() => setPage(1)}
+                                            >
+                                                VIN
+                                            </Button>
+                                            <Button
+                                                className={style.sellInteractiveBtns}
+                                                style={page===2? stylesheet.button : {}}
+                                                sx={{
+                                                    flexGrow: 1,
+                                                }}
+                                                onClick={() => setPage(2)}
+                                                disabled={_.isEmpty(vehicleInfo)}
+                                            >
+                                                License Plate
+                                            </Button>
+                                            <Button
+                                                className={style.sellInteractiveBtns}
+                                                sx={{px: 2}}
+                                                style={page===3? stylesheet.button : {}}
+                                                onClick={() => setPage(3)}
+                                                disabled={_.isEmpty(vehicleInfo)}
+                                            >
+                                                Make/Model
+                                            </Button>
+                                        </Box>
+                                        <Typography variant="subtitle1" sx={{fontWeight: 700, mt: 3}}>Enter your vehicle Information</Typography>
+                                        <RenderForm/>
+                                    </Box>
+                                </Grid>
                             </Grid>
-                        </Grid>
                     </Container>
                 </NavigationBar>
             }

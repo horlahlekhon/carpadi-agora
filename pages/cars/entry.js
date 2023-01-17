@@ -22,7 +22,7 @@ import {states} from "../../src/utils/temp-data";
 
 const steps = ['Vehicle Details', 'Vehicle Condition', 'Customer Details', 'Worth Range'];
 const usages = [{id: 1, label: '1 User'}, {id: 2, label: '2 Users'}, {id: 3, label: '3 Users'}, {id: 4, label: '4 Users'}, {id: 5, label: '5 or More'}];
-const customs = [{id: 'old', label: 'Old'}, {id: 'new', label: 'New'}, {id: 'others', label: 'Others'}];
+const customs = [{id: 'yes', label: 'Yes'}, {id: 'no', label: 'No'}];
 const conditions = [{id: 'great', label: 'Great'}, {id: 'good', label: 'Good'}, {id: 'fair', label: 'Fair'}, {id: 'poor', label: 'Poor'}];
 
 const notifications = [{id: 'email', label: 'Email Address'}, {id: 'phone', label: 'Phone Number'}];
@@ -37,6 +37,7 @@ export default function CarRegisterDetail(props) {
     const [comment, setComment] = useState('');
     const [state, setState] = useState('Lagos');
     const [isOpen, setIsOpen] = useState(false);
+    const [data, setData] = useState(router.query)
 
     const stylesheet = {
         button: {
@@ -80,6 +81,7 @@ export default function CarRegisterDetail(props) {
 
     const handleFormSubmission = () => {
         //process api call
+        console.log(data)
         setIsOpen(true);
     };
 
@@ -149,7 +151,7 @@ export default function CarRegisterDetail(props) {
                                 <OutlinedInput
                                     size="small"
                                     fullWidth
-                                    placeholder="enter duration of use"
+                                    placeholder="enter duration of use in months"
                                     sx={stylesheet.input}
                                 />
                             </FormControl>
@@ -260,14 +262,14 @@ export default function CarRegisterDetail(props) {
 
                             <FormControl className="mt-4">
                                 <FormLabel id="demo-radio-buttons-group-label2" className="fw-bold">
-                                    Is your custom available
+                                    Is your custom papers available
                                 </FormLabel>
                                 <Typography variant="caption" sx={{color: "#767676"}}>
-                                    (If bought brand New do you have the attertction paper)
+                                    (If bought brand New do you have the delivery note and receipt of purchase)
                                 </Typography>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="old"
+                                    defaultValue="No"
                                     name="radio-buttons-group"
                                 >
                                     {

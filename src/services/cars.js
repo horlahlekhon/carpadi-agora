@@ -57,10 +57,21 @@ const retrieveBrands = (filter) => {
         })
 }
 
+const fetchVehicleInfoByVin = (vin) => {
+    return fetchWrapper.post(`${baseUrl}/vehicle-by-vin/`, {
+        vin: vin
+    }).then((response) => {
+        return {status: true, data: response}
+    }).catch((error) => {
+        return {status: false, data: error}
+    })
+}
+
 export {
     retrieveCarsProducts,
     retrieveCarFilters,
     retrieveCar,
-    retrieveBrands
+    retrieveBrands,
+    fetchVehicleInfoByVin
    
 }
