@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import SellLayout from "../../src/layouts/SellLayout";
 import {
     Container,
@@ -13,12 +13,16 @@ import {
     RadioGroup,
     Radio,
     FormControlLabel,
-    Select, MenuItem
+    Select, MenuItem, duration
 } from "@mui/material";
 import {Col, Row} from "reactstrap";
 import {useRouter} from "next/router";
 import CustomDialog from "../../src/components/CustomDialog";
 import {states} from "../../src/utils/temp-data";
+import _ from "lodash";
+import Loader from "../../src/layouts/core/Loader";
+import { Phone, SendTwoTone } from "@mui/icons-material";
+
 
 const steps = ['Vehicle Details', 'Vehicle Condition', 'Customer Details', 'Worth Range'];
 const usages = [{id: 1, label: '1 User'}, {id: 2, label: '2 Users'}, {id: 3, label: '3 Users'}, {id: 4, label: '4 Users'}, {id: 5, label: '5 or More'}];
@@ -37,7 +41,25 @@ export default function CarRegisterDetail(props) {
     const [comment, setComment] = useState('');
     const [state, setState] = useState('Lagos');
     const [isOpen, setIsOpen] = useState(false);
-    const [data, setData] = useState(router.query)
+    const [data, setData] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
+    const [carData, setCarData] =  useState(null)
+    const [mileage, setMileage] = useState(0)
+    const [usageDuration, setUsageDuration] = useState(0)
+    const [carCondition, setCarCondition] = useState(null)
+    const [previousUsersCount, setPreviousUserSCount] = useState(0)
+    const [customPaperStatus, setCustomPaperStatus] = useState("")
+    const [note, setNote] = useState("")
+    const noteRef = useRef()
+    const addressRef = useRef()
+    const firstNameRef  = useRef()
+    const lastNameRef  = useRef()
+    const emailRef = useRef()
+    const phoneRef = useRef()
+    const [contactPreference, setContactPreference] = useState("")
+    const [firstName, setFirstName] = useState({"firstName": "", error: false})
+    const [lastName, setLastName] = useState("")
+
 
     const stylesheet = {
         button: {
@@ -72,6 +94,9 @@ export default function CarRegisterDetail(props) {
         setStep((value) => value + 1)
     };
 
+    const handleProceedStep3 = (e) => {
+        
+    }
     const handleBackward = (e) => {
         e.preventDefault();
         setStep((value) => value - 1)
@@ -89,6 +114,14 @@ export default function CarRegisterDetail(props) {
         setIsOpen(false);
         router.push('/');
     };
+
+    useEffect(() => {
+        const query = router.query
+        if(!_.isEmpty(query)){
+            setCarData(query)
+            setIsLoading(false)
+        }
+    }, [router])
 
     const RegisterSteps = () => {
         switch (step) {
@@ -118,20 +151,9 @@ export default function CarRegisterDetail(props) {
                                             variant="h5"
                                             sx={{fontWeight: "bold", fontSize: {xs: 17, md: 24}}}
                                         >
-                                            2003 Acura MDX
+                                            {carData.name}
                                         </Typography>
-                                        <Typography sx={{fontSize: {xs: 14, md: 16}}}>Trim: Base 4D SUV</Typography>
-                                    </div>
-                                </Grid>
-                                <Grid item xs={4} md={3}>
-                                    <div className="d-flex justify-content-end">
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            sx={{px: 2, textTransform: "none", borderRadius: 3}}
-                                        >
-                                            Edit
-                                        </Button>
+                                        <Typography sx={{fontSize: {xs: 14, md: 16}}}>Trim: {carData.trim} {carData.driveType || ""} {carData.carType || ""}</Typography>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -146,23 +168,34 @@ export default function CarRegisterDetail(props) {
                             }}
                         >
                             <Typography variant="subtitle1" className="fw-bold">Enter your vehicle Information</Typography>
-                            <Typography variant="body2" sx={stylesheet.label}>How long have you used the car</Typography>
+                            <Typography variant="body2" sx={stylesheet.label}>How long have you used the car in months</Typography>
                             <FormControl sx={stylesheet.wrapper}>
                                 <OutlinedInput
+                                    key="duration"
                                     size="small"
                                     fullWidth
                                     placeholder="enter duration of use in months"
                                     sx={stylesheet.input}
+                                    error={usageDuration === 0}
+                                    onChange={(e) => setUsageDuration(e.target.value)}
+                                    autoFocus={true}
+                                    type="number"
+                                    value={usageDuration}
                                 />
                             </FormControl>
 
                             <Typography variant="body2" sx={stylesheet.label}>Mileage</Typography>
                             <FormControl sx={stylesheet.wrapper}>
                                 <OutlinedInput
+                                    key="mileage"
                                     size="small"
                                     fullWidth
                                     placeholder="enter mileage"
                                     sx={stylesheet.input}
+                                    error={mileage === 0}
+                                    onChange={(e) => setMileage(e.target.value)}
+                                    value={mileage}
+                                    autoFocus={true}
                                 />
                             </FormControl>
                             <Grid container spacing={2} className="mb-3">
@@ -182,6 +215,7 @@ export default function CarRegisterDetail(props) {
                                         variant="contained"
                                         sx={stylesheet.submit}
                                         onClick={handleProceed}
+                                        disabled={mileage == 0 || duration == 0}
                                     >
                                         Proceed
                                     </Button>
@@ -216,20 +250,9 @@ export default function CarRegisterDetail(props) {
                                             variant="h5"
                                             sx={{fontWeight: "bold", fontSize: {xs: 17, md: 24}}}
                                         >
-                                            2003 Acura MDX
+                                            {carData.name}
                                         </Typography>
-                                        <Typography sx={{fontSize: {xs: 14, md: 16}}}>Trim: Base 4D SUV</Typography>
-                                    </div>
-                                </Grid>
-                                <Grid item xs={4} md={3}>
-                                    <div className="d-flex justify-content-end">
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            sx={{px: 2, textTransform: "none", borderRadius: 3}}
-                                        >
-                                            Edit
-                                        </Button>
+                                        <Typography sx={{fontSize: {xs: 14, md: 16}}}>Trim: {carData.trim} {carData.driveType || ""} {carData.carType || ""}</Typography>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -251,6 +274,7 @@ export default function CarRegisterDetail(props) {
                                     aria-labelledby="demo-radio-buttons-group-label"
                                     defaultValue={1}
                                     name="radio-buttons-group"
+                                    onChange={(e) => setPreviousUserSCount(usages[e.target.value])}
                                 >
                                     {
                                         usages.map(usage => (
@@ -271,6 +295,7 @@ export default function CarRegisterDetail(props) {
                                     aria-labelledby="demo-radio-buttons-group-label"
                                     defaultValue="No"
                                     name="radio-buttons-group"
+                                    onChange={(e) => setCustomPaperStatus(customs[e.target.value])}
                                 >
                                     {
                                         customs.map(usage => (
@@ -288,6 +313,7 @@ export default function CarRegisterDetail(props) {
                                     aria-labelledby="demo-radio-buttons-group-label"
                                     defaultValue="good"
                                     name="radio-buttons-group"
+                                    onChange={(e) => setCarCondition(conditions[e.target.value])}
                                 >
                                     {
                                         conditions.map(usage => (
@@ -306,6 +332,10 @@ export default function CarRegisterDetail(props) {
                                     fullWidth
                                     placeholder="enter your note"
                                     sx={stylesheet.input}
+                                    // value={note}
+                                    // onChange={(e) => setNote(e.target.value)}
+                                    autoFocus={true}
+                                    ref={noteRef}
                                 />
                             </FormControl>
                             <Grid container spacing={2} className="mb-3">
@@ -325,6 +355,7 @@ export default function CarRegisterDetail(props) {
                                         variant="contained"
                                         sx={stylesheet.submit}
                                         onClick={handleProceed}
+                                        disabled={customPaperStatus === "" || previousUsersCount === 0 || carCondition === null}
                                     >
                                         Proceed
                                     </Button>
@@ -389,10 +420,15 @@ export default function CarRegisterDetail(props) {
                             <Typography variant="body2" sx={stylesheet.label}>First Name</Typography>
                             <FormControl sx={stylesheet.wrapper}>
                                 <OutlinedInput
+                                    key="firstname"
                                     size="small"
                                     fullWidth
                                     placeholder="enter customer first name"
                                     sx={stylesheet.input}
+                                    value={firstName}
+                                    // onChange={(e) => setFirstName(e.target.value)}
+                                    // autoFocus={true}
+                                    onBlur=
                                 />
                             </FormControl>
 
@@ -400,9 +436,14 @@ export default function CarRegisterDetail(props) {
                             <FormControl sx={stylesheet.wrapper}>
                                 <OutlinedInput
                                     size="small"
+                                    key="last"
                                     fullWidth
                                     placeholder="enter customer last name"
                                     sx={stylesheet.input}
+                                    ref={lastNameRef}
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    autoFocus={true}
                                 />
                             </FormControl>
 
@@ -411,8 +452,11 @@ export default function CarRegisterDetail(props) {
                                 <OutlinedInput
                                     size="small"
                                     fullWidth
+                                    key="phone"
                                     placeholder="enter phone  numner e.g +2349012345678"
                                     sx={stylesheet.input}
+                                    // autoFocus={true}
+                                    ref={phoneRef}
                                 />
                             </FormControl>
 
@@ -421,27 +465,11 @@ export default function CarRegisterDetail(props) {
                                 <OutlinedInput
                                     size="small"
                                     fullWidth
+                                    key="Email"
                                     placeholder="enter email address"
                                     sx={stylesheet.input}
+                                    ref={emailRef}
                                 />
-                            </FormControl>
-
-                            <Typography variant="body2" sx={stylesheet.label}>State</Typography>
-                            <FormControl sx={stylesheet.wrapper}>
-                                <Select
-                                    value={state}
-                                    onChange={handleSelectState}
-                                    displayEmpty
-                                    size="small"
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    sx={stylesheet.input}
-                                >
-                                    {
-                                        states.map(state => (
-                                            <MenuItem value={state} key={Math.random()}>{state}</MenuItem>
-                                        ))
-                                    }
-                                </Select>
                             </FormControl>
 
                             <Typography variant="body2" sx={stylesheet.label}>Address</Typography>
@@ -453,6 +481,7 @@ export default function CarRegisterDetail(props) {
                                     fullWidth
                                     placeholder="enter address"
                                     sx={stylesheet.input}
+                                    ref={addressRef}
                                 />
                             </FormControl>
 
@@ -465,6 +494,7 @@ export default function CarRegisterDetail(props) {
                                     aria-labelledby="demo-radio-buttons-group-label"
                                     defaultValue="phone"
                                     name="radio-buttons-group"
+                                    onChange={(e) => setContactPreference(notifications[e.target.value])}
                                 >
                                     {
                                         notifications.map(note => (
@@ -491,6 +521,7 @@ export default function CarRegisterDetail(props) {
                                         variant="contained"
                                         sx={stylesheet.submit}
                                         onClick={handleProceed}
+                                        // disabled={firstNameRef.current.value === "" || phone.current.value === "" }
                                     >
                                         Proceed
                                     </Button>
@@ -721,7 +752,7 @@ export default function CarRegisterDetail(props) {
                                 </Grid>
                             </Grid>
                         </Box>
-
+                                        
                         <Grid container>
                             {
                                 steps.map((item, index) =>(
@@ -731,8 +762,11 @@ export default function CarRegisterDetail(props) {
                                 ))
                             }
                         </Grid>
+             
                     </Box>
-
+                    {isLoading ? (
+                <Loader />
+              ) :(          
                     <Box
                         sx={{
                             border: "1px solid #dedede",
@@ -748,6 +782,8 @@ export default function CarRegisterDetail(props) {
                             </Col>
                         </Row>
                     </Box>
+              )
+                    }
                 </div>
             </Container>
             <CustomDialog isOpen={isOpen} handleClose={handleCloseModal} width={950}>

@@ -65,7 +65,7 @@ const SellCar = (props) => {
             fetchVehicleInfoByVin(vin.vin)
                 .then((response) => {
                     if(response.status && response.data){
-                        setVehicleInfo(response.data.id)
+                        setVehicleInfo({id: response.data.id, carType: response.data.car_type, driveType: response.data.drive_type})
                         setMake(response.data.brand.name)
                         setModel(response.data.brand.model)
                         setYear(response.data.brand.year)
@@ -234,7 +234,12 @@ const SellCar = (props) => {
                                 query: {
                                     state,
                                     licence_plate: licencePlate,
-                                    vehicle_info: vehicleInfo
+                                    vehicle_info: vehicleInfo.id,
+                                    trim,
+                                    name: `${year} ${make} ${model}`,
+                                    driveType: vehicleInfo.driveType,
+                                    carType: vehicleInfo.carType
+                                    
                                 }
                             })}
                         >
