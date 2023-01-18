@@ -52,12 +52,12 @@ export default function CarRegisterDetail(props) {
     const [note, setNote] = useState("")
     const noteRef = useRef()
     const addressRef = useRef()
-    const firstNameRef  = useRef()
+    const firstNameRef  = useRef(null)
     const lastNameRef  = useRef()
     const emailRef = useRef()
     const phoneRef = useRef()
     const [contactPreference, setContactPreference] = useState("")
-    const [firstName, setFirstName] = useState({"firstName": "", error: false})
+    const [firstName, setFirstName] = useState({value: "", error: true})
     const [lastName, setLastName] = useState("")
 
 
@@ -425,10 +425,17 @@ export default function CarRegisterDetail(props) {
                                     fullWidth
                                     placeholder="enter customer first name"
                                     sx={stylesheet.input}
-                                    value={firstName}
-                                    // onChange={(e) => setFirstName(e.target.value)}
-                                    // autoFocus={true}
-                                    onBlur=
+                                    inputRef={firstNameRef}
+                                    error={firstName.error}
+                                    defaultValue={firstName.value}
+                                    onBlur={(e) => {
+                                        const fname = firstNameRef.current.value
+                                        firstNameRef.current.value = fname
+                                        console.log("firsname", fname)
+                                        if(fname !== "") {
+                                            setFirstName({value: fname, error: false})
+                                        }
+                                    }}
                                 />
                             </FormControl>
 
