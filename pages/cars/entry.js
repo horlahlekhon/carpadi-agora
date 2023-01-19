@@ -44,8 +44,9 @@ export default function CarRegisterDetail(props) {
     const [data, setData] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [carData, setCarData] =  useState(null)
-    const [mileage, setMileage] = useState(0)
-    const [usageDuration, setUsageDuration] = useState(0)
+    const [mileage, setMileage] = useState({value: 0, error: true})
+    const [usageDuration, setUsageDuration] = useState({value: 0, error: true})
+    const usageDurationRef = useRef(null)
     const [carCondition, setCarCondition] = useState(null)
     const [previousUsersCount, setPreviousUserSCount] = useState(0)
     const [customPaperStatus, setCustomPaperStatus] = useState("")
@@ -177,10 +178,17 @@ export default function CarRegisterDetail(props) {
                                     placeholder="enter duration of use in months"
                                     sx={stylesheet.input}
                                     error={usageDuration === 0}
-                                    onChange={(e) => setUsageDuration(e.target.value)}
-                                    autoFocus={true}
                                     type="number"
-                                    value={usageDuration}
+                                    defaultValue={usageDuration.value}
+                                    inputRef={usageDurationRef}
+                                    error={usageDuration.error}
+                                    onBlur={(e) => {
+                                        const usage = usageDurationRef.current.value
+                                        usageDurationRef.current.value = usage
+                                        if(usage !== 0){
+                                            setUsageDuration({value: usage, error: false})
+                                        }
+                                    }}
                                 />
                             </FormControl>
 
@@ -192,10 +200,15 @@ export default function CarRegisterDetail(props) {
                                     fullWidth
                                     placeholder="enter mileage"
                                     sx={stylesheet.input}
-                                    error={mileage === 0}
-                                    onChange={(e) => setMileage(e.target.value)}
-                                    value={mileage}
-                                    autoFocus={true}
+                                    error={mileage.error}
+                                    onBlur={(e) => {
+                                        const mil = mileageRef.current.value
+                                        mileageRef.current.value = usage
+                                        if(mil !== 0){
+                                            setMileage({value: mil, error: false})
+                                        }
+                                    }}
+                                    
                                 />
                             </FormControl>
                             <Grid container spacing={2} className="mb-3">
