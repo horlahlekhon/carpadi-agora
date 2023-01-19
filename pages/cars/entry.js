@@ -45,6 +45,7 @@ export default function CarRegisterDetail(props) {
     const [isLoading, setIsLoading] = useState(true)
     const [carData, setCarData] =  useState(null)
     const [mileage, setMileage] = useState({value: 0, error: true})
+    const mileageRef = useRef(null)
     const [usageDuration, setUsageDuration] = useState({value: 0, error: true})
     const usageDurationRef = useRef(null)
     const [carCondition, setCarCondition] = useState(null)
@@ -92,6 +93,9 @@ export default function CarRegisterDetail(props) {
 
     const handleProceed = (e) => {
         e.preventDefault();
+        console.log("milleage", mileage)
+        console.log("usage duration", usageDuration)
+
         setStep((value) => value + 1)
     };
 
@@ -177,7 +181,6 @@ export default function CarRegisterDetail(props) {
                                     fullWidth
                                     placeholder="enter duration of use in months"
                                     sx={stylesheet.input}
-                                    error={usageDuration === 0}
                                     type="number"
                                     defaultValue={usageDuration.value}
                                     inputRef={usageDurationRef}
@@ -185,9 +188,8 @@ export default function CarRegisterDetail(props) {
                                     onBlur={(e) => {
                                         const usage = usageDurationRef.current.value
                                         usageDurationRef.current.value = usage
-                                        if(usage !== 0){
-                                            setUsageDuration({value: usage, error: false})
-                                        }
+                                        setUsageDuration({value: usage, error: usage === 0 ? true : false})
+                                        console.log("usage duration", usage) 
                                     }}
                                 />
                             </FormControl>
@@ -201,12 +203,12 @@ export default function CarRegisterDetail(props) {
                                     placeholder="enter mileage"
                                     sx={stylesheet.input}
                                     error={mileage.error}
+                                    inputRef={mileageRef}
+                                    defaultValue={mileage.value}
                                     onBlur={(e) => {
                                         const mil = mileageRef.current.value
                                         mileageRef.current.value = usage
-                                        if(mil !== 0){
-                                            setMileage({value: mil, error: false})
-                                        }
+                                        setMileage({value: mil, error: mil === 0 ? true : false})
                                     }}
                                     
                                 />
@@ -228,7 +230,7 @@ export default function CarRegisterDetail(props) {
                                         variant="contained"
                                         sx={stylesheet.submit}
                                         onClick={handleProceed}
-                                        disabled={mileage == 0 || duration == 0}
+                                        disabled={mileage.value == 0 || duration.value == 0}
                                     >
                                         Proceed
                                     </Button>
