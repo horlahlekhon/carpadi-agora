@@ -32,8 +32,9 @@ const NavigationBar = ({children=null, active='', ...props}) => {
                     onClick={() => router.push('/')}
                     className={style.link}
                     component="img"
-                    sx={{ display: "flex", mr: 1 }}
-                    src="/images/logo.png"
+                    sx={{ display: "flex", mr: 1, width: "46", height: "50px" }}
+                    src="https://res.cloudinary.com/grootretro/image/upload/v1646753368/carpadi-website/logo_icon_white_gfqebt.svg"
+                    // src="/images/logo.png"
                 />
                 <Typography
                     variant="h6"

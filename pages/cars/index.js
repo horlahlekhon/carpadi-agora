@@ -217,14 +217,7 @@ const CarIndex = (props) => {
   }
 
   useEffect(() => {
-    console.log(
-      "data filter",
-      dataFilter,
-      "page",
-      page,
-      "sort option",
-      sortOption
-    );
+    
     if (firstLoad) {
       const query = extractUriParam(router.asPath);
       // setDataFilter(query)

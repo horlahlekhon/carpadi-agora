@@ -67,11 +67,21 @@ const fetchVehicleInfoByVin = (vin) => {
     })
 }
 
+const postCarPurchaseOffer = (data) => {
+    return fetchWrapper.post(`${baseUrl}/sell/`, data)
+        .then((response) => {
+            return {status: true, data: response}
+        }).catch((error) => {
+            return {status: false, data: error}
+        })    
+}
+
 export {
     retrieveCarsProducts,
     retrieveCarFilters,
     retrieveCar,
     retrieveBrands,
-    fetchVehicleInfoByVin
+    fetchVehicleInfoByVin,
+    postCarPurchaseOffer
    
 }

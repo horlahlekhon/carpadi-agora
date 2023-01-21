@@ -73,7 +73,6 @@ function _delete(url) {
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
-        console.log(response)
         if (!response.ok) {
             const error = {}
             if (response.status === 404) {

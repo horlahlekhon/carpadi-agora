@@ -35,7 +35,6 @@ const CarView = ({ carId }) => {
   const [features, setFeatures] = useState([]);
   const [pageLoading, setPageLoading] = useState(false)
   const handleViewImages = () => setIsOpen(!isOpen);
-  console.debug("car id", carId);
   const fetchCar = (carId) => {
     setPageLoading(true)
     if (carId) {
@@ -71,7 +70,6 @@ const CarView = ({ carId }) => {
             Array.isArray(response.data.results)
           ) {
             const result = response.data.results.filter((e) => e.id !== carId);
-            console.log("here results", result);
             setSimilarCarProducts(result);
           } else {
             toast.error(response.data);
@@ -81,7 +79,6 @@ const CarView = ({ carId }) => {
           toast.error(error.data);
         });
     } else {
-      console.log(`empty car`, car);
       return;
     }
   };

@@ -1,7 +1,6 @@
-import MainLayout from '../../components/layouts/MainLayout'
 import styled from 'styled-components'
 import {Grid, Paper, Radio, Typography, withStyles} from '@material-ui/core'
-import Button from '../../components/shared/Button'
+import Button from '../../src/components/shared/Button'
 import {t} from '../../styles/theme'
 import {useRouter} from "next/router";
 
