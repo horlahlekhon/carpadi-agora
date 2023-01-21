@@ -3,31 +3,38 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "export NODE_ENV=development && next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "export NODE_ENV=production && next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/poppins": "^4.5.10",
+    "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.13",
     "@reduxjs/toolkit": "^1.9.0",
     "bootstrap": "^5.2.2",
+    "lodash": "^4.17.21",
     "next": "^13.0.3-canary.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.0",
     "react-is": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-slick": "^0.29.0",
+    "react-speech-recognition": "^3.10.0",
     "reactstrap": "^9.1.5",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "styled-components": "5.3.5"
   },
   "devDependencies": {
-    "prettier": "^2.7.1"
+    "@types/node": "18.11.18",
+    "prettier": "^2.7.1",
+    "typescript": "4.9.4"
   }
 }

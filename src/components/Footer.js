@@ -44,7 +44,7 @@ export default function Footer(props) {
                             <Box
                                 component="img"
                                 sx={{ ml: 0, mr: 1, height: 50, width: 'auto' }}
-                                src="/images/logo.png"
+                                src="https://res.cloudinary.com/grootretro/image/upload/v1646753368/carpadi-website/logo_icon_white_gfqebt.svg"
                             />
                             <Typography
                                 variant="h6"
