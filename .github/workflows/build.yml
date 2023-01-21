@@ -1,0 +1,41 @@
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+name: Build application
+
+jobs:
+  build:
+    name: build and push image
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Docker Build & Push to Container Registry
+        run: |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker build -t techstorri/storri-mkt-engagement:latest .
+          docker image push --all-tags techstorri/storri-mkt-engagement
+          docker logout
+
+      - name: Deploy image to server
+        uses: appleboy/ssh-action@master
+        env:
+          IMAGE_NAME: techstorri/storri-mkt-engagement:latest
+          CONTAINER_NAME: "storri-mkt-engagement"
+        with:
+          host: ${{ secrets.SSH_STAGING_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SSH_PORT }}
+          envs: IMAGE_NAME,IMAGE_TAG,CONTAINER_NAME
+          script: |
+            docker container stop storri-mkt-engagement
+            docker rm -f storri-mkt-engagement
+            docker image rm -f techstorri/storri-mkt-engagement
+            docker run -d --name storri-mkt-engagement -p 8800:80 -v /app/static:/usr/share/nginx/html/static/ techstorri/storri-mkt-engagement:latest
+
+# 56673839303

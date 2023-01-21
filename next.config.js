@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 
+
 module.exports = {
   reactStrictMode: false,
   publicRuntimeConfig: {
@@ -15,4 +16,5 @@ module.exports = {
           ? 'http://localhost:8000/api/v1' // development api
           : 'https://api.carpadi.com/api/v1' // production api
   },
+  output: 'standalone',
 }
