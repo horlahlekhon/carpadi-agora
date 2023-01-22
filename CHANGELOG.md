@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/horlahlekhon/carpadi-agora/compare/v1.0.0...v1.1.0) (2023-01-22)
+
+
+### Features
+
+* add docker ([93f51ea](https://github.com/horlahlekhon/carpadi-agora/commit/93f51eacdbacaacfe8035317a618a7cab19b0b33))
+* add docker ([b3180b5](https://github.com/horlahlekhon/carpadi-agora/commit/b3180b5203917a2f2cde47d7a44ef6b1f40338a7))
+
 # 1.0.0 (2023-01-22)
 
 
