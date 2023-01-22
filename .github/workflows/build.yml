@@ -41,7 +41,7 @@ jobs:
             npx semantic-release --dry-run
             cat ./artifacts/.VERSION >> $GITHUB_ENV
         env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Docker Build & Push to Container Registry
         run: |
           ls
@@ -67,7 +67,7 @@ jobs:
             npx semantic-release
             cat ./artifacts/.VERSION
         env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 
       - name: Deploy image to server
