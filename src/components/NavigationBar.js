@@ -5,7 +5,7 @@ import {Box, AppBar, Toolbar, Container, Typography, ButtonGroup, Button} from "
 import style from "../../styles/custom.module.css";
 import {useRouter} from "next/router";
 
-const pages = [{name: 'Buy car', link:'/cars'}, {name: 'Sell car', link: '/cars/register'}, {name: 'Become a Merchant', link: '/register'}];
+const pages = [{name: 'Buy car', link:'/cars'}, {name: 'Sell car', link: '/cars/register'}, {name: 'Become a Merchant', link: 'https://trading.carpadi.com'}];
 
 const NavigationBar = ({children=null, active='', ...props}) => {
 
