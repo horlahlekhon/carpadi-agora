@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/horlahlekhon/carpadi-agora/compare/v1.1.0...v1.1.1) (2023-01-23)
+
+
+### Bug Fixes
+
+* add detach to docker command ([5ebbc27](https://github.com/horlahlekhon/carpadi-agora/commit/5ebbc27fa82f75d730558417b5b847a8a6ece772))
+
 # [1.1.0](https://github.com/horlahlekhon/carpadi-agora/compare/v1.0.0...v1.1.0) (2023-01-22)
 
 
