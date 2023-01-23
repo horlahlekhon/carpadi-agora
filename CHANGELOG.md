@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/horlahlekhon/carpadi-agora/compare/v1.1.1...v1.2.0) (2023-01-23)
+
+
+### Features
+
+* change become a trader link ([a12ca37](https://github.com/horlahlekhon/carpadi-agora/commit/a12ca37bfbc0c81a5f2f9470c41512839b8efb80))
+
 ## [1.1.1](https://github.com/horlahlekhon/carpadi-agora/compare/v1.1.0...v1.1.1) (2023-01-23)
 
 
