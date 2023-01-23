@@ -1,5 +1,6 @@
 import * as React from "react";
-import {Avatar, Typography} from "@mui/material";
+import {Avatar, Box, Typography} from "@mui/material";
+import { Button } from "reactstrap";
 
 export default function StepsInBuyCar({step}) {
     return (
@@ -24,6 +25,11 @@ export default function StepsInBuyCar({step}) {
             >
                 {step.content}
             </Typography>
+            <Box>
+                <Button variant="outlined" href={step.link}>
+                    {step.buttonContent}
+                </Button>
+            </Box>
         </>
     )
 }

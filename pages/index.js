@@ -36,6 +36,8 @@ export default function Home() {
         "we sell the Best Brand New and used cars in nigeria which was\n" +
         "shipped from abroad or anywhere",
       color: "#8E37E5",
+      buttonContent: "Buy now",
+      link: "/cars"
     },
     {
       number: 2,
@@ -44,6 +46,8 @@ export default function Home() {
         "Tell us a little about your Vehicle, and we will give you an Instant\n" +
         "offer for good cash",
       color: "#37E5BC",
+      buttonContent: "Sell now",
+      link: "/register"
     },
     {
       number: 3,
@@ -52,6 +56,8 @@ export default function Home() {
         "Tell us a little about your Vehicle, and we will give you an Instant\n" +
         "offer for Trade.",
       color: "#442AE0",
+      buttonContent: "Start trading",
+      link: "https://trading.carpadi.com"
     },
   ];
   const feedbacks = [
@@ -266,7 +272,7 @@ export default function Home() {
                 pr: { sx: 1, md: 3 },
               }}
             >
-              Download our trading app
+              Start cars trading with carpadi
             </Typography>
             <Typography
               variant="body2"
@@ -358,7 +364,7 @@ export default function Home() {
               <Col xs={6}>
                 <Box
                   component="a"
-                  href="/"
+                  href="https://trading.carpadi.com"
                   sx={{
                     display: "flex",
                     height: { xs: 50, md: 70 },
@@ -371,37 +377,36 @@ export default function Home() {
                     color: "black",
                   }}
                 >
-                  <Box
-                    component="img"
-                    src="/icons/play-store.png"
+                  {/* <Box
+                    component="button"
                     sx={{
                       height: { xs: 20, sm: 30, md: 45 },
                       backgroundColor: "transparent",
                       mr: { xs: 1, md: 2 },
                     }}
-                  />
+                  /> */}
                   <div className="ml-lg-2 ml-sm-1">
                     <Typography
                       variant="subtitle2"
                       sx={{
                         textTransform: "uppercase",
-                        fontSize: { xs: 8, sm: 11, md: 14 },
+                        fontSize: { xs: 8, sm: 11, md: 20 },
+                        fontWeight: "7px"
                       }}
                     >
-                      Get it on
+                      Join the  waitlist
                     </Typography>
-                    <Typography
+                    {/* <Typography
                       variant="h5"
                       sx={{
                         fontSize: { xs: 11, sm: 16, md: 23 },
                       }}
                     >
-                      Google Play
-                    </Typography>
+                    </Typography> */}
                   </div>
                 </Box>
               </Col>
-              <Col xs={6}>
+              {/* <Col xs={6}>
                 <Box
                   component="a"
                   href="/"
@@ -446,7 +451,7 @@ export default function Home() {
                     </Typography>
                   </div>
                 </Box>
-              </Col>
+              </Col> */}
             </Row>
             <Typography
               variant="h6"
@@ -456,7 +461,7 @@ export default function Home() {
                 fontSize: { xs: 16, md: 18 },
               }}
             >
-              Learn more
+              <a href="https://trading.carpadi.com">Learn more</a>
             </Typography>
           </Col>
           <Col xs={12} md={6}>
