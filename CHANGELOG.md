@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/horlahlekhon/carpadi-agora/compare/v1.4.0...v1.5.0) (2023-02-08)
+
+
+### Features
+
+* add learn more button ([92e8bd0](https://github.com/horlahlekhon/carpadi-agora/commit/92e8bd05d6cd87359718ab5bc27849340d0c0398))
+
 # [1.4.0](https://github.com/horlahlekhon/carpadi-agora/compare/v1.3.0...v1.4.0) (2023-02-08)
 
 
