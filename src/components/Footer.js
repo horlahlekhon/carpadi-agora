@@ -192,12 +192,11 @@ export default function Footer(props) {
                 </Typography>
 
                 <Typography variant="body2" gutterBottom sx={{color: "white", mb: 3}}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse volutpat, nisl et fermentum rhoncus,
-                    massa tortor fermentum felis, vitae suscipit diam ligula quis nisl. Nam commodo dignissim velit,
-                    ut viverra odio auctor sed. Etiam at arcu magna. Donec pharetra orci ante, vel porta purus semper non.
-                    Quisque fringilla metus dictum ante aliquam semper. Ut tincidunt maximus sapien, et malesuada tortor pharetra nec.
-                    Aliquam elementum nunc nisi, scelerisque auctor diam dapibus et. Nunc odio justo, euismod at ante at,
-                    scelerisque porttitor lectus. Phasellus non mauris purus. Praesent auctor.
+                    A town hall different from bala blu, blue blu bulaba. broom broom broom brooooooooom.
+                     Bala blu blue blu bulaba. The farmers will make more money. 
+                     Your lunch will not be imported, cassava garri ewa and ehhh ehhhhnn. 
+                     The farmer will make money, the dinner would be cassava, eba, ewa and everything.
+                     A town hall different from bala blu, blue blu bulaba. broom broom broom brooooooooom. Bala blu blue blu bulaba.
                 </Typography>
 
                 <Typography variant="caption" gutterBottom sx={{color: "white", pt: 5, mb: 2}}>
