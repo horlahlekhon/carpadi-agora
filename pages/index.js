@@ -47,7 +47,7 @@ export default function Home() {
         "offer for good cash",
       color: "#37E5BC",
       buttonContent: "Sell now",
-      link: "/register"
+      link: "/cars/register"
     },
     {
       number: 3,

@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Avatar, Box, Typography} from "@mui/material";
+import {Avatar, Box, Icon, Typography} from "@mui/material";
 import { Button } from "reactstrap";
-
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 export default function StepsInBuyCar({step}) {
     return (
         <>
@@ -24,12 +24,9 @@ export default function StepsInBuyCar({step}) {
                 }}
             >
                 {step.content}
-            </Typography>
-            <Box>
-                <Button variant="outlined" href={step.link}>
-                    {step.buttonContent}
-                </Button>
-            </Box>
+            </Typography>   
+            <Box component="a" className="learn-more" style={{textDecoration: "none"}}  href={step.link}>Learn more <i className="learn-more-child"><ArrowRightAltIcon /></i> </Box>
+            
         </>
     )
 }

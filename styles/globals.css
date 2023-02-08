@@ -14,3 +14,15 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.learn-more-child{
+  text-decoration: none;
+  width: 150px;
+  display: inline-block;
+  transition: all 0.2s linear 0s;
+}
+
+.learn-more:hover .learn-more-child {
+  text-indent: 5px;
+}
+
