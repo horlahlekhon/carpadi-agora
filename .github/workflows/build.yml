@@ -82,4 +82,5 @@ jobs:
           envs: IMAGE_NAME,IMAGE_TAG,CONTAINER_NAME
           script: |
               docker rm -f agora
+              docker image rm olalekanadebari/carpadi-agora
               docker run -d --name agora -p 3000:3000 olalekanadebari/carpadi-agora:latest
