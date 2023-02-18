@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/horlahlekhon/carpadi-agora/compare/v1.6.0...v1.6.1) (2023-02-18)
+
+
+### Bug Fixes
+
+* learn more messages ([535059d](https://github.com/horlahlekhon/carpadi-agora/commit/535059d3fd4fa574bbb3e9ac5ab58cd8819a81ca))
+
 # [1.6.0](https://github.com/horlahlekhon/carpadi-agora/compare/v1.5.0...v1.6.0) (2023-02-08)
 
 
