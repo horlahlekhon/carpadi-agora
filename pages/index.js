@@ -272,13 +272,13 @@ export default function Home() {
                 pr: { sx: 1, md: 3 },
               }}
             >
-              Start cars trading with carpadi
+              Earn money trading cars with carpadi
             </Typography>
             <Typography
               variant="body2"
               sx={{ color: "white", mt: { xs: 3, md: 4 } }}
             >
-              Trade Nigerian-used cars, such as
+              Trade locally used cars, such as
             </Typography>
             <Grid container spacing={1}>
               <Grid
@@ -453,7 +453,7 @@ export default function Home() {
                 </Box>
               </Col> */}
             </Row>
-            <Typography
+            {/* <Typography
               variant="h6"
               sx={{
                 mt: { xs: 2, md: 3 },
@@ -462,7 +462,7 @@ export default function Home() {
               }}
             >
               <a href="https://trading.carpadi.com">Learn more</a>
-            </Typography>
+            </Typography> */}
           </Col>
           <Col xs={12} md={6}>
             <Box

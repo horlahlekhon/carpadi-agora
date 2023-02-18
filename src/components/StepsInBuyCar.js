@@ -25,7 +25,7 @@ export default function StepsInBuyCar({step}) {
             >
                 {step.content}
             </Typography>   
-            <Box component="a" className="learn-more" style={{textDecoration: "none"}}  href={step.link}>Learn more <i className="learn-more-child"><ArrowRightAltIcon /></i> </Box>
+            <Box component="a" className="learn-more" style={{textDecoration: "none"}}  href={step.link}>{step.buttonContent} <i className="learn-more-child"><ArrowRightAltIcon /></i> </Box>
             
         </>
     )
