@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/horlahlekhon/carpadi-agora/compare/v1.6.1...v1.6.2) (2023-02-20)
+
+
+### Bug Fixes
+
+* ui issues ([ad7a140](https://github.com/horlahlekhon/carpadi-agora/commit/ad7a1409e806bc1961ebdb70566761cef8270748))
+
 ## [1.6.1](https://github.com/horlahlekhon/carpadi-agora/compare/v1.6.0...v1.6.1) (2023-02-18)
 
 
