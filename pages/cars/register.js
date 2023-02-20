@@ -269,7 +269,7 @@ const SellCar = (props) => {
                                             fontSize: {xs: 35, md: 48},
                                         }}
                                     >
-                                        Sell your car here
+                                        Sell or Swap your car.
                                     </Typography>
                                     <Typography
                                         variant="subtitle1"
@@ -277,8 +277,9 @@ const SellCar = (props) => {
                                             mt: 2,
                                             color: "white",
                                         }}
-                                    >
-                                        Get instant cash offer and vehicle pickup on your schedule.
+                                    > 
+                                        Get instant cash offer and vehicle pickup on 
+                                        your schedule once car passes inspection.
                                     </Typography>
                                     <Box
                                         component='img'

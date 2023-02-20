@@ -5,7 +5,11 @@ import {Box, AppBar, Toolbar, Container, Typography, ButtonGroup, Button} from "
 import style from "../../styles/custom.module.css";
 import {useRouter} from "next/router";
 
-const pages = [{name: 'Buy car', link:'/cars'}, {name: 'Sell car', link: '/cars/register'}, {name: 'Become a Merchant', link: 'https://trading.carpadi.com'}];
+const pages = [
+    {name: 'Buy car', link:'/cars'}, 
+    {name: 'Sell car', link: '/cars/register'},
+    {name: 'Become a Merchant', link: 'https://trading.carpadi.com', target: "_blank"}
+];
 
 const NavigationBar = ({children=null, active='', ...props}) => {
 
@@ -59,7 +63,7 @@ const NavigationBar = ({children=null, active='', ...props}) => {
                     <Nav fill={true} className="ml-n6">
                         {pages.map((page) => (
                             <NavItem key={`${page}-${Math.random()}`}>
-                                <NavLink href={page.link} className="text-white" style={page.name == active?{fontWeight: 700} : {}}>
+                                <NavLink href={page.link} target={page.target ? "_blank": ""}  className="text-white" style={page.name == active?{fontWeight: 700} : {}}>
                                     {page.name}
                                 </NavLink>
                             </NavItem>

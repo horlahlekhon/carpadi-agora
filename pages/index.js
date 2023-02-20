@@ -33,31 +33,32 @@ export default function Home() {
       number: 1,
       title: "Buy car",
       content:
-        "we sell the Best Brand New and used cars in nigeria which was\n" +
-        "shipped from abroad or anywhere",
+        "Our cars have been thoroughly inspected and up to standard,\n" +
+        "so you worry less when buying from us.",
       color: "#8E37E5",
       buttonContent: "Buy now",
       link: "/cars"
     },
     {
       number: 2,
-      title: "Sell your car",
+      title: "Sell / Swap your car",
       content:
-        "Tell us a little about your Vehicle, and we will give you an Instant\n" +
-        "offer for good cash",
+        "We give you the best offer in the market for your car,\n" +
+        "and you get paid instantly.",
       color: "#37E5BC",
       buttonContent: "Sell now",
       link: "/cars/register"
     },
     {
       number: 3,
-      title: "Trade your car",
+      title: "Become a merchant",
       content:
-        "Tell us a little about your Vehicle, and we will give you an Instant\n" +
-        "offer for Trade.",
+        "Join over 1k dealers and build your car dealership business,\n" +
+        "with as little as 500k.",
       color: "#442AE0",
       buttonContent: "Start trading",
-      link: "https://trading.carpadi.com"
+      link: "https://trading.carpadi.com",
+      target: "_blank"
     },
   ];
   const feedbacks = [
@@ -103,14 +104,14 @@ export default function Home() {
     },
   ];
   const fetchedCars = [
-    { name: "Saloon", seats: "4 - 7", image: "/cars/car-1.png" },
-    { name: "SUV", seats: "5 - 7", image: "/cars/car-2.png" },
-    { name: "Space W", seats: "6 - 9", image: "/cars/car-3.png" },
-    { name: "Convertible", seats: "3 - 5", image: "/cars/car-4.png" },
-    { name: "Wagon", seats: "4 - 6", image: "/cars/car-5.png" },
-    { name: "Electric", seats: "4 - 6", image: "/cars/car-2.png" },
-    { name: "Auto", seats: "3 - 6", image: "/cars/car-1.png" },
-    { name: "Transit", seats: "10 - 16", image: "/cars/car-4.png" },
+    { name: "Saloon", seats: "4 - 7", image: "/cars/car-1.png", id: "saloon" },
+    { name: "SUV", seats: "5 - 7", image: "/cars/car-2.png", id: "suv"  },
+    { name: "Space W", seats: "6 - 9", image: "/cars/car-3.png", id: "space_wagon"  },
+    { name: "Convertible", seats: "3 - 5", image: "/cars/car-4.png", id: "convertible"  },
+    { name: "Wagon", seats: "4 - 6", image: "/cars/car-5.png", id: "wagon"  },
+    { name: "Electric", seats: "4 - 6", image: "/cars/car-2.png", id: "electric"  },
+    { name: "Auto", seats: "3 - 6", image: "/cars/car-1.png", id: "auto"  },
+    { name: "Transit", seats: "10 - 16", image: "/cars/car-4.png", id: "transit"},
   ];
 
   const [cars, setCars] = useState({});
@@ -118,7 +119,7 @@ export default function Home() {
 
   useEffect(() => {
     setCars(fetchedCars);
-  }, []);
+  }, []); 
   return (
     <LandingLayout
       title="Welcome to CarPadi landing page"
@@ -163,6 +164,9 @@ export default function Home() {
             backgroundColor: "#243773",
             color: "white",
           }}
+          onClick={(e) => {
+            router.push(`/cars`)
+         }}
         >
           view all car types
         </Button>
@@ -188,7 +192,7 @@ export default function Home() {
                 letterSpacing: 6,
               }}
             >
-              How Carpadi Works
+              What Carpadi Offers
             </Typography>
             <Box
               component="img"

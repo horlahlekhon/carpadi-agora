@@ -5,27 +5,26 @@ import style from "../../styles/custom.module.css";
 
 
 export default function Footer(props) {
-    const shopItems = [
-        {name: 'Search used cars', link: 'cars/used'},
-        {name: 'Search new cars', link: 'cars/new'},
-        {name: 'How to buy a car', link: 'cars/how'},
+    const services = [
+        {name: 'Sell cars', link: 'cars/register'},
+        {name: 'Buy cars', link: 'cars'},
+        {name: 'Become a merchant', link: 'https://trading.carpadi.com'},
     ];
 
-    const sellTrade = [
-        {name: 'Get an Offer', link: 'get-offers'},
-        {name: 'How to Sell / trade a car', link: 'how-to-sell'},
+    const company = [
+        {name: 'About us', link: 'about-us'},
     ];
 
-    const learnItems = [
-        {name: 'About Carpadi', link: 'about'},
-        {name: 'Carpadi Reviews', link: 'reviews'},
+    const contactUs = [
+        {name: '+2348129014778 ', link: ''},
+        {name: 'admin@carpadi.com', link: ''},
+        {name: 'KM 32 Lekki-Epe express way, Ikota.', link: ''},
     ];
 
     const helpItems = [
         {name: 'FAQ', link: 'faq'},
-        {name: 'Live Chat', link: 'chats'},
-        {name: 'Contact Us', link: 'contact-us'},
-        {name: 'support@carpadi.com', link: 'mail:to'},
+        {name: 'Privacy policy', link: 'privacy'},
+        {name: 'terms & conditions', link: 'terms'}
     ];
 
 
@@ -68,25 +67,7 @@ export default function Footer(props) {
                     </Col>
                     <Col xs={12} md={7} className="mb-3">
                         <Row>
-                            <Col xs={12} md={4} className="mb-3">
-                                <Typography variant="subtitle2" gutterBottom sx={{textTransform: "uppercase", color: "white"}}>
-                                    Contact
-                                </Typography>
-                                <Typography variant="body2" sx={{color: "white"}}>
-                                    support@capadi.com
-                                </Typography>
-                                <Typography variant="body2" sx={{color: "white"}}>
-                                    Phone: 0990302828901
-                                </Typography>
-                            </Col>
-                            <Col xs={12} md={4} className="mb-3">
-                                <Typography variant="subtitle2" gutterBottom sx={{textTransform: "uppercase", color: "white"}}>
-                                    Address
-                                </Typography>
-                                <Typography variant="body2" sx={{color: "white"}}>
-                                    Morbi eu facilisis eros. Nulla gravida ipsum nec ex laoreet ultrices.
-                                </Typography>
-                            </Col>
+                            <Col xs={2} md={4} className="mb-3"></Col>
                             <Col xs={12} md={4} className="mb-3">
                                 <Typography variant="subtitle2" gutterBottom sx={{textTransform: "uppercase", color: "white"}}>
                                     Social
@@ -108,7 +89,7 @@ export default function Footer(props) {
                             Shop
                         </Typography>
                         {
-                            shopItems.map((item, index) => (
+                            services.map((item, index) => (
                                 <Link
                                     variant="body1"
                                     href={item.link}
@@ -126,10 +107,10 @@ export default function Footer(props) {
 
                     <Col xs={12} md={3} className="mb-3">
                         <Typography variant="h6" gutterBottom sx={{textTransform: "capitalize", color: "white", fontWeight: "bold"}}>
-                            Sell / Trade
+                            Company
                         </Typography>
                         {
-                            sellTrade.map((item) => (
+                            company.map((item) => (
                                 <Link
                                     variant="body1"
                                     href={item.link}
@@ -144,28 +125,6 @@ export default function Footer(props) {
                             ))
                         }
                     </Col>
-
-                    <Col xs={12} md={3} className="mb-3">
-                        <Typography variant="h6" gutterBottom sx={{textTransform: "capitalize", color: "white", fontWeight: "bold"}}>
-                            Learn
-                        </Typography>
-                        {
-                            learnItems.map((item) => (
-                                <Link
-                                    variant="body1"
-                                    href={item.link}
-                                    gutterBottom
-                                    underline="hover"
-                                    display="block"
-                                    sx={{color: "white", mb: 2, textDecoration: 'none'}}
-                                    key={`${item}-${Math.random()}`}
-                                >
-                                    {item.name}
-                                </Link>
-                            ))
-                        }
-                    </Col>
-
                     <Col xs={12} md={3} className="mb-3">
                         <Typography variant="h6" gutterBottom sx={{textTransform: "capitalize", color: "white", fontWeight: "bold"}}>
                             Help
@@ -186,8 +145,30 @@ export default function Footer(props) {
                             ))
                         }
                     </Col>
+                    <Col xs={12} md={3} className="mb-3">
+                        <Typography variant="h6" gutterBottom sx={{textTransform: "capitalize", color: "white", fontWeight: "bold"}}>
+                            Contact us
+                        </Typography>
+                        {
+                            contactUs.map((item) => (
+                                <Link
+                                    variant="body1"
+                                    href={item.link}
+                                    gutterBottom
+                                    underline="hover"
+                                    display="block"
+                                    sx={{color: "white", mb: 2, textDecoration: 'none'}}
+                                    key={`${item}-${Math.random()}`}
+                                >
+                                    {item.name}
+                                </Link>
+                            ))
+                        }
+                    </Col>
+
+                    
                 </Row>
-                <Typography variant="subtitle2" gutterBottom sx={{textTransform: "uppercase", color: "white", mt: 5}}>
+                {/* <Typography variant="subtitle2" gutterBottom sx={{textTransform: "uppercase", color: "white", mt: 5}}>
                     Privacy Policy
                 </Typography>
 
@@ -197,7 +178,7 @@ export default function Footer(props) {
                      Your lunch will not be imported, cassava garri ewa and ehhh ehhhhnn. 
                      The farmer will make money, the dinner would be cassava, eba, ewa and everything.
                      A town hall different from bala blu, blue blu bulaba. broom broom broom brooooooooom. Bala blu blue blu bulaba.
-                </Typography>
+                </Typography> */}
 
                 <Typography variant="caption" gutterBottom sx={{color: "white", pt: 5, mb: 2}}>
                     © Copyright 2022 - CARPADI. All rights reserved.

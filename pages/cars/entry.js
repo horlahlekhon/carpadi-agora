@@ -30,9 +30,9 @@ import { toast } from "react-hot-toast";
 
 const steps = [
   "Vehicle Details",
-  "Vehicle Condition",
+  // "Vehicle Condition",
   "Customer Details",
-  "Worth Range",
+  // "Worth Range",
 ];
 const usages = [
   { id: 1, label: "1 User" },
@@ -52,10 +52,9 @@ const conditions = [
   { id: "poor", label: "Poor" },
 ];
 
-const notifications = [
-  { id: "email", label: "Email Address" },
-  { id: "phone", label: "Phone Number" },
-  {id: "whatsapp", label: "Whatsapp"}
+const deal_preference = [
+  { id: "swap", label: "Swap( swap your car for another)" },
+  { id: "outright", label: "Outright Buying" },
 ];
 const price_options = [
   { id: "yes", label: "Yes" },
@@ -65,17 +64,12 @@ const price_options = [
 export default function CarRegisterDetail(props) {
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const [state, setState] = useState("Lagos");
   const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [carData, setCarData] = useState(null);
   const mileageRef = useRef(null);
   const usageDurationRef = useRef(null);
-  const noteRef = useRef();
-  const addressRef = useRef();
   const firstNameRef = useRef(null);
-  const lastNameRef = useRef();
   const phoneRef = useRef();
   const emailRef = useRef();
   const priceRef = useRef();
@@ -85,17 +79,10 @@ export default function CarRegisterDetail(props) {
     registeration_state: "",
     current_usage_timeframe_by_user: 0,
     mileage: 0,
-    count_of_previous_users: 0,
-    custom_papers_availability: "No",
-    car_condition: "",
-    note: "",
-    contact_preference: "",
     inspection_location: "",
-    is_negotiable: null,
-    price: 0,
+    deal_preference: "outright",
     user: {
-      first_name: "",
-      last_name: "",
+      name: "",
       phone: "",
       email: "",
     },
@@ -114,8 +101,7 @@ export default function CarRegisterDetail(props) {
     inspection_location: true,
     is_negotiable: true,
     price: true,
-    first_name: true,
-    last_name: true,
+    name: true,
     phone: true,
     email: true,
   });
@@ -148,7 +134,8 @@ export default function CarRegisterDetail(props) {
   };
 
   const handleSelectState = (e) => {
-    setState(e.target.value);
+    console.log("inspection_location", e.target.value)
+    setRequestData({...requestData, inspection_location: e.target.value})
   };
 
   const handleProceed = (e) => {
@@ -361,201 +348,6 @@ export default function CarRegisterDetail(props) {
                   mt: { xs: 2, md: 0 },
                 }}
               >
-                Vehicle Condition
-              </Typography>
-              <Typography variant="title1" sx={{ mb: 3 }}>
-                Give us more information about your vehicle
-              </Typography>
-            </div>
-            <Box
-              className="p-4 mt-2"
-              sx={{ border: "1px solid #dedede", borderRadius: 4 }}
-            >
-              <Grid container sx={{ alignItems: "center" }}>
-                <Grid
-                  item
-                  sx={{ display: { xs: "none", md: "inline" } }}
-                  md={3}
-                />
-                <Grid item xs={8} md={6}>
-                  <div className="text-center">
-                    <Typography
-                      variant="h5"
-                      sx={{ fontWeight: "bold", fontSize: { xs: 17, md: 24 } }}
-                    >
-                      {carData.name}
-                    </Typography>
-                    <Typography sx={{ fontSize: { xs: 14, md: 16 } }}>
-                      Trim: {carData.trim} {carData.driveType || ""}{" "}
-                      {carData.carType || ""}
-                    </Typography>
-                  </div>
-                </Grid>
-              </Grid>
-            </Box>
-            <Box
-              className="mt-4"
-              sx={{
-                border: "1px solid #dedede",
-                borderRadius: 4,
-                py: "30px",
-                px: { xs: "10px", sm: "15px", md: "100px" },
-              }}
-            >
-              <FormControl>
-                <FormLabel
-                  id="demo-radio-buttons-group-label"
-                  className="fw-bold"
-                >
-                  How many users have used the car before?
-                </FormLabel>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue={requestData.count_of_previous_users}
-                  name="radio-buttons-group"
-                  onChange={(e) => {
-                    setRequestData({
-                      ...requestData,
-                      count_of_previous_users: parseInt(e.target.value),
-                    });
-                  }}
-                >
-                  {usages.map((usage) => (
-                    <FormControlLabel
-                      key={Math.random()}
-                      value={usage.id}
-                      control={<Radio />}
-                      label={usage.label}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-
-              <FormControl className="mt-4">
-                <FormLabel
-                  id="demo-radio-buttons-group-label2"
-                  className="fw-bold"
-                >
-                  Is your custom papers available
-                </FormLabel>
-                <Typography variant="caption" sx={{ color: "#767676" }}>
-                  (If bought brand New do you have the delivery note and receipt
-                  of purchase)
-                </Typography>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue={requestData.custom_papers_availability}
-                  name="radio-buttons-group"
-                  onChange={(e) =>
-                    setRequestData({
-                      ...requestData,
-                      custom_papers_availability: e.target.value,
-                    })
-                  }
-                >
-                  {customs.map((usage) => (
-                    <FormControlLabel
-                      key={Math.random()}
-                      value={usage.id}
-                      control={<Radio />}
-                      label={usage.label}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-
-              <FormControl className="mt-4">
-                <FormLabel
-                  id="demo-radio-buttons-group-label3"
-                  className="fw-bold"
-                >
-                  What is your car condition
-                </FormLabel>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue={requestData.car_condition}
-                  name="radio-buttons-group"
-                  onChange={(e) => {
-                    setRequestData({
-                      ...requestData,
-                      car_condition: e.target.value,
-                    });
-                  }}
-                >
-                  {conditions.map((usage) => (
-                    <FormControlLabel
-                      key={Math.random()}
-                      value={usage.id}
-                      control={<Radio />}
-                      label={usage.label}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-
-              <Typography variant="body2" sx={stylesheet.label}>
-                Note (optional)
-              </Typography>
-              <FormControl sx={stylesheet.wrapper}>
-                <OutlinedInput
-                  size="small"
-                  minRows={6}
-                  multiline={true}
-                  fullWidth
-                  placeholder="enter your note"
-                  sx={stylesheet.input}
-                  defaultValue={requestData.note}
-                  inputRef={noteRef}
-                  onBlur={(e) => {
-                    const note = noteRef.current.value;
-                    noteRef.current.value = note;
-                    setRequestData({ ...requestData, note: note });
-                  }}
-                />
-              </FormControl>
-              <Grid container spacing={2} className="mb-3">
-                <Grid item xs={6} md={4}>
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    sx={stylesheet.submit}
-                    onClick={handleBackward}
-                  >
-                    Back
-                  </Button>
-                </Grid>
-                <Grid item xs={6} md={8}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={stylesheet.submit}
-                    onClick={handleProceed}
-                    disabled={
-                      requestData.custom_papers_availability === "" ||
-                      !requestData.count_of_previous_users ||
-                      requestData.car_condition == ""
-                    }
-                  >
-                    Proceed
-                  </Button>
-                </Grid>
-              </Grid>
-            </Box>
-          </>
-        );
-      case 3:
-        return (
-          <>
-            <div className="text-center mb-4">
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 700,
-                  mb: 1,
-                  fontSize: { xs: 23, sm: 28, md: 34 },
-                  mt: { xs: 2, md: 0 },
-                }}
-              >
                 Customer Details
               </Typography>
               <Typography variant="title1" sx={{ mb: 3 }}>
@@ -609,28 +401,28 @@ export default function CarRegisterDetail(props) {
               }}
             >
               <Typography variant="body2" sx={stylesheet.label}>
-                First Name
+                Name
               </Typography>
               <FormControl sx={stylesheet.wrapper}>
                 <OutlinedInput
                   key="firstname"
                   size="small"
                   fullWidth
-                  placeholder="enter customer first name"
+                  placeholder="Enter your name"
                   sx={stylesheet.input}
                   inputRef={firstNameRef}
-                  error={formErrors.first_name}
-                  defaultValue={requestData.user.first_name}
+                  error={formErrors.name}
+                  defaultValue={requestData.user.name}
                   onBlur={(e) => {
                     const fname = firstNameRef.current.value;
                     firstNameRef.current.value = fname;
-                    setRequestData({...requestData, user: {...requestData.user, first_name: fname}})
-                    setFormErrors({...formErrors, first_name: fname === "" ? true : false})
+                    setRequestData({...requestData, user: {...requestData.user, name: fname}})
+                    setFormErrors({...formErrors, name: fname === "" ? true : false})
                   }}
                 />
               </FormControl>
 
-              <Typography variant="body2" sx={stylesheet.label}>
+              {/* <Typography variant="body2" sx={stylesheet.label}>
                 Last
               </Typography>
               <FormControl sx={stylesheet.wrapper}>
@@ -641,7 +433,7 @@ export default function CarRegisterDetail(props) {
                   placeholder="enter customer last name"
                   sx={stylesheet.input}
                   inputRef={lastNameRef}
-                  error={formErrors.first_name}
+                  error={formErrors.name}
                   defaultValue={requestData.user.last_name}
                   onBlur={(e) => {
                     const lname = lastNameRef.current.value;
@@ -650,7 +442,7 @@ export default function CarRegisterDetail(props) {
                     setFormErrors({...formErrors, last_name: lname === "" ? true : false})
                   }}
                 />
-              </FormControl>
+              </FormControl> */}
 
               <Typography variant="body2" sx={stylesheet.label}>
                 Phone Number
@@ -662,7 +454,7 @@ export default function CarRegisterDetail(props) {
                   key="phone"
                   type="tel"
                   required
-                  placeholder="enter phone  numner e.g +2349012345678"
+                  placeholder="enter phone  number e.g 09012345678"
                   inputRef={phoneRef}
                   error={!(new RegExp(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im).test(requestData.user.phone))}
                   defaultValue={requestData.user.phone}
@@ -680,13 +472,15 @@ export default function CarRegisterDetail(props) {
               <Typography variant="body2" sx={stylesheet.label}>
                 Email Address
               </Typography>
+              <Typography variant="caption" sx={{ color: "#767676" }}>
+                  (Optional)
+                </Typography>
               <FormControl sx={stylesheet.wrapper}>
                 <OutlinedInput
                   size="small"
                   fullWidth
                   key="Email"
                   type="email"
-                  required
                   placeholder="enter email address"
                   sx={stylesheet.input}
                   inputRef={emailRef}
@@ -696,32 +490,29 @@ export default function CarRegisterDetail(props) {
                     const email = emailRef.current.value;
                     emailRef.current.value = email;
                     setRequestData({...requestData, user: {...requestData.user, email: email}})
-                    setFormErrors({...formErrors, email: email === "" ? true : false})
                   }}
                 />
               </FormControl>
 
               <Typography variant="body2" sx={stylesheet.label}>
-                Address
+                Which state is the car in for inspection
               </Typography>
               <FormControl sx={stylesheet.wrapper}>
-                <OutlinedInput
-                  size="small"
-                  minRows={6}
-                  multiline={true}
-                  fullWidth
-                  placeholder="enter address"
-                  sx={stylesheet.input}
-                  inputRef={addressRef}
-                  error={formErrors.inspection_location}
-                  defaultValue={requestData.inspection_location}
-                  onBlur={(e) => {
-                    const address = addressRef.current.value;
-                    addressRef.current.value = address;
-                    setRequestData({...requestData, inspection_location: address})
-                    setFormErrors({...formErrors, inspection_location: address === "" ? true : false})
-                  }}
-                />
+                  <Select
+                      value={requestData.inspection_location}
+                      onChange={handleSelectState}
+                      displayEmpty
+                      size="small"
+                      inputProps={{ 'aria-label': 'Without label' }}
+                      sx={stylesheet.input}
+                      error={!requestData.inspection_location}
+                  >
+                      {
+                          states.map(state => (
+                              <MenuItem value={state} key={Math.random()}>{state}</MenuItem>
+                          ))
+                      }
+                  </Select>
               </FormControl>
 
               <FormControl className="mt-4">
@@ -729,25 +520,25 @@ export default function CarRegisterDetail(props) {
                   id="demo-radio-buttons-group-label4"
                   className="fw-bold"
                 >
-                  Which is the best way to get in touch with you
+                  What type of deal do you prefer
                 </FormLabel>
                 <Typography variant="caption" sx={{ color: "#767676" }}>
                   (Optional)
                 </Typography>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue={requestData.contact_preference}
+                  defaultValue={requestData.deal_preference}
                   name="radio-buttons-group"
                   onChange={(e) =>
-                    setRequestData({...requestData, contact_preference: e.target.value})
+                    setRequestData({...requestData, deal_preference: e.target.value})
                   }
                 >
-                  {notifications.map((note) => (
+                  {deal_preference.map((deal) => (
                     <FormControlLabel
                       key={Math.random()}
-                      value={note.id}
+                      value={deal.id}
                       control={<Radio />}
-                      label={note.label}
+                      label={deal.label}
                     />
                   ))}
                 </RadioGroup>
@@ -769,11 +560,10 @@ export default function CarRegisterDetail(props) {
                     fullWidth
                     variant="contained"
                     sx={stylesheet.submit}
-                    onClick={handleProceed}
-                    disabled={formErrors.first_name === ""
+                    onClick={handleFormSubmission}
+                    disabled={formErrors.name === ""
                      || formErrors.phone === ""
-                      || formErrors.email === ""
-                    || requestData.contact_preference === ""}
+                    }
                   >
                     Proceed
                   </Button>
@@ -782,7 +572,7 @@ export default function CarRegisterDetail(props) {
             </Box>
           </>
         );
-      case 4:
+      // case 3:
         return (
           <>
             <div className="text-center mb-4">
@@ -927,6 +717,10 @@ export default function CarRegisterDetail(props) {
             </Box>
           </>
         );
+      // case 4:
+      //   return (
+          
+      //   );
       default:
         return null;
     }
@@ -955,7 +749,7 @@ export default function CarRegisterDetail(props) {
             >
               <Grid container>
                 <Grid
-                  xs={3}
+                  xs={6}
                   item
                   sx={{
                     display: "flex",
@@ -978,15 +772,17 @@ export default function CarRegisterDetail(props) {
                   </div>
                 </Grid>
                 <Grid
-                  xs={3}
+                  xs={6}
                   item
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "start",
+                    borderTopRightRadius: "20px",
+                    borderBottomRightRadius: "20px",
                     backgroundColor: step >= 2 ? "#4BFF9F" : "transparent",
                   }}
                 >
-                  <div>
+                  <div className="float-end">
                     <Avatar
                       sx={{
                         bgcolor: step >= 2 ? "#243773" : "white",
@@ -998,50 +794,6 @@ export default function CarRegisterDetail(props) {
                     </Avatar>
                   </div>
                 </Grid>
-                <Grid
-                  xs={3}
-                  item
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    backgroundColor: step >= 3 ? "#4BFF9F" : "transparent",
-                  }}
-                >
-                  <div>
-                    <Avatar
-                      sx={{
-                        bgcolor: step >= 3 ? "#243773" : "white",
-                        color: step >= 3 ? "#fff" : "#000",
-                        border: "2px solid #a3a3a3",
-                      }}
-                    >
-                      3
-                    </Avatar>
-                  </div>
-                </Grid>
-                <Grid
-                  xs={3}
-                  item
-                  sx={{
-                    display: "flex",
-                    justifyContent: "end",
-                    backgroundColor: step >= 4 ? "#4BFF9F" : "transparent",
-                    borderTopRightRadius: "20px",
-                    borderBottomRightRadius: "20px",
-                  }}
-                >
-                  <div className="float-end">
-                    <Avatar
-                      sx={{
-                        bgcolor: step >= 4 ? "#243773" : "white",
-                        color: step >= 4 ? "#fff" : "#000",
-                        border: "2px solid #a3a3a3",
-                      }}
-                    >
-                      4
-                    </Avatar>
-                  </div>
-                </Grid>
               </Grid>
             </Box>
 
@@ -1049,22 +801,23 @@ export default function CarRegisterDetail(props) {
               {steps.map((item, index) => (
                 <Grid
                   item
-                  xs={3}
+                  xs={6}
                   sx={{
                     display: "flex",
                     justifyContent:
-                      index === 0 ? "start" : index === 3 ? "end" : "center",
+                      index === 0 ? "start" : "center",
                   }}
                   key={Math.random()}
                 >
                   <Typography
                     sx={{ fontSize: { xs: 14, sm: 14.5, md: 16 } }}
                     style={
-                      index === 3
-                        ? { textAlign: "end" }
-                        : index === 2 || index === 1
-                        ? { textAlign: "center" }
-                        : {}
+                      // index === 2
+                      //   ? { textAlign: "end" }
+                      //   : index === 2 || index === 1
+                      //   ? { textAlign: "center" }
+                      //   : {}
+                        { textAlign: "end" }
                     }
                   >
                     {item}
@@ -1114,7 +867,7 @@ export default function CarRegisterDetail(props) {
               }}
             />
             <Typography variant="body1">
-              Your request as been send, We will surly get back to you as soon
+              Your request as been send, We will surley get back to you as soon
               as posible
             </Typography>
             <Button

@@ -1,7 +1,10 @@
 import * as React from "react";
 import {Box, Button, Typography} from "@mui/material";
+import { useRouter } from "next/router";
 
 export default function CarDisplay({car}) {
+    const router = useRouter()
+
     return (
         <Box sx={{
             border: '1px solid #dedede',
@@ -25,7 +28,15 @@ export default function CarDisplay({car}) {
             <Typography variant="body1" gutterBottom sx={{mb: 1}}>
                 {`${car.seats} seats`}
             </Typography>
-            <Button variant="outlined" color="inherit" sx={{borderRadius: 3, textTransform: 'lowercase'}}>start shopping</Button>
+            <Button
+             variant="outlined" 
+             color="inherit" 
+             sx={{borderRadius: 3, textTransform: 'lowercase'}}
+             onClick={(e) => {
+                router.push(`/cars?car_type=${car.id}`)
+             }}
+             >
+                start shopping</Button>
         </Box>
     )
 }
