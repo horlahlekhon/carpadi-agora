@@ -10,7 +10,6 @@ import {
   Grid,
   Paper,
   Divider,
-  Select,
   MenuItem,
   FormControl,
   InputLabel,
@@ -26,6 +25,7 @@ import { toast } from "react-hot-toast";
 import { retrieveBrands} from "../src/services/cars"
 import _, { filter } from "lodash";
 import { useRouter } from "next/router";
+import Form from 'react-bootstrap/Form';
 
 export default function Home() {
   const steps = [
@@ -198,7 +198,7 @@ export default function Home() {
               component="img"
               src="/icons/icon-circle.png"
               sx={{
-                height: 290,
+                height: 300,
                 justifySelf: "center",
                 mx: "auto",
                 display: { xs: "flex", md: "none" },
@@ -216,7 +216,7 @@ export default function Home() {
               component="img"
               src="/icons/icon-circle.png"
               sx={{
-                height: 380,
+                height: 400,
                 display: { xs: "none", md: "flex" },
                 justifySelf: "center",
               }}
@@ -374,7 +374,7 @@ export default function Home() {
                     height: { xs: 50, md: 70 },
                     borderRadius: 3,
                     backgroundColor: "white",
-                    justifyContent: "start",
+                    justifyContent: "center",
                     alignItems: "center",
                     px: 2,
                     textDecoration: "none",
@@ -394,7 +394,8 @@ export default function Home() {
                       variant="subtitle2"
                       sx={{
                         textTransform: "uppercase",
-                        fontSize: { xs: 8, sm: 11, md: 20 },
+                        textAlign: "center",
+                        fontSize: { xs: 11, sm: 16, md: 20 },
                         fontWeight: "7px"
                       }}
                     >
@@ -573,7 +574,7 @@ const Navigation = (router) => {
           sx={{       
             display: "flex",
             padding: 1.3,
-            mx: { xs: 0, sm: 3, md: 20 },
+            mx: { xs: 0, sm: 3, md: 8, lg: 15 },
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 4,
@@ -587,33 +588,34 @@ const Navigation = (router) => {
             sx={{ textTransform: "capitalize", color: "black" }}
             endIcon={<ExpandMoreIcon />}
           ></Button> */}
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel>Select Make</InputLabel>
-            <Select label="" value={make} onChange={(e) => handleChange(e, "make")}>
+          <FormControl variant="standard" sx={{ minWidth: 120 }}>
+
+            <Form.Select label="" value={make} onChange={(e) => handleChange(e, "make")} className={style.formselect}>
+            <option>Select make</option>
             {
                 brands && (
                     brands.map((brand, index) => (
-                        <MenuItem key={index} value={brand.make} >{brand.make}</MenuItem>
+                        <option key={index} value={brand.make} >{brand.make}</option>
                     ))
                 )
               }
-            </Select>
+            </Form.Select>
           </FormControl>
           <Divider
             orientation="vertical"
             sx={{ mx: 2, padding: 0, bgcolor: "#000" }}
           />
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel>Select Model</InputLabel>
-            <Select label="" value={model} onChange={(e) => handleChange(e, "model")}>
+          <FormControl variant="standard" sx={{ minWidth: 120 }}>
+            <Form.Select label="" value={model} onChange={(e) => handleChange(e, "model")} className={style.formselect}>
+            <option>Select model</option>
               {
                 brands && (
                     brands.map((brand, index) => (
-                        <MenuItem key={index} value={brand.model} >{brand.model}</MenuItem>
+                        <option key={index} value={brand.model} >{brand.model}</option>
                     ))
                 )
               }
-            </Select>
+            </Form.Select>
           </FormControl>
           <Button
             variant="contained"
@@ -621,7 +623,7 @@ const Navigation = (router) => {
               display: { xs: "none", md: "block" },
               height: 50,
               borderRadius: 4,
-              px: 4,
+              px:3,
               ml: 1.4,
               backgroundColor: "#01579B",
               color: "white",
