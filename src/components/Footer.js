@@ -59,6 +59,9 @@ export default function Footer(props) {
                                     fontWeight: 700,
                                     color: 'white',
                                     textDecoration: 'none',
+                                    '&:hover': {
+                                        color: 'white'
+                                    }
                                 }}
                             >
                                 Carpadi

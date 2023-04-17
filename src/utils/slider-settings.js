@@ -33,32 +33,29 @@ export const feedback = {
 export const featuresSettings = (images = []) => {
 
   return {
-    slidesToShow: 3,
-    slidesToScroll: 1,
+
     autoplay: true,
     autoplaySpeed: 2000,
     lazyLoad: true,
+    dots: true,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 500,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
+          slidesToShow: 2,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 900,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 2,
+          slidesToShow: 3,
+
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 4000,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 4,
           slidesToScroll: 1,
         },
       },
