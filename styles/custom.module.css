@@ -1,24 +1,10 @@
 .hero {
     background-image: linear-gradient(180deg, #243773, #14D5FF);
 }
-
-li.slick-active button::before{
-    background: #000 !important;
-    color: blue !important;
-}
 .footer-logo {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-}
-
-.formselect{
-    border: 1px solid transparent !important;
-}
-
-.formselect:focus {
-    outline: 0;
-    box-shadow: none !important;
 }
 
 @media only screen and (max-width: 769px) {

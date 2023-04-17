@@ -15,7 +15,6 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import { Form } from 'react-bootstrap'
 import CarDisplay from "../src/components/CarDisplay";
 import StepsInBuyCar from "../src/components/StepsInBuyCar";
 import Slider from "react-slick";
@@ -217,7 +216,7 @@ export default function Home() {
               component="img"
               src="/icons/icon-circle.png"
               sx={{
-                height: 400,
+                height: 380,
                 display: { xs: "none", md: "flex" },
                 justifySelf: "center",
               }}
@@ -266,7 +265,7 @@ export default function Home() {
           ))}
         </Slider>
 
-        <Row className={style.download}>
+        <Row noGutters className={style.download}>
           <Col xs={12} md={6} className={style.downloadCol}>
             <Typography
               variant="h3"
@@ -375,7 +374,7 @@ export default function Home() {
                     height: { xs: 50, md: 70 },
                     borderRadius: 3,
                     backgroundColor: "white",
-                    justifyContent: "center",
+                    justifyContent: "start",
                     alignItems: "center",
                     px: 2,
                     textDecoration: "none",
@@ -395,7 +394,7 @@ export default function Home() {
                       variant="subtitle2"
                       sx={{
                         textTransform: "uppercase",
-                        fontSize: { xs: 12, md: 20 },
+                        fontSize: { xs: 8, sm: 11, md: 20 },
                         fontWeight: "7px"
                       }}
                     >
@@ -574,7 +573,7 @@ const Navigation = (router) => {
           sx={{       
             display: "flex",
             padding: 1.3,
-            mx: { xs: 0, sm: 3, md: 5, lg: 15 },
+            mx: { xs: 0, sm: 3, md: 20 },
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 4,
@@ -588,34 +587,33 @@ const Navigation = (router) => {
             sx={{ textTransform: "capitalize", color: "black" }}
             endIcon={<ExpandMoreIcon />}
           ></Button> */}
-          <FormControl variant="standard" sx={{ minWidth: 120 }}>
-           
-            <Form.Select className={style.formselect} label="" value={make} onChange={(e) => handleChange(e, "make")}>
-              <option>Select make</option>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel>Select Make</InputLabel>
+            <Select label="" value={make} onChange={(e) => handleChange(e, "make")}>
             {
                 brands && (
                     brands.map((brand, index) => (
-                        <option key={index} value={brand.make} >{brand.make}</option>
+                        <MenuItem key={index} value={brand.make} >{brand.make}</MenuItem>
                     ))
                 )
               }
-            </Form.Select>
+            </Select>
           </FormControl>
           <Divider
             orientation="vertical"
             sx={{ mx: 2, padding: 0, bgcolor: "#000" }}
           />
-          <FormControl variant="standard" sx={{ minWidth: 120 }}>
-            <Form.Select className={style.formselect} label="" value={model} onChange={(e) => handleChange(e, "model")}>
-              <option>Select model</option>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel>Select Model</InputLabel>
+            <Select label="" value={model} onChange={(e) => handleChange(e, "model")}>
               {
                 brands && (
                     brands.map((brand, index) => (
-                        <option key={index} value={brand.model} >{brand.model}</option>
+                        <MenuItem key={index} value={brand.model} >{brand.model}</MenuItem>
                     ))
                 )
               }
-            </Form.Select>
+            </Select>
           </FormControl>
           <Button
             variant="contained"
@@ -623,7 +621,7 @@ const Navigation = (router) => {
               display: { xs: "none", md: "block" },
               height: 50,
               borderRadius: 4,
-              px: 3,
+              px: 4,
               ml: 1.4,
               backgroundColor: "#01579B",
               color: "white",

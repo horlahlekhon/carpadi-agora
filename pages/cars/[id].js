@@ -14,14 +14,13 @@ import {
 import { Cars } from "../../src/utils/temp-data";
 import { NairaFormat } from "../../src/utils/functions";
 import Slider from "react-slick";
-// import { featuresSettings } from "../../src/utils/slider-settings";
+import { featuresSettings } from "../../src/utils/slider-settings";
 import { features as featureData } from "../../src/utils/temp-data";
 import BuyCarItem from "../../src/components/BuyCarItem";
 import CarsModal from "../../src/components/CarsModal";
 import { retrieveCar, retrieveCarsProducts } from "../../src/services/cars";
 import { toast } from "react-hot-toast";
 import Loader from "../../src/layouts/core/Loader";
-import {  makeStyles } from "@material-ui/core";
 
 import getConfig from "next/config";
 
@@ -33,7 +32,7 @@ const CarView = ({ carId }) => {
   const [car, setCar] = useState({});
   const [cars, setCars] = useState(Cars);
   const [isOpen, setIsOpen] = useState(false);
-  const [features, setFeatures] = useState(featureData);
+  const [features, setFeatures] = useState([]);
   const [pageLoading, setPageLoading] = useState(false)
   const handleViewImages = () => setIsOpen(!isOpen);
   const fetchCar = (carId) => {
@@ -43,7 +42,7 @@ const CarView = ({ carId }) => {
         .then((response) => {
           if (response.status && typeof response.data === "object") {
             setCar(response.data);
-            // setFeatures(response.data.car_features);
+            setFeatures(response.data.car_features);
           } else {
             toast.error(response.data);
           }
@@ -84,8 +83,6 @@ const CarView = ({ carId }) => {
     }
   };
 
-
-
   useEffect(() => {
     
     const query = router.query;
@@ -93,12 +90,18 @@ const CarView = ({ carId }) => {
     fetchSimilarCars(query);
   }, [router, carId]);
 
-
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
   return (
     <LandingLayout title="View Single Car" navbar={<NavigationBar />}>
         {
-          pageLoading ?  <Loader />:
+          pageLoading ? <Loader/>:
           car && car.id && (
         <Container>
           
@@ -719,59 +722,8 @@ const CarView = ({ carId }) => {
 };
 
 const Features = ({ featuresData }) => {
-  
-  const useStyles = makeStyles((theme) => ({
-    dots: {
-      "& li.slick-active button::before": {
-        color: "#243773"
-      },
-      "& li": {
-        "& button::before": {
-          fontSize: theme.typography.pxToRem(14),
-          color: "#F0F0F0",
-         
-        }
-      }
-    }
-  }));
-
-  const classes = useStyles();
-
-  const featuresSettings = {
-    autoplay: true,
-    infinite: true,
-    autoplaySpeed: 2000,
-    dots: true,
-    arrows: false,
-    adaptiveHeight: true,
-    dotsClass: `slick-dots ${classes.dots}`,
-    slidesToScroll: 2,
-    responsive: [
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 2,
-
-        },
-      },
-      {
-        breakpoint: 4000,
-        settings: {
-          slidesToShow: 4,
-          
-        },
-      },
-    ],
-  };
-
   return (
-    <Box component="div" sx={{ mt: "100px", mb: "50px", mx:'auto', width: "90%" }}>
+    <Box component="div" sx={{ mt: "100px", mb: "50px", width: "100%" }}>
       <div className="text-center">
         <Typography variant="h5" sx={{ fontWeight: 700, mb: 5 }}>
           Key features include
@@ -793,8 +745,8 @@ const Features = ({ featuresData }) => {
                   component="img"
                 //   src={feature.url}
                   src={
-                    feature.url.length > 0
-                      ? feature.url[0]
+                    feature.feature_images.length > 0
+                      ? feature.feature_images[0]
                       : `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`
                   }
                   sx={{
@@ -816,13 +768,13 @@ const Features = ({ featuresData }) => {
           ))}
         </Grid>
       ) : (
-        <Slider {...featuresSettings}>
+        <Slider {...featuresSettings(featuresData)}>
           {featuresData.map((feature) => (
             <div className="text-center px-2" key={Math.random()}>
               <Box
                 component="img"
                 // src={feature.url}
-                src={feature.url.length > 0 ? feature.url: `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`}
+                src={feature.feature_images.length > 0 ? feature.feature_images[0]: `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`}
 
                 sx={{
                   height: 190,

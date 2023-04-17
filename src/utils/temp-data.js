@@ -20,18 +20,18 @@ export const    Cars = [
 ];
 
 export const features = [
-    {name: 'Panoramic roof', url: '/cars/features/feature-1.png'},
-    {name: 'Digital device', url: '/cars/features/feature-2.png'},
-    {name: 'Leather seats', url: '/cars/features/feature-3.png'},
-    {name: 'Seat heater', url: '/cars/features/feature-4.png'},
-    {name: 'Panoramic roof', url: '/cars/features/feature-1.png'},
-    {name: 'Digital device', url: '/cars/features/feature-2.png'},
-    {name: 'Leather seats', url: '/cars/features/feature-3.png'},
-    {name: 'Seat heater', url: '/cars/features/feature-4.png'},
-    {name: 'Panoramic roof', url: '/cars/features/feature-1.png'},
-    {name: 'Digital device', url: '/cars/features/feature-2.png'},
-    {name: 'Leather seats', url: '/cars/features/feature-3.png'},
-    {name: 'Seat heater', url: '/cars/features/feature-4.png'},
+    // {name: 'Panoramic roof', url: '/cars/features/feature-1.png'},
+    // {name: 'Leather seats', url: '/cars/features/feature-2.png'},
+    // {name: 'Digital device', url: '/cars/features/feature-3.png'},
+    // {name: 'Seat heater', url: '/cars/features/feature-4.png'},
+    // {name: 'Panoramic roof', url: '/cars/features/feature-5.png'},
+    // {name: 'Durable seats', url: '/cars/features/feature-6.png'},
+    // {name: 'Panoramic roof', url: '/cars/features/feature-1.png'},
+    // {name: 'Leather seats', url: '/cars/features/feature-2.png'},
+    // {name: 'Digital device', url: '/cars/features/feature-3.png'},
+    // {name: 'Seat heater', url: '/cars/features/feature-4.png'},
+    // {name: 'Panoramic roof', url: '/cars/features/feature-5.png'},
+    // {name: 'Durable seats', url: '/cars/features/feature-6.png'},
 ];
 
 export const states = [
