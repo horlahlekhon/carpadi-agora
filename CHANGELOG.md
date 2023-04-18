@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/horlahlekhon/carpadi-agora/compare/v1.6.2...v1.7.0) (2023-04-18)
+
+
+### Features
+
+* Merge pull request [#9](https://github.com/horlahlekhon/carpadi-agora/issues/9) from horlahlekhon/feat-new-changes ([31dcaf9](https://github.com/horlahlekhon/carpadi-agora/commit/31dcaf9c42dc3725bfd5d8d69d0e7910cd7f8584))
+
 ## [1.6.2](https://github.com/horlahlekhon/carpadi-agora/compare/v1.6.1...v1.6.2) (2023-02-20)
 
 
