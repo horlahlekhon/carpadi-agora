@@ -1,6 +1,18 @@
 .hero {
     background-image: linear-gradient(180deg, #243773, #14D5FF);
 }
+
+.formselect {
+    background-size: 16px 24px !important;
+    border: 1px solid transparent !important;
+}
+
+.formselect:focus {
+    border-color: none !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
 .footer-logo {
     display: flex;
     flex-flow: row wrap;
