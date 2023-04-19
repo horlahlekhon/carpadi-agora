@@ -534,7 +534,7 @@ const Navigation = (router) => {
 
   
 
-  const _handleChange = (e, type) => {
+  const handleChange = (e, type) => {
     if(type === "make"){
         setMake(e.target.value)
     }else if(type === "model"){
@@ -543,7 +543,7 @@ const Navigation = (router) => {
         toast.error("invalid selection!")
     }
   }
-  const handleChange = _.debounce(_handleChange, 2000)
+  // const handleChange = _.debounce(_handleChange, 2000)
 
   useEffect(() => {
     retrieveBrandsData(make, model)
@@ -574,7 +574,7 @@ const Navigation = (router) => {
           sx={{       
             display: "flex",
             padding: 1.3,
-            mx: { xs: 0, sm: 3, md: 8, lg: 15 },
+            mx: { xs: 0, sm: 3, md:5, lg: 12 },
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 4,
@@ -622,8 +622,9 @@ const Navigation = (router) => {
             sx={{
               display: { xs: "none", md: "block" },
               height: 50,
+              width: '30%',
               borderRadius: 4,
-              px:3,
+              p:1,
               ml: 1.4,
               backgroundColor: "#01579B",
               color: "white",
