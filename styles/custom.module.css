@@ -1,5 +1,6 @@
 .hero {
     background-image: linear-gradient(180deg, #243773, #14D5FF);
+    padding: 0 0 10px;
 }
 
 .formselect {
