@@ -510,21 +510,19 @@ const Navigation = (router) => {
   const [model, setModel] = useState("")
   const [brands, setBrands] = useState([])
   const [currentQueryCount, setCurrentQueryCount] = useState(0)
-  const [loadedBrands, setLoadedBrands] = useState(false)
   const retrieveBrandsData = (make, model) => {
-    const filter = {model: model, make: make}
+  const filter = {model: model, make: make}
     retrieveBrands(filter)
         .then((response) => {
             if (response.status && typeof response.data == "object"){
-                if(response.data.count){
-                    setCurrentQueryCount(response.data.count)
-                }else if(loadedBrands === false){
-                    setBrands(response.data.brands)
-                    setCurrentQueryCount(response.data.available_cars_count)
-                    setLoadedBrands(true)
-                }
-            }else{
-                toast.error(response.data)
+              if(typeof response.data.count === 'number'){
+                setCurrentQueryCount(response.data.count)
+              }else if(response.data.available_cars_count && typeof response.data.available_cars_count === 'number'){
+                setCurrentQueryCount(response.data.available_cars_count)
+                setBrands(response.data.brands)
+              }else{
+                toast.error("Invalid data receieved when getting available brands, please reload.")
+              }
             }
         }).catch((error) => {
             toast.error(error.data)
@@ -537,8 +535,11 @@ const Navigation = (router) => {
   const handleChange = (e, type) => {
     if(type === "make"){
         setMake(e.target.value)
+      console.log("selected make", e.target.value)
     }else if(type === "model"){
         setModel(e.target.value)
+      console.log("selected model", e.target.value)
+
     }else{
         toast.error("invalid selection!")
     }
