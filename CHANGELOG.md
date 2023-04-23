@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/horlahlekhon/carpadi-agora/compare/v1.7.0...v1.7.1) (2023-04-23)
+
+
+### Bug Fixes
+
+* issue with vehicle search select ([7befc44](https://github.com/horlahlekhon/carpadi-agora/commit/7befc44bf69575b7e394b3085d88d48c83c90afd))
+
 # [1.7.0](https://github.com/horlahlekhon/carpadi-agora/compare/v1.6.2...v1.7.0) (2023-04-18)
 
 
