@@ -29,7 +29,7 @@ const NavigationBar = ({children=null, active='', ...props}) => {
     });
 
     return(
-    <AppBar position="static" color="transparent" elevation={0}>
+    <Box position="static" color="transparent" elevation={0}>
         <Container {...props}>
             <Toolbar disableGutters>
                 <Box
@@ -38,7 +38,7 @@ const NavigationBar = ({children=null, active='', ...props}) => {
                     component="img"
                     sx={{ display: "flex", mr: 1, width: "46", height: "50px" }}
                     src="https://res.cloudinary.com/grootretro/image/upload/v1646753368/carpadi-website/logo_icon_white_gfqebt.svg"
-                    // src="/images/logo.png"
+                  
                 />
                 <Typography
                     variant="h6"
@@ -54,12 +54,15 @@ const NavigationBar = ({children=null, active='', ...props}) => {
                         fontWeight: 700,
                         color: 'white',
                         textDecoration: 'none',
+                        '&:hover':{
+                            color: 'white',
+                         }
                     }}
                 >
                     Carpadi
                 </Typography>
 
-                <Box sx={{ flexGrow: 1, justifyContent: 'center', display: { xs: 'none', md: 'flex' }, ml: {md: -20} }}>
+                <Box sx={{ flexGrow: 1, justifyContent: 'center', display: { xs: 'none', md: 'flex' }, mr: {md: 20} }}>
                     <Nav fill={true} className="ml-n6">
                         {pages.map((page) => (
                             <NavItem key={`${page}-${Math.random()}`}>
@@ -108,7 +111,7 @@ const NavigationBar = ({children=null, active='', ...props}) => {
             </Box>
             {children}
         </Container>
-    </AppBar>
+    </Box>
 )};
 
 export default NavigationBar;

@@ -160,6 +160,17 @@ export default function CarRegisterDetail(props) {
          })
     setFormComplete(true)
   };
+  
+
+  // const handleNextInput = (event, currentInput, nextInput) => {
+  //   if (event.key === "Tab"){
+  //     event.preventDefault();
+  //     if (nextInput && nextInput.current){
+  //       nextInput.current.focus();
+  //     }
+  //   }
+
+  // }
 
   const submitData = (data) => {
     postCarPurchaseOffer(data)
@@ -221,7 +232,7 @@ export default function CarRegisterDetail(props) {
                   sx={{ display: { xs: "none", md: "inline" } }}
                   md={3}
                 />
-                <Grid item xs={8} md={6}>
+                <Grid item xs={12} md={6}>
                   <div className="text-center">
                     <Typography
                       variant="h5"
@@ -264,6 +275,7 @@ export default function CarRegisterDetail(props) {
                     requestData.current_usage_timeframe_by_user || 0
                   }
                   inputRef={usageDurationRef}
+                  // onKeyDown={(e) => handleNextInput(e, usageDurationRef, mileageRef)}
                   error={formErrors.current_usage_timeframe_by_user}
                   onBlur={(e) => {
                     const usage = parseInt(usageDurationRef.current.value);
@@ -294,6 +306,7 @@ export default function CarRegisterDetail(props) {
                   sx={stylesheet.input}
                   error={formErrors.mileage}
                   inputRef={mileageRef}
+                  // onKeyDown={(e) => handleNextInput(e, mileageRef, null)}
                   defaultValue={requestData.mileage}
                   onBlur={(e) => {
                     const mil = parseInt(mileageRef.current.value);
@@ -364,7 +377,7 @@ export default function CarRegisterDetail(props) {
                   sx={{ display: { xs: "none", md: "inline" } }}
                   md={3}
                 />
-                <Grid item xs={8} md={6}>
+                <Grid item xs={12} md={6}>
                   <div className="text-center">
                     <Typography
                       variant="h5"
@@ -455,6 +468,7 @@ export default function CarRegisterDetail(props) {
                   type="tel"
                   required
                   placeholder="enter phone  number e.g 09012345678"
+                  sx={stylesheet.input}
                   inputRef={phoneRef}
                   error={!(new RegExp(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im).test(requestData.user.phone))}
                   defaultValue={requestData.user.phone}
@@ -754,6 +768,7 @@ export default function CarRegisterDetail(props) {
                   sx={{
                     display: "flex",
                     justifyContent: "start",
+                    borderRadius: step !== 2 ? "20px" : 0,
                     borderTopLeftRadius: "20px",
                     borderBottomLeftRadius: "20px",
                     backgroundColor: step >= 1 ? "#4BFF9F" : "transparent",
@@ -762,9 +777,10 @@ export default function CarRegisterDetail(props) {
                   <div>
                     <Avatar
                       sx={{
+                        left: "3%",
                         bgcolor: step >= 1 ? "#243773" : "white",
                         color: step >= 1 ? "#fff" : "#000",
-                        border: "2px solid #a3a3a3",
+                        border: "2px solid #ffffff",
                       }}
                     >
                       1
@@ -785,9 +801,10 @@ export default function CarRegisterDetail(props) {
                   <div className="float-end">
                     <Avatar
                       sx={{
+                        right: step <= 2 ? "104%": '0%',
                         bgcolor: step >= 2 ? "#243773" : "white",
                         color: step >= 2 ? "#fff" : "#000",
-                        border: "2px solid #a3a3a3",
+                        border: step <= 1 ? "2px solid #a3a3a3" : "2px solid #ffffff",
                       }}
                     >
                       2

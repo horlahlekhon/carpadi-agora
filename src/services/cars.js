@@ -47,7 +47,11 @@ const retrieveBrands = (filter) => {
     
     let filterString = ""
     Object.keys(filter).forEach(element => {
-        if(filter[element]) filterString += `&${element}=${String(filter[element]).toLowerCase()}`
+        const elemLower = String(filter[element]).toLowerCase()
+        if (filter[element] && elemLower !== "select make" && elemLower !== "select model" ) {
+            console.log("element", filter[element])
+          filterString += `&${element}=${elemLower}`
+        }
     });
     return fetchWrapper.get(`${baseUrl}/home?${filterString}`)
         .then((response) => {

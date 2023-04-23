@@ -40,6 +40,9 @@ function SellLayout({children, title='Welcome', ...props}) {
                                 fontWeight: 700,
                                 color: '#243773',
                                 textDecoration: 'none',
+                                '&:hover':{
+                                   color: '#243773',
+                                }
                             }}
                         >
                             Carpadi

@@ -27,6 +27,7 @@ const SellCar = (props) => {
             borderRadius: 4, py: "5px",
         },
         label: {
+            color: '#111',
             mt: 2, mb: 1
         },
         submit: {
@@ -81,6 +82,7 @@ const SellCar = (props) => {
 }
     const getVinData = _.debounce(handleVin, 5000)
 
+
     useEffect(() => {
         getVinData()
         
@@ -101,7 +103,7 @@ const SellCar = (props) => {
                                 placeholder="enter your VIN"
                                 sx={stylesheet.input}
                                 value={vin.vin}
-                                onChange={(e) => {setVin({vin: e.target.value, error: vin.error}); setVehicleInfo({})}}
+                                onChange={(e) => {setVin({vin: e.target.value.slice(0, 17), error: vin.error}); setVehicleInfo({})}}
                                 autoFocus={true}
                                 helperText="Invalid vin"
                                 // onBlur={}
@@ -168,7 +170,7 @@ const SellCar = (props) => {
             case 3:
                 return (
                     <div>
-                        <Typography variant="caption" sx={{lineHeight: '1px', mb: 2}}>
+                        <Typography variant="caption" sx={{color: '#111', lineHeight: '1px', mb: 2}}>
                             We recommend entering your VIN or Plate number.
                             with that, we can give you an instant cash offer in most case
                         </Typography>
@@ -351,7 +353,7 @@ const SellCar = (props) => {
                                                 Make/Model
                                             </Button>
                                         </Box>
-                                        <Typography variant="subtitle1" sx={{fontWeight: 700, mt: 3}}>Enter your vehicle Information</Typography>
+                                        <Typography variant="subtitle1" sx={{color: '#111',fontWeight: 700, mt: 3}}>Enter your vehicle Information</Typography>
                                         <RenderForm/>
                                     </Box>
                                 </Grid>
