@@ -13,7 +13,7 @@ module.exports = {
       cloudinaryCloudName: process.env.CLOUD_NAME || '',
       cloudinaryPreset: process.env.CLOUD_PRESET || '',
       apiUrl: process.env.NODE_ENV === 'development'
-          ? 'http://localhost:8000/api/v1' // development api
+          ? 'https://api.carpadi.com/api/v1' // development api
           : 'https://api.carpadi.com/api/v1' // production api
   },
   output: 'standalone',

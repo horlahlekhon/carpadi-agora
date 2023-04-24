@@ -33,7 +33,7 @@ const CarView = ({ carId }) => {
   const [car, setCar] = useState({});
   const [cars, setCars] = useState(Cars);
   const [isOpen, setIsOpen] = useState(false);
-  const [features, setFeatures] = useState(featureData);
+  const [features, setFeatures] = useState([]);
   const [pageLoading, setPageLoading] = useState(false)
   const handleViewImages = () => setIsOpen(!isOpen);
   const fetchCar = (carId) => {
@@ -43,7 +43,7 @@ const CarView = ({ carId }) => {
         .then((response) => {
           if (response.status && typeof response.data === "object") {
             setCar(response.data);
-            // setFeatures(response.data.car_features);
+            setFeatures(response.data.car_features);
           } else {
             toast.error(response.data);
           }
@@ -793,8 +793,8 @@ const Features = ({ featuresData }) => {
                   component="img"
                 //   src={feature.url}
                   src={
-                    feature.url.length > 0
-                      ? feature.url[0]
+                    feature.feature_images.length > 0
+                      ? feature.feature_images[0]
                       : `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`
                   }
                   sx={{
@@ -822,7 +822,7 @@ const Features = ({ featuresData }) => {
               <Box
                 component="img"
                 // src={feature.url}
-                src={feature.url.length > 0 ? feature.url: `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`}
+                src={feature.feature_images.length > 0 ? feature.feature_images[0]: `${publicRuntimeConfig.staticBase}/images/placeholder-car-image-1.jpg`}
 
                 sx={{
                   height: 190,
