@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/horlahlekhon/carpadi-agora/compare/v1.7.1...v1.7.2) (2023-04-24)
+
+
+### Bug Fixes
+
+* remove commented out code for car features ([711afd9](https://github.com/horlahlekhon/carpadi-agora/commit/711afd9a8a3fa3a2e715e151df4a15022c6ae65f))
+
 ## [1.7.1](https://github.com/horlahlekhon/carpadi-agora/compare/v1.7.0...v1.7.1) (2023-04-23)
 
 
